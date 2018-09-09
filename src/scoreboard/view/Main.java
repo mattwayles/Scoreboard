@@ -37,13 +37,17 @@ public class Main extends Application {
 
         scene.setOnKeyPressed(e -> {
             Controller.changeScore(e, match.team1, match.team2, root);
-            match.updateView();
-            root.getChildren().remove(0);
-            root.getChildren().add(match.view);
+            update(match, root);
         });
         root.getChildren().add(match.view);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void update(Match match, Pane root) {
+        match.updateView();
+        root.getChildren().remove(0);
+        root.getChildren().add(match.view);
     }
 
 
