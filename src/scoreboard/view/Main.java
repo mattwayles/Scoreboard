@@ -1,22 +1,16 @@
 package scoreboard.view;
 
 import javafx.application.Application;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Separator;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import scoreboard.controller.Controller;
-import scoreboard.model.Team;
 
 public class Main extends Application {
     static final int HEIGHT = 768;
     static final int WIDTH = 1280;
 
-
+    //TODO: In match; new TeamView(new Team...) is kinda janky
     //TODO: Clean up code, set style properties in CSS
     //TODO: Wider separator
     //TODO: Center everything based on dynamic page width
@@ -35,19 +29,10 @@ public class Main extends Application {
 
         Match match = new Match();
 
-        scene.setOnKeyPressed(e -> {
-            Controller.changeScore(e, match.team1, match.team2, root);
-            update(match, root);
-        });
+        scene.setOnKeyPressed(e -> Controller.changeScore(e, match.team1, match.team2));
         root.getChildren().add(match.view);
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    private void update(Match match, Pane root) {
-        match.updateView();
-        root.getChildren().remove(0);
-        root.getChildren().add(match.view);
     }
 
 

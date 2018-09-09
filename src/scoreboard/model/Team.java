@@ -5,6 +5,11 @@ public class Team {
     private int score;
     private int gamesWon = 0;
 
+    protected Team() {
+        this.teamName = "";
+        this.score = 0;
+    }
+
     public Team(String teamName, Integer score) {
         this.teamName = teamName;
         this.score = score;
