@@ -77,6 +77,8 @@ public class TeamSelect extends Main {
     private void populateTeamOptions() throws IOException {
         ObservableList<String> options = FXCollections.observableArrayList();
 
+        //TODO: Send in the teamName textfile as a main() arg
+        //TODO: Sort list
         File file = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("TeamNames.txt")).getFile());
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
