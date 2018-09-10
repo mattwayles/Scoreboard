@@ -68,7 +68,9 @@ public class Controller {
                 match.displayWinner(team.getTeamName(), gameNum);
                 main.refresh(match);
             }
-            team.getGamesWonImgs().getChildren().add(new ImageView(new Image("/img/game" + gameNum + ".png")));
+            if (gameNum < 3) {
+                team.getGamesWonImgs().getChildren().add(new ImageView(new Image("/img/game" + gameNum + ".png")));
+            }
             winScore = ++gameNum == 3 ? 15 : winScore;
     }
 

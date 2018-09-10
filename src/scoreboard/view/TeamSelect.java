@@ -85,6 +85,8 @@ public class TeamSelect extends Main {
             }
         }
         this.team1Select = new ComboBox<>(options);
+        team1Select.getSelectionModel().selectNext();
         this.team2Select = new ComboBox<>(options);
+        team2Select.getSelectionModel().selectNext();
     }
 }
