@@ -79,7 +79,7 @@ public class TeamSelect extends Main {
 
         //TODO: Send in the teamName textfile as a main() arg
         //TODO: Sort list
-        File file = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("TeamNames.txt")).getFile());
+        File file = new File(System.getProperty("user.dir") + "/TeamNames.txt");
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 options.add(scanner.nextLine());
