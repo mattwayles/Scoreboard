@@ -2,7 +2,7 @@ package scoreboard.model;
 
 public class Team {
     private String teamName;
-    private int score;
+    private int score = 0;
     private int gamesWon = 0;
 
     protected Team() {
@@ -10,16 +10,11 @@ public class Team {
         this.score = 0;
     }
 
-    public Team(String teamName, Integer score) {
+    public Team(String teamName) {
         this.teamName = teamName;
-        this.score = score;
     }
 
     public String getTeamName() { return teamName; }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
 
     public int getScore() { return score; }
 

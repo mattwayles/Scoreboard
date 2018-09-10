@@ -4,11 +4,65 @@
     -fx-border-style: solid;
 }
 
-.teamNameLabel {
-    -fx-text-fill: blue;
-    -fx-font-size: 56px;
+.mainTitle {
+    -fx-font-family: "Harlow Solid Italic";
+    -fx-font-size: 72px;
+}
+
+.version {
+    -fx-font-family: "Harlow Solid Italic";
+    -fx-font-size: 36px;
+}
+
+.separator {
+    -fx-pref-width: 10px;
+    -fx-border-color: black;
+    -fx-background-color: black;
+}
+
+.team1NameLabel {
+    -fx-text-fill: #0800ad;
+    -fx-font-size: 72px;
+}
+
+.team2NameLabel {
+    -fx-text-fill: #a05500;
+    -fx-font-size: 72px;
 }
 
 .scoreLabel {
-    -fx-font-size: 172px;
+    -fx-font-size: 400px;
+}
+
+.team1SelectionLabel {
+    -fx-font-family: "Cooper Black";
+    -fx-font-size: 28px;
+    -fx-alignment: center;
+    -fx-text-fill: #0800ad
+}
+
+.team1SelectionLabel {
+    -fx-font-family: "Cooper Black";
+    -fx-font-size: 28px;
+    -fx-alignment: center;
+    -fx-text-fill: #0800ad;
+}
+
+.team2SelectionLabel {
+    -fx-font-family: "Cooper Black";
+    -fx-font-size: 28px;
+    -fx-alignment: center;
+    -fx-text-fill: #a05500;
+}
+
+.pressStartLabel {
+    -fx-font-family: "Cooper Black";
+    -fx-font-size: 20px;
+    -fx-alignment: center;
+    -fx-text-fill: #006400;
+}
+
+.winnerLabel {
+    -fx-font-family: "Harlow Solid Italic";
+    -fx-font-size: 72px;
 }

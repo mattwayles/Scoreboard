@@ -1,19 +1,28 @@
 package scoreboard.view;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import scoreboard.model.Team;
 
 public class TeamView extends Team {
     private Label nameLabel;
     private Label scoreLabel;
-    private Label gamesWonLabel;
+    private HBox gamesWonImgs;
+    private static int count = 1;
 
-    TeamView(Team team) {
-        this.nameLabel = new Label(team.getTeamName());
-        this.nameLabel.getStyleClass().add("teamNameLabel");
-        this.scoreLabel = new Label(String.valueOf(team.getScore()));
+    TeamView(String teamName) {
+        super(teamName);
+        this.nameLabel = new Label(getTeamName());
+        this.nameLabel.getStyleClass().add("team" + count + "NameLabel");
+        this.scoreLabel = new Label(String.valueOf(getScore()));
         this.scoreLabel.getStyleClass().add("scoreLabel");
-        this.gamesWonLabel = new Label(String.valueOf(team.getGamesWon()));
+        this.gamesWonImgs = new HBox(50);
+        this.getGamesWonImgs().getChildren().add(new ImageView(new Image("/img/empty.png")));
+        this.gamesWonImgs.setAlignment(Pos.CENTER);
+        count++;
     }
 
     Label getNameLabel() { return this.nameLabel; }
@@ -24,8 +33,10 @@ public class TeamView extends Team {
 
     public void setScoreLabel(int score) { this.scoreLabel.textProperty().setValue(String.valueOf(score));}
 
-    Label getGamesWonLabel() { return this.gamesWonLabel; }
+    public HBox getGamesWonImgs() { return this.gamesWonImgs; }
 
-    public void setGamesWonLabel(int gamesWon) { this.gamesWonLabel.textProperty().setValue(String.valueOf(gamesWon));}
+    public void setGamesWonImgs(HBox gamesWonImgs) { this.gamesWonImgs = gamesWonImgs;}
+
+    public static void resetCount() { count = 1; }
 
 }
