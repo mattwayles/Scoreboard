@@ -26,13 +26,15 @@
 }
 
 .team1NameLabel {
+    -fx-font-family: "Cooper Black";
     -fx-text-fill: #0800ad;
-    -fx-font-size: 72px;
+    -fx-font-size: 50px;
 }
 
 .team2NameLabel {
+    -fx-font-family: "Cooper Black";
     -fx-text-fill: #a05500;
-    -fx-font-size: 72px;
+    -fx-font-size: 50px;
 }
 
 .scoreLabel {

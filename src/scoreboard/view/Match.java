@@ -27,7 +27,7 @@ public class Match extends Main {
         separator.getStyleClass().add("separator");
         view = new HBox(createTeamView(team1), separator, createTeamView(team2));
         //TODO: Move to CSS?
-        view.setPadding(new Insets(20, 10, 10, 10));
+        view.setPadding(new Insets(40, 10, 10, 10));
         view.setMaxWidth(WIDTH - 20);
     }
 
