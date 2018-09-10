@@ -21,6 +21,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        root.setId("root");
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Chucktown Social");
         scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
