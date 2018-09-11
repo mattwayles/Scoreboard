@@ -9,6 +9,8 @@ import scoreboard.view.Match;
 import scoreboard.view.TeamSelect;
 import scoreboard.view.TeamView;
 
+import java.util.concurrent.TimeUnit;
+
 public class Controller {
     private static int winScore = 21;
     private static int gameNum = 1;
@@ -65,12 +67,10 @@ public class Controller {
                 team.getGamesWonImgs().getChildren().remove(0);
             }
             else if (team.getGamesWon() == 2) {
-                match.displayWinner(team.getTeamName(), gameNum);
+                match.displayMatchWinner(team.getTeamName(), gameNum);
                 main.refresh(match);
             }
-            if (gameNum < 3) {
-                team.getGamesWonImgs().getChildren().add(new ImageView(new Image("/img/game" + gameNum + ".png")));
-            }
+            team.getGamesWonImgs().getChildren().add(new ImageView(new Image("/img/gameWon.png")));
             winScore = ++gameNum == 3 ? 15 : winScore;
     }
 

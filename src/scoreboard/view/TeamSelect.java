@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,7 +38,7 @@ public class TeamSelect extends Main {
     public ComboBox getTeam2Select() { return this.team2Select; }
 
     private VBox createTeamSelectView(HBox selectBoxes) {
-        Label title = new Label("Chucktown Social Cornhole Scoreboard");
+        Text title = new Text("Chucktown Social Cornhole Scoreboard");
         title.getStyleClass().add("mainTitle");
         Label version = new Label("v0.1");
         version.getStyleClass().add("version");
@@ -67,7 +68,7 @@ public class TeamSelect extends Main {
         team2Box.setSpacing(10);
         team2Box.setAlignment(Pos.CENTER);
 
-        HBox selectBoxes = new HBox(WIDTH / 2);
+        HBox selectBoxes = new HBox(250);
         selectBoxes.setAlignment(Pos.CENTER);
         selectBoxes.getChildren().addAll(team1Box, team2Box);
 

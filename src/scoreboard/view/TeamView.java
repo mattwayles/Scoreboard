@@ -20,7 +20,7 @@ public class TeamView extends Team {
         this.scoreLabel = new Label(String.valueOf(getScore()));
         this.scoreLabel.getStyleClass().add("scoreLabel");
         this.gamesWonImgs = new HBox(50);
-        this.getGamesWonImgs().getChildren().add(new ImageView(new Image("/img/empty.png")));
+        this.getGamesWonImgs().getChildren().add(new ImageView(new Image("/img/placeholder.png")));
         this.gamesWonImgs.setAlignment(Pos.CENTER);
         count++;
     }

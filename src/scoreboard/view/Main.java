@@ -8,8 +8,8 @@ package scoreboard.view;
         import scoreboard.controller.Controller;
 
 public class Main extends Application {
-    static final int HEIGHT = 768;
-    static final int WIDTH = 1280;
+    static final int HEIGHT = 1000;
+    static final int WIDTH = 1980;
     private StackPane root = new StackPane();
     private Scene scene = new Scene(root, WIDTH, HEIGHT);
     private Stage primaryStage;
@@ -46,7 +46,7 @@ public class Main extends Application {
             if (e.getCode() == KeyCode.Q || e.getCode() == KeyCode.W) {
                 restart();
             }
-            else {
+            else{
                 Controller.changeScore(e, match, this);
             }
         });
