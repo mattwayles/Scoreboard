@@ -50,6 +50,7 @@ public class Main extends Application {
                 Controller.changeScore(e, match, this);
             }
         });
+        scene.setOnKeyReleased(e -> Controller.releaseKey(e, match, this));
 
         root.getChildren().add(match.getMatchView());
     }

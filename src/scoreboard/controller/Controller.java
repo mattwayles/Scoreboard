@@ -8,12 +8,15 @@ import scoreboard.view.Main;
 import scoreboard.view.Match;
 import scoreboard.view.TeamSelect;
 import scoreboard.view.TeamView;
-
-import java.util.concurrent.TimeUnit;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Controller {
     private static int winScore = 21;
     private static int gameNum = 1;
+    private static Set<KeyCode> keysDown = new HashSet<>();
+    private static long keyPressTime;
+    private static KeyCode lastKeyPressed;
 
     public static void chooseTeams(KeyEvent e, TeamSelect teamSelect, Main main) {
         if (e.getCode() == KeyCode.A) {
@@ -35,6 +38,11 @@ public class Controller {
     public static void changeScore(KeyEvent e, Match match, Main main) {
         TeamView team1 = match.getTeam1();
         TeamView team2 = match.getTeam2();
+        keysDown.add(e.getCode());
+        if (e.getCode() != lastKeyPressed) {
+            lastKeyPressed = e.getCode();
+                keyPressTime = System.currentTimeMillis();
+        }
 
         if (e.getCode() == KeyCode.A) {
             team1.setScore(team1.getScore() + 1);
@@ -60,7 +68,19 @@ public class Controller {
             resetGame(team1, team2);
         }
     }
-    
+
+    public static void releaseKey(KeyEvent e, Match match, Main main) {
+        if (keysDown.contains(KeyCode.A) && keysDown.contains(KeyCode.Z)) {
+            System.out.println(System.currentTimeMillis() - keyPressTime);
+            if (System.currentTimeMillis() - keyPressTime >= 3000L) {
+                match.easterEgg();
+                main.refresh(match);
+            }
+        }
+        keyPressTime = System.currentTimeMillis();
+        keysDown.remove(e.getCode());
+    }
+
     private static void winner(TeamView team, Match match, Main main) {
             team.setGamesWon(team.getGamesWon() + 1);
             if (team.getGamesWon() == 1) {
@@ -73,6 +93,8 @@ public class Controller {
             team.getGamesWonImgs().getChildren().add(new ImageView(new Image("/img/gameWon.png")));
             winScore = ++gameNum == 3 ? 15 : winScore;
     }
+
+
 
     private static void resetGame(TeamView team1, TeamView team2) {
         team1.setScore(0);

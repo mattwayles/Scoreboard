@@ -66,6 +66,10 @@ public class Match extends Main {
         view.setAlignment(Pos.CENTER);
     }
 
+    public void easterEgg() {
+        view = new HBox(new ImageView(new Image("/img/easteregg.gif", WIDTH, HEIGHT, false, false)));
+    }
+
     HBox getMatchView() { return this.view; }
 
     public TeamView getTeam1() { return this.team1; }
