@@ -17,7 +17,7 @@ import main.java.com.socialsportstechnology.games.cornhole.view.TeamView;
 public class CornholeController extends Controller {
     public static void changeScore(KeyEvent e, MainView view, Match match) {
         CornholeMatchView cornholeMatchView = (CornholeMatchView) view.getCurrentControl();
-        int winScore = match.getGameScores()[cornholeMatchView.getCurrentGame()];
+        int winScore = match.getGameScores()[match.getCurrentGame()];
         TeamView team1 = cornholeMatchView.getTeam1();
         TeamView team2 = cornholeMatchView.getTeam2();
 
