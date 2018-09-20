@@ -1,4 +1,4 @@
-package scoreboard.model;
+package main.java.com.socialsportstechnology.games.cornhole.model;
 
 public class Team {
     private String teamName;

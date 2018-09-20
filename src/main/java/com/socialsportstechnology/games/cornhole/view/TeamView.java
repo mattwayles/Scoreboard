@@ -1,11 +1,11 @@
-package scoreboard.view;
+package main.java.com.socialsportstechnology.games.cornhole.view;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import scoreboard.model.Team;
+import main.java.com.socialsportstechnology.games.cornhole.model.Team;
 
 public class TeamView extends Team {
     private Label nameLabel;

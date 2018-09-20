@@ -1,4 +1,4 @@
-package scoreboard.view;
+package main.java.com.socialsportstechnology.config.view;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,22 +7,20 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import main.java.com.socialsportstechnology.config.model.Match;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Scanner;
 
-public class TeamSelect extends Main {
+public class TeamSelectView extends Match {
+    private static final String TEAM_SELECT_ID = "teamSelect";
+
     private VBox teamSelectView;
     private ComboBox team1Select;
     private ComboBox team2Select;
 
-
-    TeamSelect() {
+    public TeamSelectView() {
         try {
             this.populateTeamOptions();
         } catch (IOException e) {
@@ -30,23 +28,17 @@ public class TeamSelect extends Main {
         }
         HBox teamSelectBoxes = createTeamSelectBoxes();
         this.teamSelectView = createTeamSelectView(teamSelectBoxes);
+        this.setId(TEAM_SELECT_ID);
 
     }
 
-    VBox getTeamSelectView() { return this.teamSelectView; }
+    public VBox getTeamSelectView() { return this.teamSelectView; }
     public ComboBox getTeam1Select() { return this.team1Select; }
     public ComboBox getTeam2Select() { return this.team2Select; }
 
     private VBox createTeamSelectView(HBox selectBoxes) {
-        Text title = new Text("Chucktown Social Cornhole Scoreboard");
-        title.getStyleClass().add("mainTitle");
-        Label version = new Label("v0.1");
-        version.getStyleClass().add("version");
-        VBox titleBox = new VBox(title, version);
-        titleBox.setAlignment(Pos.CENTER);
-        Label beginLabel = new Label("Press Start to Begin (Q / W until controllers work)");
-        beginLabel.getStyleClass().add("pressStartLabel");
-        VBox teamSelectView = new VBox(titleBox, selectBoxes, beginLabel);
+
+        VBox teamSelectView = new VBox(selectBoxes);
         //TODO: Move this to CSS?
         teamSelectView.setSpacing(150);
         teamSelectView.setAlignment(Pos.CENTER);
