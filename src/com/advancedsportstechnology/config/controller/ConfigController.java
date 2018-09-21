@@ -14,6 +14,7 @@ import com.advancedsportstechnology.modules.games.cornhole.view.CornholeMatchVie
 public class ConfigController extends Controller {
     private static final int[] CORNHOLE_DEFAULTS = new int[] {21, 21, 15};
     private static final int[] TRAMPOLINE_VOLLEYBALL_DEFAULTS = new int[] {25, 25, 15};
+    private static String matchType;
 
 
     private static int gameNum;
@@ -31,10 +32,9 @@ public class ConfigController extends Controller {
             gameSelectView.getSelectionBox().getSelectionModel().selectNext();
         }
         else if (e.getCode() == KeyCode.Q || e.getCode() == KeyCode.W) {
-            String matchType = gameSelectView.getSelectionBox().getSelectionModel().getSelectedItem().toString();
+            matchType = gameSelectView.getSelectionBox().getSelectionModel().getSelectedItem().toString();
             int[] defaultScores = getGameScoreDefaults(matchType);
             match = new Match(matchType, defaultScores);
-            //TODO: Remove when TrampVoll is available:
             if (!matchType.equals("More Games Soon!"))
                 openGameScoreSelect(view, gameNum);
         }
@@ -56,7 +56,7 @@ public class ConfigController extends Controller {
                 openGameScoreSelect(view, gameNum);
             }
             else {
-                TeamSelectView teamSelectView = new TeamSelectView();
+                TeamSelectView teamSelectView = new TeamSelectView(matchType);
                 view.setCurrentControl(teamSelectView);
                 view.updateConfigView(teamSelectView.getTeamSelectView());
             }
@@ -86,7 +86,7 @@ public class ConfigController extends Controller {
     }
 
     public static void restartMatch(MainView view) {
-        TeamSelectView teamSelectView = new TeamSelectView();
+        TeamSelectView teamSelectView = new TeamSelectView(matchType);
         view.setCurrentControl(teamSelectView);
         view.updateConfigView(teamSelectView.getTeamSelectView());
     }

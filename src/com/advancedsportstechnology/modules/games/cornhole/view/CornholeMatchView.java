@@ -29,6 +29,7 @@ public class CornholeMatchView extends Match {
     private void createCornholeView() {
         ViewCreator vc = new ViewCreator();
         this.view = vc.createView(this.team1, this.team2);
+        this.view.getStyleClass().add("cornholeMatchView");
     }
 
     public TeamView getTeam1() { return this.team1; }

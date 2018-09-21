@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import com.advancedsportstechnology.config.model.Match;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -19,9 +20,9 @@ public class TeamSelectView extends Match {
     private ComboBox team1Select;
     private ComboBox team2Select;
 
-    public TeamSelectView() {
+    public TeamSelectView(String id) {
         try {
-            this.populateTeamOptions();
+            this.populateTeamOptions(id);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,9 +61,19 @@ public class TeamSelectView extends Match {
         return selectBoxes;
     }
 
-    private void populateTeamOptions() throws IOException {
+    private void populateTeamOptions(String id) throws IOException {
         ObservableList<String> options = FXCollections.observableArrayList();
-        File file = new File(System.getProperty("user.dir") + "/TeamNames.txt");
+        File file;
+        switch (id) {
+            case "Cornhole":
+                file = new File(System.getProperty("user.dir") + "/CornholeTeams.txt");
+                break;
+            case "Trampoline Volleyball":
+                file = new File(System.getProperty("user.dir") + "/VolleyballTeams.txt");
+                break;
+            default:
+                throw new FileNotFoundException();
+        }
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 options.add(scanner.nextLine());

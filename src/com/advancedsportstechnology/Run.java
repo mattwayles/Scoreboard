@@ -33,7 +33,9 @@ public class Run extends Application {
         scene.setOnKeyPressed(e -> controller.routeKeyPress(e, mainView));
         scene.setOnKeyReleased(e -> controller.releaseKey(e, mainView));
         scene.getStylesheets().add(getClass().getResource("config/css/configStyle.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("modules/shared/css/sharedStyle.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("modules/games/cornhole/css/cornholeStyle.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("modules/games/trampolinevolleyball/css/volleyballStyle.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
