@@ -16,7 +16,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Paint;
 
 public class GameController {
-    public static void changeScore(KeyEvent e, TeamView team1, TeamView team2, int winScore, Match match, MainView view, Match matchView) {
+    public static boolean changeScore(KeyEvent e, TeamView team1, TeamView team2, int winScore, Match match, MainView view, Match matchView) {
+        boolean winner = false;
+
         if (e.getCode() == KeyCode.A) {
             team1.setScore(team1.getScore() + 1);
             team1.setScoreLabel(team1.getScore());
@@ -38,8 +40,10 @@ public class GameController {
             else if (team2.getScore() == winScore) {
                 winner(team2, team1, view, matchView, Paint.valueOf("#a05500"), match);
             }
-            resetGame(team1, team2);
+            winner = true;
         }
+
+        return winner;
     }
 
     private static void winner(TeamView winningTeam, TeamView losingTeam, MainView view, Match matchView, Paint color, Match match) {
@@ -93,12 +97,5 @@ public class GameController {
             view.setCurrentControl(winnerView);
             view.updateMainView(winnerView.getView());
         }
-    }
-
-    private static void resetGame(TeamView team1, TeamView team2) {
-        team1.setScore(0);
-        team1.setScoreLabel(team1.getScore());
-        team2.setScore(0);
-        team2.setScoreLabel(team2.getScore());
     }
 }

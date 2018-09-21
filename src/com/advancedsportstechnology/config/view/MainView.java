@@ -5,12 +5,16 @@ import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
 import com.sun.javafx.jmx.MXNodeAlgorithmContext;
 import com.sun.javafx.sg.prism.NGNode;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import javafx.scene.image.ImageView;
 
 public class MainView extends Node {
     private static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
@@ -51,7 +55,11 @@ public class MainView extends Node {
         title.getStyleClass().add("mainTitle");
         Label version = new Label(VERSION);
         version.getStyleClass().add("version");
-        VBox titleBox = new VBox(title, version);
+        ImageView logo = new ImageView(new Image("/img/astLogo.png"));
+        HBox logoBox = new HBox(logo, title);
+        logoBox.setSpacing(20);
+        logoBox.setAlignment(Pos.CENTER);
+        VBox titleBox = new VBox(logoBox, version);
         titleBox.getStyleClass().add("titleBox");
         return titleBox;
     }

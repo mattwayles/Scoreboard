@@ -24,8 +24,16 @@ public class VolleyballMatchView extends Match {
     public HBox getView() { return view; }
     public TeamView getTeam1() { return this.team1; }
     public TeamView getTeam2() { return this.team2; }
+    public void setTeam1(TeamView team) { this.team1 = team; }
+    public void setTeam2(TeamView team) { this.team2 = team; }
 
     private void createVolleyballView() {
+        ViewCreator vc = new ViewCreator();
+        this.view = vc.createView(this.team1, this.team2);
+        this.view.getStyleClass().add("volleyballMatchView");
+    }
+
+    public void reverseTeams() {
         ViewCreator vc = new ViewCreator();
         this.view = vc.createView(this.team1, this.team2);
         this.view.getStyleClass().add("volleyballMatchView");
