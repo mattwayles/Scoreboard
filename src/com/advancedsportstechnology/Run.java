@@ -15,6 +15,8 @@ public class Run extends Application {
     //TODO: This Version Goals:
         //TODO: Java .jar run
         //TODO: GPIO Pins
+        //TODO: Select team name color, select background
+        //TODO: Dark theme
         //TODO: Label CSS buffing; shadows, gradients, add personality to labels
         //TODO: CSS Transitions; make "Press Start to Play" bounce
 
