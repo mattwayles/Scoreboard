@@ -48,9 +48,7 @@ public class GameScoreSelectView extends Match {
 
         //Create game select VBox
         VBox gameScoreBox = new VBox(gameSelectionLabel, gameScoreHBox, directionLabel);
-        //TODO: Move to CSS?
-        gameScoreBox.setSpacing(25);
-        gameScoreBox.setAlignment(Pos.CENTER);
+        gameScoreBox.getStyleClass().add("gameScoreBox");
 
         this.setGameScoreSelectView(gameScoreBox);
     }

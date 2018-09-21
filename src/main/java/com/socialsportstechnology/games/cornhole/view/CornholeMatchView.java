@@ -10,12 +10,13 @@ import main.java.com.socialsportstechnology.config.model.Match;
 
 public class CornholeMatchView extends Match {
     private static final String CORNHOLE_ID = "cornhole";
+    private static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
+    private static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
+
 
     private HBox view;
     private TeamView team1;
     private TeamView team2;
-    private double screenWidth;
-    private double screenHeight;
 
 
     public CornholeMatchView(String team1Name, String team2Name) {
@@ -28,16 +29,12 @@ public class CornholeMatchView extends Match {
     public HBox getView() { return view; }
 
     private void createCornholeView() {
-        screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
-        screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
-
         VBox separator = new VBox();
-        separator.setPrefHeight(screenHeight - 20);
+        separator.setPrefHeight(HEIGHT);
         separator.getStyleClass().add("separator");
         this.view = new HBox(createTeamView(team1), separator, createTeamView(team2));
-        //TODO: Move to CSS?
-        this.view.setPadding(new Insets(40, 10, 10, 10));
-        this.view.setMaxWidth(screenWidth - 20);
+        this.view.getStyleClass().add("cornholeView");
+        this.view.setMaxWidth(WIDTH - 20);
     }
 
     public TeamView getTeam1() { return this.team1; }
@@ -51,17 +48,15 @@ public class CornholeMatchView extends Match {
 
     private VBox createScoreBox(Label score) {
         VBox box = new VBox(score);
-        box.setAlignment(Pos.CENTER);
-        box.setPrefHeight(screenHeight);
+        box.getStyleClass().add("scoreBox");
         return box;
     }
 
     private VBox createTeamBox(Label teamName, HBox images, VBox scoreBox) {
         VBox box = new VBox(teamName, images, scoreBox);
-        //TODO: Move to CSS?
-        box.setSpacing(20);
-        box.setAlignment(Pos.CENTER);
-        box.setPrefWidth(screenWidth / 2);
+        box.getStyleClass().add("teamBox");
+        box.setPrefWidth(WIDTH / 2);
+        box.setMinHeight(HEIGHT);
         return box;
     }
 }

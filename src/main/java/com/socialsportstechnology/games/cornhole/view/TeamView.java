@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import main.java.com.socialsportstechnology.games.cornhole.model.Team;
 
 public class TeamView extends Team {
@@ -18,6 +20,7 @@ public class TeamView extends Team {
         this.nameLabel = new Label(getTeamName());
         this.nameLabel.getStyleClass().add("team" + count + "NameLabel");
         this.scoreLabel = new Label(String.valueOf(getScore()));
+        scoreLabel.setFont(Screen.getPrimary().getVisualBounds().getHeight() < 1000 ? new Font( 375) : new Font(500));
         this.scoreLabel.getStyleClass().add("scoreLabel");
         this.gamesWonImgs = new HBox(50);
         this.getGamesWonImgs().getChildren().add(new ImageView(new Image("/img/placeholder.png")));

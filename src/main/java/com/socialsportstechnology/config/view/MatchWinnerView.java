@@ -16,17 +16,15 @@ public class MatchWinnerView extends Match {
     }
 
     public void displayMatchWinner(String teamName, int games, Paint color) {
-        //TODO: Move to CSS?
         Label winner = new Label(teamName + " wins in " + games + " games!");
         winner.getStyleClass().add("winnerLabel");
         winner.setTextFill(color);
         Label notice = new Label("Press Start to reset (Q / W until controllers are working)");
         notice.getStyleClass().add("pressStartLabel");
         VBox message = new VBox(winner, notice);
-        message.setSpacing(100);
-        message.setAlignment(Pos.CENTER);
+        message.getStyleClass().add("winnerMessage");
         this.view = new HBox(message);
-        view.setAlignment(Pos.CENTER);
+        this.view.getStyleClass().add("winnerView");
     }
 
     public HBox getView() { return view; }

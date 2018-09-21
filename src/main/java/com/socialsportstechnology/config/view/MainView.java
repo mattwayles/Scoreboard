@@ -5,14 +5,19 @@ import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
 import com.sun.javafx.jmx.MXNodeAlgorithmContext;
 import com.sun.javafx.sg.prism.NGNode;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 
 public class MainView extends Node {
+    private static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
+
+    private static final String TITLE = "Chucktown Social Scoreboard";
+    private static final String VERSION = "v0.3";
+
     private Pane mainView;
     private Node currentControl;
 
@@ -33,21 +38,22 @@ public class MainView extends Node {
         Label beginLabel = createBeginLabel();
         GameSelectView gameSelection = new GameSelectView();
         VBox mainView = new VBox(titleBox, gameSelection.getGameSelectView(), beginLabel);
-        //TODO: Move this to CSS?
-        mainView.setSpacing(150);
-        mainView.setAlignment(Pos.CENTER);
+        mainView.getStyleClass().add("mainView");
+        mainView.setMaxHeight(HEIGHT);
+        mainView.getStyleClass().add("black");
+        mainView.setSpacing(HEIGHT / 7);
 
         setCurrentControl(gameSelection);
         return mainView;
     }
 
     private VBox createLabelBox() {
-        Text title = new Text("Chucktown Social Scoreboard");
+        Text title = new Text(TITLE);
         title.getStyleClass().add("mainTitle");
-        Label version = new Label("v0.2");
+        Label version = new Label(VERSION);
         version.getStyleClass().add("version");
         VBox titleBox = new VBox(title, version);
-        titleBox.setAlignment(Pos.CENTER);
+        titleBox.getStyleClass().add("titleBox");
         return titleBox;
     }
 

@@ -31,7 +31,8 @@ public class Run extends Application {
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         scene.setOnKeyPressed(e -> controller.routeKeyPress(e, mainView));
         scene.setOnKeyReleased(e -> controller.releaseKey(e, mainView));
-        scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("config/css/configStyle.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("games/cornhole/css/cornholeStyle.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
