@@ -14,7 +14,6 @@ public class Run extends Application {
 
     //TODO: This Version Goals:
         //TODO: Java .jar run
-        //TODO: Internal TeamList sorting (TeamSelectView)
         //TODO: GPIO Pins
         //TODO: Label CSS buffing; shadows, gradients, add personality to labels
         //TODO: CSS Transitions; make "Press Start to Play" bounce

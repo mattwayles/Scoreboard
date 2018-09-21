@@ -63,8 +63,6 @@ public class TeamSelectView extends Match {
 
     private void populateTeamOptions() throws IOException {
         ObservableList<String> options = FXCollections.observableArrayList();
-
-        //TODO: Sort list
         File file = new File(System.getProperty("user.dir") + "/TeamNames.txt");
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
@@ -72,6 +70,7 @@ public class TeamSelectView extends Match {
 
             }
         }
+        options = options.sorted();
         this.team1Select = new ComboBox<>(options);
         team1Select.getSelectionModel().selectNext();
         this.team2Select = new ComboBox<>(options);

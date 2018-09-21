@@ -14,6 +14,10 @@
     -fx-text-wrap: true;
 }
 
+.winnerLabel {
+    -fx-padding: 40px;
+}
+
 .version {
     -fx-font-family: "Harlow Solid Italic";
     -fx-font-size: 36px;
