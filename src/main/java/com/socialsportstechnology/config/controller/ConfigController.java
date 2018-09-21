@@ -4,9 +4,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import main.java.com.socialsportstechnology.Controller;
 import main.java.com.socialsportstechnology.config.model.Match;
-import main.java.com.socialsportstechnology.config.view.MainView;
 import main.java.com.socialsportstechnology.config.view.GameScoreSelectView;
 import main.java.com.socialsportstechnology.config.view.GameSelectView;
+import main.java.com.socialsportstechnology.config.view.MainView;
 import main.java.com.socialsportstechnology.config.view.TeamSelectView;
 import main.java.com.socialsportstechnology.games.cornhole.view.CornholeMatchView;
 

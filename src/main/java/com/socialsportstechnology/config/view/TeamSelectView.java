@@ -39,9 +39,7 @@ public class TeamSelectView extends Match {
     private VBox createTeamSelectView(HBox selectBoxes) {
 
         VBox teamSelectView = new VBox(selectBoxes);
-        //TODO: Move this to CSS?
-        teamSelectView.setSpacing(150);
-        teamSelectView.setAlignment(Pos.CENTER);
+        teamSelectView.getStyleClass().add("teamSelectView");
 
         return teamSelectView;
     }
@@ -50,18 +48,14 @@ public class TeamSelectView extends Match {
         Label team1SelectionLabel = new Label("Select Team 1:");
         team1SelectionLabel.getStyleClass().add("team1SelectionLabel");
         VBox team1Box = new VBox(team1SelectionLabel, team1Select);
-        //TODO: Move to CSS?
-        team1Box.setSpacing(10);
-        team1Box.setAlignment(Pos.CENTER);
+        team1Box.getStyleClass().add("teamBox");
         Label team2SelectionLabel = new Label("Select Team 2:");
         team2SelectionLabel.getStyleClass().add("team2SelectionLabel");
         VBox team2Box = new VBox(team2SelectionLabel, team2Select);
-        //TODO: Move to CSS?
-        team2Box.setSpacing(10);
-        team2Box.setAlignment(Pos.CENTER);
+        team2Box.getStyleClass().add("teamBox");
 
         HBox selectBoxes = new HBox(250);
-        selectBoxes.setAlignment(Pos.CENTER);
+        selectBoxes.getStyleClass().add("selectBoxes");
         selectBoxes.getChildren().addAll(team1Box, team2Box);
 
         return selectBoxes;
@@ -70,7 +64,6 @@ public class TeamSelectView extends Match {
     private void populateTeamOptions() throws IOException {
         ObservableList<String> options = FXCollections.observableArrayList();
 
-        //TODO: Send in the teamName textfile as a main() arg
         //TODO: Sort list
         File file = new File(System.getProperty("user.dir") + "/TeamNames.txt");
         try (Scanner scanner = new Scanner(file)) {

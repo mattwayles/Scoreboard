@@ -1,21 +1,23 @@
 package main.java.com.socialsportstechnology;
 
-        import javafx.application.Application;
-        import javafx.scene.Scene;
-        import javafx.scene.layout.*;
-        import javafx.stage.Screen;
-        import javafx.stage.Stage;
-        import main.java.com.socialsportstechnology.config.view.MainView;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import main.java.com.socialsportstechnology.config.view.MainView;
 
 public class Run extends Application {
     private static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
     private static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
     private static Stage stage;
 
-    //TODO: Next Version Improvements:
+    //TODO: This Version Goals:
         //TODO: Java .jar run
-        //TODO: Set style properties in CSS
-        //TODO: Center everything based on dynamic page width
+        //TODO: Internal TeamList sorting (TeamSelectView)
+        //TODO: GPIO Pins
+        //TODO: Label CSS buffing; shadows, gradients, add personality to labels
+        //TODO: CSS Transitions; make "Press Start to Play" bounce
 
     @Override
     public void start(Stage primaryStage) {

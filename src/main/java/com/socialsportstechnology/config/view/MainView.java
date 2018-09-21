@@ -40,7 +40,6 @@ public class MainView extends Node {
         VBox mainView = new VBox(titleBox, gameSelection.getGameSelectView(), beginLabel);
         mainView.getStyleClass().add("mainView");
         mainView.setMaxHeight(HEIGHT);
-        mainView.getStyleClass().add("black");
         mainView.setSpacing(HEIGHT / 7);
 
         setCurrentControl(gameSelection);

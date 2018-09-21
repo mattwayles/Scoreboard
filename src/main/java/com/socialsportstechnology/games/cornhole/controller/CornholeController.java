@@ -1,5 +1,6 @@
 package main.java.com.socialsportstechnology.games.cornhole.controller;
 
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -9,6 +10,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Screen;
 import main.java.com.socialsportstechnology.Controller;
 import main.java.com.socialsportstechnology.config.model.Match;
+import main.java.com.socialsportstechnology.config.view.GameWinnerView;
 import main.java.com.socialsportstechnology.config.view.MainView;
 import main.java.com.socialsportstechnology.config.view.MatchWinnerView;
 import main.java.com.socialsportstechnology.games.cornhole.view.CornholeMatchView;
@@ -37,28 +39,57 @@ public class CornholeController extends Controller {
 
         if (team1.getScore() == winScore || team2.getScore() == winScore) {
             if (team1.getScore() == winScore) {
-                winner(team1, view, Paint.valueOf("#0800ad"), match);
+                winner(team1, team2, view, cornholeMatchView, Paint.valueOf("#0800ad"), match);
             }
             else if (team2.getScore() == winScore) {
-                winner(team2, view, Paint.valueOf("#a05500"), match);
+                winner(team2, team1, view, cornholeMatchView, Paint.valueOf("#a05500"), match);
             }
             resetGame(team1, team2);
         }
     }
 
-    private static void winner(TeamView team, MainView view, Paint color, Match match) {
-            team.setGamesWon(team.getGamesWon() + 1);
+    private static void winner(TeamView winningTeam, TeamView losingTeam, MainView view, CornholeMatchView matchView, Paint color, Match match) {
+            winningTeam.setGamesWon(winningTeam.getGamesWon() + 1);
             match.setCurrentGame(match.getCurrentGame() + 1);
-            if (team.getGamesWon() == 1) {
-                team.getGamesWonImgs().getChildren().remove(0);
+            if (winningTeam.getGamesWon() == 1) {
+                winningTeam.getGamesWonImgs().getChildren().remove(0);
+
+                GameWinnerView winnerView = new GameWinnerView(3, winningTeam.getScore(), losingTeam.getScore());
+                winnerView.displayGameWinner(winningTeam.getTeamName(), match.getCurrentGame(), color);
+                view.setCurrentControl(winnerView);
+                view.updateMainView(winnerView.getView());
+
+                Thread thread = new Thread(() -> {
+                    int i = 2;
+                    while (i >= 0) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                        Platform.runLater(() -> {
+                            winnerView.decrementSeconds();
+                            winnerView.displayGameWinner(winningTeam.getTeamName(), match.getCurrentGame(), color);
+                            view.setCurrentControl(winnerView);
+                            view.updateMainView(winnerView.getView());
+                        });
+                        i--;
+                    }
+                    Platform.runLater(() -> {
+                        view.setCurrentControl(matchView);
+                        view.updateMainView(matchView.getView());
+                    });
+
+                });
+                thread.start();
+                winningTeam.getGamesWonImgs().getChildren().add(new ImageView(new Image("/img/gameWon.png")));
             }
-            else if (team.getGamesWon() == 2) {
+            else if (winningTeam.getGamesWon() == 2) {
                 MatchWinnerView winnerView = new MatchWinnerView();
-                winnerView.displayMatchWinner(team.getTeamName(), match.getCurrentGame(), color);
+                winnerView.displayMatchWinner(winningTeam.getTeamName(), match.getCurrentGame(), color);
                 view.setCurrentControl(winnerView);
                 view.updateMainView(winnerView.getView());
             }
-            team.getGamesWonImgs().getChildren().add(new ImageView(new Image("/img/gameWon.png")));
     }
 
     public static void easterEgg(MainView view) {
