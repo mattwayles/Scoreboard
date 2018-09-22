@@ -1,6 +1,7 @@
 package com.advancedsportstechnologies.config.view;
 
 import com.advancedsportstechnologies.PiController;
+import com.advancedsportstechnologies.Run;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -23,7 +24,7 @@ public class GameSelectView extends MainView {
     public GameSelectView() {
         createGameSelectView();
         this.setId(GAME_SELECT_ID);
-        this.setEventListeners();
+        if (!Run.debug) {this.setEventListeners(); }
     }
 
     public ComboBox getSelectionBox() { return this.selectionBox; }

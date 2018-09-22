@@ -1,6 +1,7 @@
 package com.advancedsportstechnologies.config.view;
 
 import com.advancedsportstechnologies.PiController;
+import com.advancedsportstechnologies.Run;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
@@ -18,7 +19,7 @@ public class GameScoreSelectView extends MainView {
     public GameScoreSelectView(int gameNum, int defaultScore) {
         createGameScoreSelectView(gameNum, defaultScore);
         this.setId(GAME_SCORE_SELECT_ID);
-        this.setEventListeners();
+        if (!Run.debug) {this.setEventListeners(); }
     }
 
     public VBox getGameScoreSelectView() {

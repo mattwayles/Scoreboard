@@ -12,7 +12,7 @@ public class Run extends Application {
     private static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
     private static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
     private static Stage stage;
-    private static boolean debug;
+    public static boolean debug;
 
     //TODO: This Version Goals:
         //TODO: GPIO Pins
@@ -33,7 +33,10 @@ public class Run extends Application {
         GameSelectView gameSelection = new GameSelectView();
         MainView mainView = new MainView(gameSelection);
         gameSelection.setMainView(mainView.getMainView());
-        PiController.setView(mainView);
+
+        if (!debug) {
+            PiController.setView(mainView);
+        }
 
         root.getChildren().add(mainView.getMainView());
         Scene scene = new Scene(root, WIDTH, HEIGHT);
@@ -54,6 +57,9 @@ public class Run extends Application {
     }
 
     public static void main(String[] args) {
+        if (args[0].equals("debug")) {
+            debug = true;
+        }
         launch(args);
     }
 }
