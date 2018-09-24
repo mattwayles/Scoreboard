@@ -1,5 +1,6 @@
 package com.advancedsportstechnologies.modules.games.cornhole.controller;
 
+import com.advancedsportstechnologies.KeyboardController;
 import com.advancedsportstechnologies.config.model.Match;
 import com.advancedsportstechnologies.config.view.MainView;
 import com.advancedsportstechnologies.config.view.MatchWinnerView;
@@ -10,17 +11,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
-import com.advancedsportstechnologies.Controller;
 import com.advancedsportstechnologies.modules.games.cornhole.view.CornholeMatchView;
 
-public class CornholeController extends Controller {
-    public static void changeScore(KeyEvent e, MainView view, Match match) {
+public class CornholeController {
+    public static void changeScore(KeyEvent e, MainView view) {
         CornholeMatchView cornholeMatchView = (CornholeMatchView) view.getCurrentControl();
-        int winScore = match.getGameScores()[match.getCurrentGame()];
+        int winScore = KeyboardController.getMatch().getGameScores()[KeyboardController.getMatch().getCurrentGame()];
         TeamView team1 = cornholeMatchView.getTeam1();
         TeamView team2 = cornholeMatchView.getTeam2();
 
-        if(GameController.changeScore(e, team1, team2, winScore, match, view, cornholeMatchView)) {
+        if(GameController.changeScore(e, team1, team2, winScore, view, cornholeMatchView)) {
             resetGame(team1, team2);
         }
     }

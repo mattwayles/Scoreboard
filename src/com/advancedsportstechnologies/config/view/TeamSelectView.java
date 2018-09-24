@@ -1,5 +1,9 @@
 package com.advancedsportstechnologies.config.view;
 
+import com.advancedsportstechnologies.PiController;
+import com.advancedsportstechnologies.Run;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
@@ -29,7 +33,7 @@ public class TeamSelectView extends MainView {
         HBox teamSelectBoxes = createTeamSelectBoxes();
         this.teamSelectView = createTeamSelectView(teamSelectBoxes);
         this.setId(TEAM_SELECT_ID);
-
+        if (!Run.debug) {this.setEventListeners(); }
     }
 
     public VBox getTeamSelectView() { return this.teamSelectView; }
@@ -85,5 +89,33 @@ public class TeamSelectView extends MainView {
         team1Select.getSelectionModel().selectNext();
         this.team2Select = new ComboBox<>(options);
         team2Select.getSelectionModel().selectNext();
+    }
+
+    private void setEventListeners() {
+        PiController.controller1Up.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()) {
+                Platform.runLater(() -> team1Select.getSelectionModel().selectPrevious());
+            }
+        });
+        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()) {
+                Platform.runLater(() -> team1Select.getSelectionModel().selectNext());
+            }
+        });
+        PiController.controller2Up.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()) {
+                Platform.runLater(() -> team2Select.getSelectionModel().selectPrevious());
+            }
+        });
+        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()) {
+                Platform.runLater(() -> team2Select.getSelectionModel().selectNext());
+            }
+        });
+        PiController.reset.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()) {
+                Platform.runLater(() -> PiController.startMatch(this));
+            }
+        });
     }
 }

@@ -1,9 +1,12 @@
 package com.advancedsportstechnologies.modules.shared.model;
 
+import javafx.scene.paint.Paint;
+
 public class Team {
     private String teamName;
     private int score = 0;
     private int gamesWon = 0;
+    private Paint color;
 
     protected Team() {
         this.teamName = "";
@@ -25,4 +28,8 @@ public class Team {
     public int getGamesWon() { return gamesWon; }
 
     public void setGamesWon(int gamesWon) { this.gamesWon = gamesWon; }
+
+    public Paint getColor() { return this.color; }
+
+    public void setColor(Paint color) { this.color = color; }
 }

@@ -12,45 +12,46 @@ import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
 
+public class GameFormatSelectView extends MainView {
+    private static final String GAME_SELECT_ID = "gameFormat";
 
-public class GameSelectView extends MainView {
-    private static final String GAME_SELECT_ID = "gameSelect";
-
-    private VBox gameSelectView;
+    private VBox gameFormatView;
     private ComboBox selectionBox;
-    private String[] games = new String[] {"Cornhole", "Trampoline Volleyball", "More Games Soon!"};
+    private String[] formats = new String[] {"Regular", "Championship"};
 
-    public GameSelectView() {
-        createGameSelectView();
+    public GameFormatSelectView() {
+        createGameFormatView();
         this.setId(GAME_SELECT_ID);
         if (!Run.debug) {this.setEventListeners(); }
     }
 
     public ComboBox getSelectionBox() { return this.selectionBox; }
 
-    VBox getGameSelectView() { return this.gameSelectView; }
+    public VBox getGameFormatSelectView() { return this.gameFormatView; }
 
-    private void setGameSelectView(VBox view) { this.gameSelectView = view; }
+    private void setGameFormatView(VBox view) { this.gameFormatView = view; }
 
     private void setSelectionBox(ComboBox box) { this.selectionBox = box; }
 
-    private void createGameSelectView() {
+    private void createGameFormatView() {
         //Create game selection label
-        Label gameSelectionLabel = new Label("Select Game:");
-        gameSelectionLabel.getStyleClass().add("gameSelectionLabel");
+        //TODO: Create label with game score on selection
+
+        Label gameFormatLabel = new Label("Select Format:");
+        gameFormatLabel.getStyleClass().add("gameSelectionLabel");
 
         //Create game selection drop-down
         ObservableList<String> options = FXCollections.observableArrayList();
-        options.addAll(Arrays.asList(this.games));
-        ComboBox gameSelectComboBox = new ComboBox<>(options);
-        gameSelectComboBox.getSelectionModel().selectNext();
-        this.setSelectionBox(gameSelectComboBox);
+        options.addAll(Arrays.asList(this.formats));
+        ComboBox gameFormatComboBox = new ComboBox<>(options);
+        gameFormatComboBox.getSelectionModel().selectNext();
+        this.setSelectionBox(gameFormatComboBox);
 
         //Create game select VBox
-        VBox gameBox = new VBox(gameSelectionLabel, gameSelectComboBox);
+        VBox gameBox = new VBox(gameFormatLabel, gameFormatComboBox);
         gameBox.getStyleClass().add("gameBox");
 
-        this.setGameSelectView(gameBox);
+        this.setGameFormatView(gameBox);
     }
 
     private void setEventListeners() {
@@ -77,8 +78,8 @@ public class GameSelectView extends MainView {
         PiController.reset.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
                 Platform.runLater(() -> {
-                    String matchType = selectionBox.getSelectionModel().getSelectedItem().toString();
-                    PiController.openGameFormatSelectView(matchType);
+                    String format = selectionBox.getSelectionModel().getSelectedItem().toString();
+                    PiController.openTeamSelect(format);
 
                 });
             }

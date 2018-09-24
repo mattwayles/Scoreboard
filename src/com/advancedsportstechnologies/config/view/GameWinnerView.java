@@ -1,5 +1,6 @@
 package com.advancedsportstechnologies.config.view;
 
+import com.advancedsportstechnologies.modules.shared.view.TeamView;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,15 +25,15 @@ public class GameWinnerView extends MainView {
         this.setId(GAME_WINNER_ID);
     }
 
-    public void displayGameWinner(String teamName, int games, Paint color) {
-        String winnerStr = teamName.toLowerCase().endsWith("s") ? teamName + " win game " + games + "!"
-                : teamName + " wins game " + games + "!";
+    public void displayGameWinner(TeamView team, int games) {
+        String winnerStr = team.getTeamName().toLowerCase().endsWith("s") ? team.getTeamName() + " win game " + games + "!"
+                : team.getTeamName() + " wins game " + games + "!";
         Label winner = new Label(winnerStr);
         winner.getStyleClass().add("winnerLabel");
-        winner.setTextFill(color);
+        winner.setTextFill(team.getColor());
         Label score = new Label(this.team1Score + " - " + this.team2Score);
         score.getStyleClass().add("splashScoreLabel");
-        score.setTextFill(color);
+        score.setTextFill(team.getColor());
         Label notice = new Label("Next Game in ");
         notice.getStyleClass().add("nextGameLabel");
         Label countdown = new Label(this.secondsRemaining + "...");

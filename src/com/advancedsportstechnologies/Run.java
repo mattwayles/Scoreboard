@@ -15,7 +15,8 @@ public class Run extends Application {
     public static boolean debug;
 
     //TODO: This Version Goals:
-        //TODO: GPIO Pins
+        //TODO: Complete GPIO Pin operations
+        //TODO: GameFormatSelectView label with the game scores on selection
         //TODO: Select team name color, select background
         //TODO: Dark theme
         //TODO: Label CSS buffing; shadows, gradients, add personality to labels
@@ -28,21 +29,24 @@ public class Run extends Application {
         root.setId("root");
         primaryStage.setTitle("Chucktown Social");
 
-        Controller controller = new Controller();
-
         GameSelectView gameSelection = new GameSelectView();
         MainView mainView = new MainView(gameSelection);
         gameSelection.setMainView(mainView.getMainView());
 
-        if (!debug) {
-            PiController.setView(mainView);
-        }
-
         root.getChildren().add(mainView.getMainView());
         Scene scene = new Scene(root, WIDTH, HEIGHT);
-        scene.setOnKeyPressed(e ->
-                controller.routeKeyPress(e, mainView));
-        scene.setOnKeyReleased(e -> controller.releaseKey(e, mainView));
+
+        if (!Run.debug) {
+            PiController.setView(mainView);
+        }
+        else {
+            KeyboardController.setView(mainView);
+            scene.setOnKeyPressed(e ->
+                    KeyboardController.routeKeyPress(e, mainView));
+
+            //TODO: Currently, this is resetting the game on the GameSelect screen (keyboard)
+            //scene.setOnKeyReleased(e -> controller.releaseKey(e, mainView));
+        }
 
         scene.getStylesheets().add(getClass().getResource("config/css/configStyle.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("modules/shared/css/sharedStyle.css").toExternalForm());
@@ -57,7 +61,7 @@ public class Run extends Application {
     }
 
     public static void main(String[] args) {
-        if (args[0].equals("debug")) {
+        if (args.length > 0 && args[0].equals("debug")) {
             debug = true;
         }
         launch(args);

@@ -1,6 +1,6 @@
 package com.advancedsportstechnologies.modules.games.trampolinevolleyball.controller;
 
-import com.advancedsportstechnologies.Controller;
+import com.advancedsportstechnologies.PiController;
 import com.advancedsportstechnologies.config.model.Match;
 import com.advancedsportstechnologies.config.view.MainView;
 import com.advancedsportstechnologies.config.view.MatchWinnerView;
@@ -13,15 +13,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
 
-public class VolleyballController extends Controller {
+public class VolleyballController {
 
-    public static void changeScore(KeyEvent e, MainView view, Match match) {
+    public static void changeScore(KeyEvent e, MainView view) {
         VolleyballMatchView volleyballMatchView = (VolleyballMatchView) view.getCurrentControl();
-        int winScore = match.getGameScores()[match.getCurrentGame()];
+        int winScore = PiController.getMatch().getGameScores()[PiController.getMatch().getCurrentGame()];
         TeamView team1 = volleyballMatchView.getTeam1();
         TeamView team2 = volleyballMatchView.getTeam2();
 
-        if(GameController.changeScore(e, team1, team2, winScore, match, view, volleyballMatchView)) {
+        if(GameController.changeScore(e, team1, team2, winScore, view, volleyballMatchView)) {
             volleyballMatchView.setTeam1(team2);
             volleyballMatchView.setTeam2(team1);
             volleyballMatchView.reverseTeams();

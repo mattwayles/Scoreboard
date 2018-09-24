@@ -2,10 +2,15 @@ package com.advancedsportstechnologies;
 
 import com.advancedsportstechnologies.config.controller.ConfigController;
 import com.advancedsportstechnologies.config.model.Match;
+import com.advancedsportstechnologies.config.view.GameFormatSelectView;
 import com.advancedsportstechnologies.config.view.MainView;
+import com.advancedsportstechnologies.config.view.TeamSelectView;
 import com.advancedsportstechnologies.modules.games.cornhole.controller.CornholeController;
+import com.advancedsportstechnologies.modules.games.cornhole.view.CornholeMatchView;
 import com.advancedsportstechnologies.modules.games.trampolinevolleyball.controller.VolleyballController;
+import com.advancedsportstechnologies.modules.games.trampolinevolleyball.view.VolleyballMatchView;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
+import com.pi4j.io.gpio.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -13,14 +18,19 @@ import javafx.stage.Stage;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Controller extends Run {
-    protected static Match match;
+public class KeyboardController extends Run {
+    private static MainView view;
+    private static Match match;
+
+    public static Match getMatch() { return match; }
+    public static void setView(MainView mainView) { view = mainView; }
+
     private static long keyPressTime;
     private static KeyCode lastKeyPressed;
     private static String lastId;
     private static Set<KeyCode> keysDown = new HashSet<>();
 
-    void routeKeyPress(KeyEvent e, MainView view) {
+    static void routeKeyPress(KeyEvent e, MainView view) {
         String id = view.getCurrentControl().getId();
         lastId = id;
 
@@ -29,23 +39,21 @@ public class Controller extends Run {
             lastKeyPressed = e.getCode();
             keyPressTime = System.currentTimeMillis();
         }
-
-
         switch (id) {
             case "gameSelect":
-               ConfigController.gameSelection(e, view);
+                ConfigController.gameSelection(e, view);
                 break;
-            case "gameScoreSelect":
-                ConfigController.scoreSelection(e, view);
+            case "gameFormat":
+                ConfigController.formatSelection(e, view);
                 break;
             case "teamSelect":
                 ConfigController.teamSelection(e, view);
                 break;
             case "cornhole":
-                CornholeController.changeScore(e, view, match);
+                CornholeController.changeScore(e, view);
                 break;
             case "volleyball":
-                VolleyballController.changeScore(e, view, match);
+                VolleyballController.changeScore(e, view);
         }
     }
 
@@ -74,8 +82,40 @@ public class Controller extends Run {
     }
 
     private void restoreState() {
-        ConfigController.setGameNum(0);
-        match.setCurrentGame(0);
+        PiController.getMatch().setCurrentGame(0);
         TeamView.resetCount();
+    }
+
+    public static void openGameFormatSelectView(String matchType) {
+        GameFormatSelectView gameFormatSelectView = new GameFormatSelectView();
+        view.setCurrentControl(gameFormatSelectView);
+        view.updateConfigView(gameFormatSelectView.getGameFormatSelectView());
+
+        //TODO: Create match with the correct scores based off selections!
+        match = new Match(matchType);
+    }
+
+    public static void openTeamSelect(String format) {
+        match.setFormat(format);
+        TeamSelectView teamSelectView = new TeamSelectView(match.getType());
+        view.setCurrentControl(teamSelectView);
+        view.updateConfigView(teamSelectView.getTeamSelectView());
+    }
+
+    public static void startMatch(TeamSelectView teamSelect) {
+        switch (match.getType()) {
+            case "Cornhole":
+                CornholeMatchView cornholeMatchView = new CornholeMatchView(teamSelect.getTeam1Select().getValue().toString(),
+                        teamSelect.getTeam2Select().getValue().toString());
+                view.setCurrentControl(cornholeMatchView);
+                view.updateMainView(cornholeMatchView.getView());
+                break;
+            case "Trampoline Volleyball":
+                VolleyballMatchView volleyballMatchView = new VolleyballMatchView(teamSelect.getTeam1Select().getValue().toString(),
+                        teamSelect.getTeam2Select().getValue().toString());
+                view.setCurrentControl(volleyballMatchView);
+                view.updateMainView(volleyballMatchView.getView());
+                break;
+        }
     }
 }

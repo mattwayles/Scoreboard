@@ -1,5 +1,7 @@
 package com.advancedsportstechnologies.modules.shared.controller;
 
+import com.advancedsportstechnologies.KeyboardController;
+import com.advancedsportstechnologies.KeyboardController;
 import com.advancedsportstechnologies.config.model.Match;
 import com.advancedsportstechnologies.config.view.GameWinnerView;
 import com.advancedsportstechnologies.config.view.MainView;
@@ -15,7 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Paint;
 
 public class GameController {
-    public static boolean changeScore(KeyEvent e, TeamView team1, TeamView team2, int winScore, Match match, MainView view, MainView matchView) {
+    public static boolean changeScore(KeyEvent e, TeamView team1, TeamView team2, int winScore, MainView view, MainView matchView) {
         boolean winner = false;
 
         if (e.getCode() == KeyCode.A) {
@@ -30,14 +32,16 @@ public class GameController {
         } else if (e.getCode() == KeyCode.X && team2.getScore() > 0) {
             team2.setScore(team2.getScore() - 1);
             team2.setScoreLabel(team2.getScore());
+        } else if (e.getCode() == KeyCode.Q) {
+            KeyboardController.openTeamSelect(KeyboardController.getMatch().getFormat());
         }
 
         if (team1.getScore() == winScore || team2.getScore() == winScore) {
             if (team1.getScore() == winScore) {
-                winner(team1, team2, view, matchView, Paint.valueOf("#0800ad"), match);
+                winner(team1, team2, view);
             }
             else if (team2.getScore() == winScore) {
-                winner(team2, team1, view, matchView, Paint.valueOf("#a05500"), match);
+                winner(team2, team1, view);
             }
             winner = true;
         }
@@ -45,15 +49,15 @@ public class GameController {
         return winner;
     }
 
-    private static void winner(TeamView winningTeam, TeamView losingTeam, MainView view, MainView matchView, Paint color, Match match) {
+    private static void winner(TeamView winningTeam, TeamView losingTeam, MainView view) {
         winningTeam.setGamesWon(winningTeam.getGamesWon() + 1);
-        match.setCurrentGame(match.getCurrentGame() + 1);
+        KeyboardController.getMatch().setCurrentGame(KeyboardController.getMatch().getCurrentGame() + 1);
         if (winningTeam.getGamesWon() == 1) {
             winningTeam.getGamesWonImgs().getChildren().remove(0);
 
             GameWinnerView winnerView = new GameWinnerView(3, winningTeam.getScore(), losingTeam.getScore());
-            winnerView.displayGameWinner(winningTeam.getTeamName(), match.getCurrentGame(), color);
-            view.setCurrentControl(winnerView);
+            winnerView.displayGameWinner(winningTeam, KeyboardController.getMatch().getCurrentGame());
+            //view.setCurrentControl(winnerView);
             view.updateMainView(winnerView.getView());
 
             Thread thread = new Thread(() -> {
@@ -66,21 +70,20 @@ public class GameController {
                     }
                     Platform.runLater(() -> {
                         winnerView.decrementSeconds();
-                        winnerView.displayGameWinner(winningTeam.getTeamName(), match.getCurrentGame(), color);
-                        view.setCurrentControl(winnerView);
+                        winnerView.displayGameWinner(winningTeam, KeyboardController.getMatch().getCurrentGame());
+                        //view.setCurrentControl(winnerView);
                         view.updateMainView(winnerView.getView());
                     });
                     i--;
                 }
                 Platform.runLater(() -> {
-                    view.setCurrentControl(matchView);
-                    switch (match.getType()) {
+                    switch (KeyboardController.getMatch().getType()) {
                         case "Cornhole":
-                            CornholeMatchView cornholeMatchView = (CornholeMatchView) matchView;
+                            CornholeMatchView cornholeMatchView = (CornholeMatchView) view.getCurrentControl();
                             view.updateMainView(cornholeMatchView.getView());
                             break;
                         case "Trampoline Volleyball":
-                            VolleyballMatchView volleyballMatchView = (VolleyballMatchView) matchView;
+                            VolleyballMatchView volleyballMatchView = (VolleyballMatchView) view.getCurrentControl();
                             view.updateMainView(volleyballMatchView.getView());
                             break;
                     }
@@ -92,7 +95,7 @@ public class GameController {
         }
         else if (winningTeam.getGamesWon() == 2) {
             MatchWinnerView winnerView = new MatchWinnerView();
-            winnerView.displayMatchWinner(winningTeam.getTeamName(), match.getCurrentGame(), color);
+            winnerView.displayMatchWinner(winningTeam, KeyboardController.getMatch().getCurrentGame());
             view.setCurrentControl(winnerView);
             view.updateMainView(winnerView.getView());
         }
