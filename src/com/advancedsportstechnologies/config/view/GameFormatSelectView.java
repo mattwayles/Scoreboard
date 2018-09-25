@@ -1,6 +1,7 @@
 package com.advancedsportstechnologies.config.view;
 
-import com.advancedsportstechnologies.PiController;
+import com.advancedsportstechnologies.config.controller.Controller;
+import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.model.Match;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
@@ -9,13 +10,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
 
-public class GameFormatSelectView extends MainView {
-    private static final String GAME_SELECT_ID = "gameFormat";
+import static com.advancedsportstechnologies.config.controller.Controller.resetButtonHeld;
 
+public class GameFormatSelectView extends MainView {
     private VBox gameFormatView;
     private String gameScores;
     private int[][] allScores;
@@ -24,29 +26,30 @@ public class GameFormatSelectView extends MainView {
     private String[] formats = new String[] {"Regular", "Championship"};
 
     public GameFormatSelectView(String matchType) {
-        this.setId(GAME_SELECT_ID);
         this.allScores = matchType.equals("Cornhole") ? Match.CORNHOLE_DEFAULTS : Match.TRAMPOLINE_VOLLEYBALL_DEFAULTS;
         this.gameScores = this.formatGameScores(this.allScores[0]);
 
         createGameFormatView();
 
-        if (!Run.debug) {this.setEventListeners(); }
+        if (!Run.debug) {
+            this.setEventListeners();
+        } else {
+            this.setKeyPressListeners();
+        }
     }
 
     private String getGameScores() { return this.gameScores; }
 
     private void setGameScores(String gameScoreStr) { this.gameScores = gameScoreStr; }
 
-    public void updateScoreLabel() {
+    private void updateScoreLabel() {
         int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
         int[] scoreArr = this.getAllScores()[selectionBoxIndex];
         this.setGameScores(this.formatGameScores(scoreArr));
         this.scoreLabel.textProperty().setValue(this.getGameScores());
     }
 
-    public int[][] getAllScores() { return this.allScores; }
-
-    public ComboBox getSelectionBox() { return this.selectionBox; }
+    private int[][] getAllScores() { return this.allScores; }
 
     public VBox getGameFormatSelectView() { return this.gameFormatView; }
 
@@ -129,6 +132,27 @@ public class GameFormatSelectView extends MainView {
 
 
                 });
+            }
+        });
+    }
+
+    private void setKeyPressListeners() {
+        Run.getScene().setOnKeyReleased(e -> {
+            MainView view = Controller.getView();
+            if (e.getCode() == KeyCode.A || e.getCode() == KeyCode.S) {
+                selectionBox.getSelectionModel().selectPrevious();
+                this.updateScoreLabel();
+            } else if (e.getCode() == KeyCode.Z || e.getCode() == KeyCode.X) {
+                selectionBox.getSelectionModel().selectNext();
+                this.updateScoreLabel();
+            } else if (e.getCode() == KeyCode.Q) {
+                if (!Controller.resetButtonHeld()) {
+                    int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
+                    int[] scoreArr = this.getAllScores()[selectionBoxIndex];
+                    Controller.openTeamSelect(scoreArr);
+                }
+                view.setKeyPressTime(0);
+                view.getKeysDown().remove(e.getCode());
             }
         });
     }

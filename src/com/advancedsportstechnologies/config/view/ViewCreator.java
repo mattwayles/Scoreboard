@@ -1,5 +1,6 @@
 package com.advancedsportstechnologies.config.view;
 
+import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -7,8 +8,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 
 public class ViewCreator {
-    private static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
-    private static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
+    private static final double HEIGHT = Run.HEIGHT;
+    private static final double WIDTH = Run.WIDTH;
 
     public HBox createView(TeamView team1, TeamView team2) {
         VBox separator = new VBox();

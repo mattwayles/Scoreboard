@@ -1,5 +1,6 @@
 package com.advancedsportstechnologies.config.view;
 
+import com.advancedsportstechnologies.Run;
 import com.sun.javafx.geom.BaseBounds;
 import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
@@ -9,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -16,14 +18,18 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.scene.image.ImageView;
 
-public class MainView extends Node {
-    private static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
+import java.util.HashSet;
+import java.util.Set;
 
+public class MainView extends Node {
     private static final String TITLE = "Chucktown Social Scoreboard";
     private static final String VERSION = "v0.3";
 
     private Pane mainView;
     private Node currentControl;
+    private long keyPressTime;
+    private KeyCode lastKeyPressed;
+    private Set<KeyCode> keysDown = new HashSet<>();
 
     public MainView() {}
 
@@ -39,13 +45,25 @@ public class MainView extends Node {
 
     public void setCurrentControl(MainView view) { this.currentControl = view; }
 
+    public long getKeyPressTime() { return this.keyPressTime; }
+
+    public void setKeyPressTime(long time) { this.keyPressTime = time; }
+
+    public KeyCode getLastKeyPressed() { return this.lastKeyPressed; }
+
+    public void setLastKeyPressed(KeyCode key) { this.lastKeyPressed = key;}
+
+    public Set<KeyCode> getKeysDown() { return this.keysDown; }
+
+    public void setKeysDown(Set<KeyCode> keys) { this.keysDown = keys; }
+
     private VBox createMainView(GameSelectView gameSelectView) {
         VBox titleBox = createLabelBox();
         Label beginLabel = createBeginLabel();
         VBox mainView = new VBox(titleBox, gameSelectView.getGameSelectView(), beginLabel);
         mainView.getStyleClass().add("mainView");
-        mainView.setMaxHeight(HEIGHT);
-        mainView.setSpacing(HEIGHT / 7);
+        mainView.setMaxHeight(Run.HEIGHT);
+        mainView.setSpacing(Run.HEIGHT / 7);
 
         setCurrentControl(gameSelectView);
         return mainView;

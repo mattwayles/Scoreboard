@@ -1,18 +1,29 @@
 package com.advancedsportstechnologies.config.view;
 
+import com.advancedsportstechnologies.Run;
+import com.advancedsportstechnologies.config.controller.Controller;
+import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
-import com.advancedsportstechnologies.config.model.Match;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class MatchWinnerView extends MainView {
-    private static final String MATCH_WINNER_ID = "matchWinner";
     private HBox view;
 
     public MatchWinnerView() {
-        this.setId(MATCH_WINNER_ID);
+        if (!Run.debug) {
+            this.setEventListeners();
+        } else {
+            this.setKeyPressListeners();
+        }
     }
 
     public void displayMatchWinner(TeamView team, int games) {
@@ -25,11 +36,38 @@ public class MatchWinnerView extends MainView {
         message.getStyleClass().add("winnerMessage");
         this.view = new HBox(message);
         this.view.getStyleClass().add("winnerView");
+        this.setId("matchView");
     }
 
     public HBox getView() { return view; }
 
     public void setView(HBox view) { this.view = view; }
+
+    private void setEventListeners() {
+        PiController.reset.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()) {
+                Platform.runLater(PiController::openTeamSelect);
+            }
+        });
+    }
+
+    private void setKeyPressListeners() {
+
+        Run.getScene().setOnKeyReleased(e -> {
+            MainView view = Controller.getView();
+            if (view.getKeysDown().contains(KeyCode.A) && view.getKeysDown().contains(KeyCode.Z)) {
+                if (System.currentTimeMillis() - view.getKeyPressTime() >= 3000L) {
+                        Controller.easterEgg("img/easterEgg.gif");
+                }
+            } else if (e.getCode() == KeyCode.Q) {
+                if (!Controller.resetButtonHeld()) {
+                    Controller.openTeamSelect();
+                }
+            }
+            view.setKeyPressTime(0);
+            view.getKeysDown().remove(e.getCode());
+        });
+    }
 
 
 }

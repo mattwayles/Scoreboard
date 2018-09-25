@@ -1,6 +1,7 @@
 package com.advancedsportstechnologies.config.view;
 
-import com.advancedsportstechnologies.PiController;
+import com.advancedsportstechnologies.config.controller.Controller;
+import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.Run;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
@@ -8,9 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import com.advancedsportstechnologies.config.model.Match;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,8 +19,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class TeamSelectView extends MainView {
-    private static final String TEAM_SELECT_ID = "teamSelect";
-
     private VBox teamSelectView;
     private ComboBox team1Select;
     private ComboBox team2Select;
@@ -32,8 +31,11 @@ public class TeamSelectView extends MainView {
         }
         HBox teamSelectBoxes = createTeamSelectBoxes();
         this.teamSelectView = createTeamSelectView(teamSelectBoxes);
-        this.setId(TEAM_SELECT_ID);
-        if (!Run.debug) {this.setEventListeners(); }
+        if (!Run.debug) {
+            this.setEventListeners();
+        } else {
+            this.setKeyPressListeners();
+        }
     }
 
     public VBox getTeamSelectView() { return this.teamSelectView; }
@@ -116,6 +118,23 @@ public class TeamSelectView extends MainView {
             if (event.getState().isHigh()) {
                 Platform.runLater(() -> PiController.startMatch(this));
             }
+        });
+    }
+
+    private void setKeyPressListeners() {
+        Run.getScene().setOnKeyReleased(e -> {
+            MainView view = Controller.getView();
+            if (e.getCode() == KeyCode.A || e.getCode() == KeyCode.S) {
+                team1Select.getSelectionModel().selectPrevious();
+            } else if (e.getCode() == KeyCode.Z || e.getCode() == KeyCode.X) {
+                team1Select.getSelectionModel().selectNext();
+            } else if (e.getCode() == KeyCode.Q) {
+                if (!Controller.resetButtonHeld()) {
+                    Controller.startMatch(this);
+                }
+            }
+            view.setKeyPressTime(0);
+            view.getKeysDown().remove(e.getCode());
         });
     }
 }
