@@ -17,7 +17,7 @@ public class ViewCreator {
         separator.getStyleClass().add("separator");
         HBox view = new HBox(createTeamView(team1), separator, createTeamView(team2));
         view.getStyleClass().add("matchView");
-        view.setMaxWidth(WIDTH - 20);
+        view.setMaxWidth(WIDTH);
 
         return view;
     }

@@ -97,7 +97,7 @@ public class GameSelectView extends MainView {
                 selectionBox.getSelectionModel().selectNext();
             } else if (e.getCode() == KeyCode.Q) {
                 String matchType = selectionBox.getSelectionModel().getSelectedItem().toString();
-                PiController.openGameFormatSelectView(matchType);
+                Controller.openGameFormatSelectView(matchType);
             }
             view.setKeyPressTime(0);
             view.getKeysDown().remove(e.getCode());

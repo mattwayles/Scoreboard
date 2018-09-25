@@ -20,8 +20,9 @@ public class Run extends Application {
     public static boolean debug;
 
     //TODO: Bugs / Features:
-        //TODO: Complete GPIO Pin operations (Reset game/ restart match/ Easter Egg/ Volleyball)
-        //TODO: Volleyball easter egg not working, prolly cuz of VolleyballMatchView setKeyPressListener
+        //TODO: Easter egg on Pi
+        //TODO: Embed Fonts
+        //TODO: Display optimization
 
     //TODO: Aesthetic:
         //TODO: Select team name color, select background

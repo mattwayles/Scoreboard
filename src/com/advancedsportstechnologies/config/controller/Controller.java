@@ -29,19 +29,15 @@ public class Controller extends Run {
         view.updateConfigView(gameSelectView.getGameSelectView());
     }
 
-    static void openGameFormatSelectView(String matchType) {
-        System.out.println("STARTING");
+    public static void openGameFormatSelectView(String matchType) {
         GameFormatSelectView gameFormatSelectView = new GameFormatSelectView(matchType);
-        System.out.println("CREATED GAMEFORMATSELECTVIEW");
         view.setCurrentControl(gameFormatSelectView);
-        System.out.println("SET CONTROL");
         view.updateConfigView(gameFormatSelectView.getGameFormatSelectView());
-        System.out.println("UPDATED VIEW");
         match = new Match(matchType);
-        System.out.println("CREATED NEW MATCH");
         GameController.match = match;
-        System.out.println("STARTING");
-        PiController.match = match;
+        if (!Run.debug) {
+            PiController.match = match;
+        }
     }
 
     public static void openTeamSelect() {
@@ -80,9 +76,10 @@ public class Controller extends Run {
 
     public static void easterEgg(String location) {
         MatchWinnerView winnerView = new MatchWinnerView();
-        winnerView.setView(new HBox(new ImageView(new Image(location,
-                Screen.getPrimary().getVisualBounds().getWidth(),
-                Screen.getPrimary().getVisualBounds().getHeight(), false, false))));
+        Image image = new Image(location, Run.WIDTH, Run.HEIGHT, false, false);
+        ImageView imageView = new ImageView(image);
+        HBox imageBox = new HBox(imageView);
+        winnerView.setView(imageBox);
         view.setCurrentControl(winnerView);
         view.updateMainView(winnerView.getView());
     }

@@ -17,6 +17,7 @@ import java.util.Set;
 
 public class MatchWinnerView extends MainView {
     private HBox view;
+    private boolean controller2DownPressed = false;
 
     public MatchWinnerView() {
         if (!Run.debug) {
@@ -57,6 +58,28 @@ public class MatchWinnerView extends MainView {
 
     private void setEventListeners() {
         PiController.removeEventListeners();
+        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isLow()) {
+                Controller.getView().setKeyPressTime(System.currentTimeMillis());
+                controller2DownPressed = true;
+            }
+            else {
+                Controller.getView().setKeyPressTime(0);
+                controller2DownPressed = false;
+            }
+        });
+
+        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isLow()) {
+                if (controller2DownPressed && System.currentTimeMillis() - Controller.getView().getKeyPressTime() >= 3000L) {
+                    Platform.runLater(() -> {
+                        //TODO: Easter egg on Pi
+                        //Controller.easterEgg("img/easterEgg.gif");
+                    });
+                }
+            }
+        });
+
         PiController.reset.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isLow()) {
                 Controller.getView().setKeyPressTime(System.currentTimeMillis());
