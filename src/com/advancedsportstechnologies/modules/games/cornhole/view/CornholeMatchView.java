@@ -1,11 +1,14 @@
 package com.advancedsportstechnologies.modules.games.cornhole.view;
 
 import com.advancedsportstechnologies.Run;
+import com.advancedsportstechnologies.config.controller.Controller;
+import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.config.view.MainView;
-import com.advancedsportstechnologies.modules.shared.controller.dual.EventListeners;
 import com.advancedsportstechnologies.modules.shared.controller.dual.GameController;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
 import com.advancedsportstechnologies.config.view.ViewCreator;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import javafx.application.Platform;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 
@@ -22,7 +25,7 @@ public class CornholeMatchView extends MainView {
         team2.setColor(Paint.valueOf("#a05500"));
         createCornholeView();
         if (!Run.debug) {
-            EventListeners.setEventListeners(team1, team2);
+            setEventListeners(team1, team2);
         } else {
             setKeyPressListeners(team1, team2);
         }
@@ -41,6 +44,57 @@ public class CornholeMatchView extends MainView {
         this.team2.setScore(0);
         this.team1.setScoreLabel(this.team1.getScore());
         this.team2.setScoreLabel(this.team2.getScore());
+    }
+
+    private static void setEventListeners(TeamView team1, TeamView team2) {
+        PiController.controller1Up.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()) {
+                Platform.runLater(() -> {
+                    team1.setScore(team1.getScore() + 1);
+                    team1.setScoreLabel(team1.getScore());
+                    GameController.checkWinner(team1, team2);
+                });
+            }
+        });
+        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh() && team1.getScore() > 0) {
+                Platform.runLater(() -> {
+                    team1.setScore(team1.getScore() - 1);
+                    team1.setScoreLabel(team1.getScore());
+                });
+            }
+        });
+        PiController.controller2Up.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()) {
+                Platform.runLater(() -> {
+                    team2.setScore(team2.getScore() + 1);
+                    team2.setScoreLabel(team2.getScore());
+                    GameController.checkWinner(team1, team2);
+                });
+            }
+        });
+        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()  && team1.getScore() > 0) {
+                Platform.runLater(() -> {
+                    team2.setScore(team2.getScore() - 1);
+                    team2.setScoreLabel(team2.getScore());
+                });
+            }
+        });
+        PiController.reset.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isLow()) {
+                Controller.getView().setKeyPressTime(System.currentTimeMillis());
+            }
+            else {
+                Platform.runLater(() -> {
+                    if (!Controller.resetButtonHeld()) {
+                        Platform.runLater(PiController::openTeamSelect);
+                    }
+                    Controller.getView().setKeyPressTime(0);
+                    //view.getKeysDown().remove(event.getCode());
+                });
+            }
+        });
     }
 
     private static void setKeyPressListeners(TeamView team1, TeamView team2) {

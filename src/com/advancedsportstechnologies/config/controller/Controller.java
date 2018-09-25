@@ -29,12 +29,19 @@ public class Controller extends Run {
         view.updateConfigView(gameSelectView.getGameSelectView());
     }
 
-    public static void openGameFormatSelectView(String matchType) {
+    static void openGameFormatSelectView(String matchType) {
+        System.out.println("STARTING");
         GameFormatSelectView gameFormatSelectView = new GameFormatSelectView(matchType);
+        System.out.println("CREATED GAMEFORMATSELECTVIEW");
         view.setCurrentControl(gameFormatSelectView);
+        System.out.println("SET CONTROL");
         view.updateConfigView(gameFormatSelectView.getGameFormatSelectView());
+        System.out.println("UPDATED VIEW");
         match = new Match(matchType);
+        System.out.println("CREATED NEW MATCH");
         GameController.match = match;
+        System.out.println("STARTING");
+        PiController.match = match;
     }
 
     public static void openTeamSelect() {
@@ -93,9 +100,17 @@ public class Controller extends Run {
         });
     }
 
+    private static int count = 0;
+
     public static boolean resetButtonHeld() {
+        count++;
         if (System.currentTimeMillis() - view.getKeyPressTime() >= 3000L) {
-            Controller.openGameSelectView();
+            if (Run.debug) {
+                Controller.openGameSelectView();
+            }
+            else {
+                PiController.openGameSelectView();
+            }
             view.setKeyPressTime(0);
             return true;
         }

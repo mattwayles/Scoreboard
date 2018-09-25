@@ -2,18 +2,15 @@ package com.advancedsportstechnologies.modules.games.trampolinevolleyball.view;
 
 import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
+import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.config.view.MainView;
-import com.advancedsportstechnologies.config.view.MatchWinnerView;
 import com.advancedsportstechnologies.config.view.ViewCreator;
-import com.advancedsportstechnologies.modules.shared.controller.dual.EventListeners;
 import com.advancedsportstechnologies.modules.shared.controller.dual.GameController;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
-import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import javafx.application.Platform;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
-import javafx.stage.Screen;
 
 public class VolleyballMatchView extends MainView {
 
@@ -30,7 +27,7 @@ public class VolleyballMatchView extends MainView {
         team2.setColor(Paint.valueOf("#a05500"));
         createVolleyballView();
         if (!Run.debug) {
-            EventListeners.setEventListeners(team1, team2);
+            this.setEventListeners();
         } else {
             this.setKeyPressListeners(team1, team2);
         }
@@ -60,6 +57,69 @@ public class VolleyballMatchView extends MainView {
         this.team2.setScore(0);
         this.team1.setScoreLabel(this.team1.getScore());
         this.team2.setScoreLabel(this.team2.getScore());
+    }
+
+    private void setEventListeners() {
+        PiController.controller1Up.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()) {
+                Platform.runLater(() -> {
+                    this.team1.setScore(this.team1.getScore() + 1);
+                    this.team1.setScoreLabel(team1.getScore());
+                    boolean winner = GameController.checkWinner(this.team1, this.team2);
+                    if (winner) {
+                        TeamView temp = this.team1;
+                        this.team1 = this.team2;
+                        this.team2 = temp;
+                        this.reverseTeams();
+                    }
+                });
+            }
+        });
+        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh() && team1.getScore() > 0) {
+                Platform.runLater(() -> {
+                    this.team1.setScore(this.team1.getScore() - 1);
+                    this.team1.setScoreLabel(this.team1.getScore());
+                });
+            }
+        });
+        PiController.controller2Up.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()) {
+                Platform.runLater(() -> {
+                    this.team2.setScore(this.team2.getScore() + 1);
+                    this.team2.setScoreLabel(this.team2.getScore());
+                    boolean winner = GameController.checkWinner(this.team1, this.team2);
+                    if (winner) {
+                        TeamView temp = this.team1;
+                        this.team1 = this.team2;
+                        this.team2 = temp;
+                        this.reverseTeams();
+                    }
+                });
+            }
+        });
+        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()  && this.team2.getScore() > 0) {
+                Platform.runLater(() -> {
+                    this.team2.setScore(this.team2.getScore() - 1);
+                    this.team2.setScoreLabel(this.team2.getScore());
+                });
+            }
+        });
+        PiController.reset.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isLow()) {
+                Controller.getView().setKeyPressTime(System.currentTimeMillis());
+            }
+            else {
+                Platform.runLater(() -> {
+                    if (!Controller.resetButtonHeld()) {
+                        Platform.runLater(PiController::openTeamSelect);
+                    }
+                    Controller.getView().setKeyPressTime(0);
+                    //view.getKeysDown().remove(event.getCode());
+                });
+            }
+        });
     }
 
     private void setKeyPressListeners(TeamView team1, TeamView team2) {

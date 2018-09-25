@@ -10,6 +10,7 @@ import com.advancedsportstechnologies.config.view.MatchWinnerView;
 import com.advancedsportstechnologies.modules.games.cornhole.view.CornholeMatchView;
 import com.advancedsportstechnologies.modules.games.trampolinevolleyball.view.VolleyballMatchView;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,8 +19,8 @@ import javafx.scene.input.KeyEvent;
 
 public class GameController {
     private static boolean cancelCountdown;
-    private static MainView view = Run.debug ? Controller.getView() : PiController.getView();
-    public static Match match = Run.debug ? Controller.getMatch() : PiController.getMatch();
+    private static MainView view = Controller.getView();
+    public static Match match = Controller.getMatch();
 
     public static boolean changeScore(KeyEvent e, TeamView team1, TeamView team2) {
         if (e.getCode() == KeyCode.A) {
@@ -53,7 +54,7 @@ public class GameController {
         return false;
     }
 
-    static boolean checkWinner(TeamView team1, TeamView team2) {
+    public static boolean checkWinner(TeamView team1, TeamView team2) {
         TeamView winner = null;
         TeamView loser = null;
         if (team1.getScore() == match.getGameScores()[match.getCurrentGame()]) {
@@ -93,7 +94,7 @@ public class GameController {
 
     private static void matchWin(TeamView winner) {
         MatchWinnerView winnerView = new MatchWinnerView();
-        winnerView.displayMatchWinner(winner, match.getCurrentGame());
+        winnerView.displayMatchWinner(winner, match.getCurrentGame(), match.getType());
         view.setCurrentControl(winnerView);
         view.updateMainView(winnerView.getView());
     }

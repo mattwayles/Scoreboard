@@ -75,16 +75,13 @@ public class MainView extends Node {
         Label version = new Label(VERSION);
         version.getStyleClass().add("version");
         ImageView logo = new ImageView(new Image("img/astLogo.png"));
-        HBox logoBox = new HBox(logo, title);
-        logoBox.setSpacing(20);
-        logoBox.setAlignment(Pos.CENTER);
-        VBox titleBox = new VBox(logoBox, version);
+        VBox titleBox = new VBox(logo, title, version);
         titleBox.getStyleClass().add("titleBox");
         return titleBox;
     }
 
     private Label createBeginLabel() {
-        Label beginLabel = new Label("Press Start to Continue (Q / W until controllers work)");
+        Label beginLabel = new Label("Press Start to Continue");
         beginLabel.getStyleClass().add("pressStartLabel");
         return beginLabel;
     }

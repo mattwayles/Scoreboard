@@ -123,14 +123,18 @@ public class GameFormatSelectView extends MainView {
             }
         });
         PiController.reset.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
+            if (event.getState().isLow()) {
+                Controller.getView().setKeyPressTime(System.currentTimeMillis());
+            }
+            else {
                 Platform.runLater(() -> {
-                    int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
-                    int[] scoreArr = this.getAllScores()[selectionBoxIndex];
-                    PiController.openTeamSelect(scoreArr);
-
-
-
+                    if (!Controller.resetButtonHeld()) {
+                        int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
+                        int[] scoreArr = this.getAllScores()[selectionBoxIndex];
+                        PiController.openTeamSelect(scoreArr);
+                    }
+                    Controller.getView().setKeyPressTime(0);
+                    //view.getKeysDown().remove(event.getCode());
                 });
             }
         });

@@ -12,10 +12,8 @@ import javafx.stage.Stage;
 import com.advancedsportstechnologies.config.view.MainView;
 
 public class Run extends Application {
-    //public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
-    public static final double HEIGHT = 1280;
-    //public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
-    public static final double WIDTH = 1024;
+    public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
+    public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
 
     private static Stage stage;
     private static Scene scene;
@@ -45,15 +43,9 @@ public class Run extends Application {
         gameSelection.setMainView(mainView.getMainView());
 
         root.getChildren().add(mainView.getMainView());
-
-        if (!Run.debug) {
-            PiController.setView(mainView);
-        }
-        else {
-            Controller controller = new Controller();
-            controller.setView(mainView);
-            scene.setOnKeyPressed(e -> Controller.keyPress());
-        }
+        Controller controller = new Controller();
+        controller.setView(mainView);
+        scene.setOnKeyPressed(e -> Controller.keyPress());
 
         rootScene.getStylesheets().add(getClass().getResource("config/css/configStyle.css").toExternalForm());
         rootScene.getStylesheets().add(getClass().getResource("modules/shared/css/sharedStyle.css").toExternalForm());

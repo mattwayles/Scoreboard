@@ -26,11 +26,16 @@ public class GameWinnerView extends MainView {
     }
 
     public void displayGameWinner(TeamView team, int games) {
-        String winnerStr = team.getTeamName().toLowerCase().endsWith("s") ? team.getTeamName() + " win game " + games + "!"
-                : team.getTeamName() + " wins game " + games + "!";
-        Label winner = new Label(winnerStr);
-        winner.getStyleClass().add("winnerLabel");
-        winner.setTextFill(team.getColor());
+        String winnerStr = team.getTeamName().toLowerCase().endsWith("s") ? " win game " + games + "!"
+                : " wins game " + games + "!";
+        Label winningTeam = new Label(team.getTeamName());
+        winningTeam.getStyleClass().add("winnerLabelTeam");
+        winningTeam.setTextFill(team.getColor());
+        Label wins = new Label(winnerStr);
+        wins.getStyleClass().add("winnerLabel");
+        wins.setTextFill(team.getColor());
+        VBox winnerBox = new VBox(winningTeam, wins);
+        winnerBox.getStyleClass().add("winnerBox");
         Label score = new Label(this.team1Score + " - " + this.team2Score);
         score.getStyleClass().add("splashScoreLabel");
         score.setTextFill(team.getColor());
@@ -40,7 +45,7 @@ public class GameWinnerView extends MainView {
         countdown.getStyleClass().add("countdownLabel");
         HBox nextGameBox = new HBox(notice, countdown);
         nextGameBox.getStyleClass().add("nextGameBox");
-        VBox message = new VBox(winner, score, nextGameBox);
+        VBox message = new VBox(winnerBox, score, nextGameBox);
         message.getStyleClass().add("winnerMessage");
         this.view = new HBox(message);
         this.view.getStyleClass().add("winnerView");

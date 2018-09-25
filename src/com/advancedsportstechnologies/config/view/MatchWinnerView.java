@@ -26,13 +26,25 @@ public class MatchWinnerView extends MainView {
         }
     }
 
-    public void displayMatchWinner(TeamView team, int games) {
-        Label winner = new Label(team.getTeamName() + " wins in " + games + " games!");
+    public void displayMatchWinner(TeamView team, int games, String gameType) {
+        String winStr = team.getTeamName().toLowerCase().endsWith("s") ? " win in " + games + " games!"
+                : " wins game " + games + "!";
+
+        Label winningTeam = new Label(team.getTeamName());
+        winningTeam.getStyleClass().add("winnerLabelTeam");
+        winningTeam.setTextFill(team.getColor());
+
+        Label winner = new Label(winStr);
         winner.getStyleClass().add("winnerLabel");
         winner.setTextFill(team.getColor());
-        Label notice = new Label("Press Start to reset (Q / W until controllers are working)");
-        notice.getStyleClass().add("pressStartLabel");
-        VBox message = new VBox(winner, notice);
+
+        VBox winnerBox = new VBox(winningTeam, winner);
+        winnerBox.getStyleClass().add("winnerBox");
+        Label press = new Label("Press Start for new " + gameType + " match");
+        press.getStyleClass().add("pressStartLabel");
+        Label hold = new Label("Hold Start to Restart");
+        hold.getStyleClass().add("pressStartLabel");
+        VBox message = new VBox(winnerBox, press, hold);
         message.getStyleClass().add("winnerMessage");
         this.view = new HBox(message);
         this.view.getStyleClass().add("winnerView");
@@ -44,9 +56,19 @@ public class MatchWinnerView extends MainView {
     public void setView(HBox view) { this.view = view; }
 
     private void setEventListeners() {
+        PiController.removeEventListeners();
         PiController.reset.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(PiController::openTeamSelect);
+            if (event.getState().isLow()) {
+                Controller.getView().setKeyPressTime(System.currentTimeMillis());
+            }
+            else {
+                Platform.runLater(() -> {
+                    if (!Controller.resetButtonHeld()) {
+                        Platform.runLater(PiController::openTeamSelect);
+                    }
+                    Controller.getView().setKeyPressTime(0);
+                    //view.getKeysDown().remove(event.getCode());
+                });
             }
         });
     }

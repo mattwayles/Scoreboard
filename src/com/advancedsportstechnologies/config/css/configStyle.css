@@ -8,14 +8,24 @@
     -fx-alignment: center;
 }
 
-.mainTitle, .winnerLabel {
+.mainTitle, .winnerLabel, .winnerLabelTeam {
     -fx-font-family: "Harlow Solid Italic";
     -fx-font-size: 85px;
     -fx-text-wrap: true;
+    -fx-alignment: center;
 }
 
 .winnerLabel {
-    -fx-padding: 40px;
+    -fx-padding: 0 40px 40px 40px;
+}
+
+.winnerLabelTeam {
+    -fx-font-size: 100px;
+}
+
+.winnerBox {
+    -fx-spacing: 0;
+    -fx-alignment: center;
 }
 
 .version {
@@ -40,7 +50,7 @@
 }
 
 .winnerMessage {
-    -fx-spacing: 100px;
+    -fx-spacing: 40px;
     -fx-alignment: center;
 }
 

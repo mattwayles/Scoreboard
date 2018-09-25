@@ -13,13 +13,14 @@ public class PiController {
     final public static GpioPinDigitalInput controller1Up = gpio.provisionDigitalInputPin(RaspiPin.GPIO_06, PinPullResistance.PULL_UP);
 
     private static MainView view;
-    private static Match match;
+    static Match match;
 
     public static Match getMatch() { return match; }
     public static MainView getView() { return view; }
     public static void setView(MainView mainView) { view = mainView; }
 
-    public static void openGameSelectView() {
+    static void openGameSelectView() {
+        removeEventListeners();
         Controller.openGameSelectView();
     }
     
@@ -38,6 +39,7 @@ public class PiController {
     }
 
     public static void startMatch(TeamSelectView teamSelect) {
+        removeEventListeners();
         Controller.startMatch(teamSelect);
     }
     
@@ -46,7 +48,7 @@ public class PiController {
     }
 
 
-    private static void removeEventListeners() {
+    public static void removeEventListeners() {
         controller1Up.removeAllListeners();
         controller1Down.removeAllListeners();
         controller2Up.removeAllListeners();

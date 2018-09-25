@@ -60,7 +60,7 @@ public class TeamSelectView extends MainView {
         VBox team2Box = new VBox(team2SelectionLabel, team2Select);
         team2Box.getStyleClass().add("teamBox");
 
-        HBox selectBoxes = new HBox(250);
+        HBox selectBoxes = new HBox(150);
         selectBoxes.getStyleClass().add("selectBoxes");
         selectBoxes.getChildren().addAll(team1Box, team2Box);
 
@@ -115,8 +115,17 @@ public class TeamSelectView extends MainView {
             }
         });
         PiController.reset.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> PiController.startMatch(this));
+            if (event.getState().isLow()) {
+                Controller.getView().setKeyPressTime(System.currentTimeMillis());
+            }
+            else {
+                Platform.runLater(() -> {
+                    if (!Controller.resetButtonHeld()) {
+                        Platform.runLater(() -> PiController.startMatch(this));
+                    }
+                    Controller.getView().setKeyPressTime(0);
+                    //view.getKeysDown().remove(event.getCode());
+                });
             }
         });
     }

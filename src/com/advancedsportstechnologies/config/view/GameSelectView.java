@@ -83,7 +83,6 @@ public class GameSelectView extends MainView {
                 Platform.runLater(() -> {
                     String matchType = selectionBox.getSelectionModel().getSelectedItem().toString();
                     PiController.openGameFormatSelectView(matchType);
-
                 });
             }
         });
@@ -98,7 +97,7 @@ public class GameSelectView extends MainView {
                 selectionBox.getSelectionModel().selectNext();
             } else if (e.getCode() == KeyCode.Q) {
                 String matchType = selectionBox.getSelectionModel().getSelectedItem().toString();
-                Controller.openGameFormatSelectView(matchType);
+                PiController.openGameFormatSelectView(matchType);
             }
             view.setKeyPressTime(0);
             view.getKeysDown().remove(e.getCode());
