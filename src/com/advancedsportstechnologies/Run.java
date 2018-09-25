@@ -12,8 +12,10 @@ import javafx.stage.Stage;
 import com.advancedsportstechnologies.config.view.MainView;
 
 public class Run extends Application {
-    public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
-    public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
+    //public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
+    public static final double HEIGHT = 1280;
+    //public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
+    public static final double WIDTH = 1024;
 
     private static Stage stage;
     private static Scene scene;

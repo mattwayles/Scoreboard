@@ -74,7 +74,7 @@ public class MainView extends Node {
         title.getStyleClass().add("mainTitle");
         Label version = new Label(VERSION);
         version.getStyleClass().add("version");
-        ImageView logo = new ImageView(new Image("/img/astLogo.png"));
+        ImageView logo = new ImageView(new Image("img/astLogo.png"));
         HBox logoBox = new HBox(logo, title);
         logoBox.setSpacing(20);
         logoBox.setAlignment(Pos.CENTER);
