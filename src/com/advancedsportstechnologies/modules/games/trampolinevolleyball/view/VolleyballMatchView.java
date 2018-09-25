@@ -39,4 +39,11 @@ public class VolleyballMatchView extends MainView {
         this.view = vc.createView(this.team1, this.team2);
         this.view.getStyleClass().add("volleyballMatchView");
     }
+
+    public void resetScores() {
+        this.team1.setScore(0);
+        this.team2.setScore(0);
+        this.team1.setScoreLabel(this.team1.getScore());
+        this.team2.setScoreLabel(this.team2.getScore());
+    }
 }

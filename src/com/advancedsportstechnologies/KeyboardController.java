@@ -10,7 +10,6 @@ import com.advancedsportstechnologies.modules.games.cornhole.view.CornholeMatchV
 import com.advancedsportstechnologies.modules.games.trampolinevolleyball.controller.VolleyballController;
 import com.advancedsportstechnologies.modules.games.trampolinevolleyball.view.VolleyballMatchView;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
-import com.pi4j.io.gpio.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -23,14 +22,14 @@ public class KeyboardController extends Run {
     private static Match match;
 
     public static Match getMatch() { return match; }
-    public static void setView(MainView mainView) { view = mainView; }
+    public void setView(MainView mainView) { view = mainView; }
 
     private static long keyPressTime;
     private static KeyCode lastKeyPressed;
     private static String lastId;
     private static Set<KeyCode> keysDown = new HashSet<>();
 
-    static void routeKeyPress(KeyEvent e, MainView view) {
+    void routeKeyPress(KeyEvent e, MainView view) {
         String id = view.getCurrentControl().getId();
         lastId = id;
 
@@ -66,14 +65,14 @@ public class KeyboardController extends Run {
             }
         } else if (keysDown.contains(KeyCode.Q) || keysDown.contains(KeyCode.W)) {
             String id = view.getCurrentControl().getId();
-            if (!id.equals("gameSelect") && !id.equals("gameScoreSelect") && !id.equals("teamSelect") && !lastId.equals("teamSelect")) {
+            if (!id.equals("gameSelect") && !id.equals("gameFormat") && !id.equals("teamSelect") && !lastId.equals("teamSelect")) {
                 restoreState();
                 if (System.currentTimeMillis() - keyPressTime >= 3000L) {
                     close();
                     start(new Stage());
                 }
                 else {
-                    ConfigController.restartMatch(view);
+                    ConfigController.restartMatch(match, view);
                 }
             }
         }
@@ -81,13 +80,13 @@ public class KeyboardController extends Run {
         keysDown.remove(e.getCode());
     }
 
-    private void restoreState() {
-        PiController.getMatch().setCurrentGame(0);
+    private static void restoreState() {
+        match.setCurrentGame(0);
         TeamView.resetCount();
     }
 
     public static void openGameFormatSelectView(String matchType) {
-        GameFormatSelectView gameFormatSelectView = new GameFormatSelectView();
+        GameFormatSelectView gameFormatSelectView = new GameFormatSelectView(matchType);
         view.setCurrentControl(gameFormatSelectView);
         view.updateConfigView(gameFormatSelectView.getGameFormatSelectView());
 
@@ -95,8 +94,12 @@ public class KeyboardController extends Run {
         match = new Match(matchType);
     }
 
-    public static void openTeamSelect(String format) {
-        match.setFormat(format);
+    public static void openTeamSelect() {
+        openTeamSelect(match.getGameScores());
+    }
+
+    public static void openTeamSelect(int[] scores) {
+        match.setGameScores(scores);
         TeamSelectView teamSelectView = new TeamSelectView(match.getType());
         view.setCurrentControl(teamSelectView);
         view.updateConfigView(teamSelectView.getTeamSelectView());

@@ -59,6 +59,12 @@
     -fx-text-fill: #0800ad
 }
 
+.gameFormatLabel {
+    -fx-font-family: "Cooper Black";
+    -fx-font-size: 24px;
+    -fx-text-fill: #a05500;
+}
+
 .teamBox {
     -fx-spacing: 10;
 

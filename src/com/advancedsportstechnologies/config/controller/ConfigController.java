@@ -1,6 +1,7 @@
 package com.advancedsportstechnologies.config.controller;
 
 import com.advancedsportstechnologies.KeyboardController;
+import com.advancedsportstechnologies.config.model.Match;
 import com.advancedsportstechnologies.config.view.GameFormatSelectView;
 import com.advancedsportstechnologies.config.view.GameSelectView;
 import com.advancedsportstechnologies.config.view.MainView;
@@ -26,16 +27,22 @@ public class ConfigController {
 
     public static void formatSelection(KeyEvent e, MainView view) {
         GameFormatSelectView gameFormatSelectView = (GameFormatSelectView) view.getCurrentControl();
+        int selectionBoxIndex;
+        int[] scoreArr;
+
 
         if (e.getCode() == KeyCode.A || e.getCode() == KeyCode.S) {
             gameFormatSelectView.getSelectionBox().getSelectionModel().selectPrevious();
+            gameFormatSelectView.updateScoreLabel();
         }
         else if (e.getCode() == KeyCode.Z || e.getCode() == KeyCode.X) {
             gameFormatSelectView.getSelectionBox().getSelectionModel().selectNext();
+            gameFormatSelectView.updateScoreLabel();
         }
         else if (e.getCode() == KeyCode.Q || e.getCode() == KeyCode.W) {
-            String format = gameFormatSelectView.getSelectionBox().getSelectionModel().getSelectedItem().toString();
-            KeyboardController.openTeamSelect(format);
+            selectionBoxIndex = gameFormatSelectView.getSelectionBox().getSelectionModel().getSelectedIndex();
+            scoreArr = gameFormatSelectView.getAllScores()[selectionBoxIndex];
+            KeyboardController.openTeamSelect(scoreArr);
         }
     }
 
@@ -61,8 +68,8 @@ public class ConfigController {
         }
     }
 
-    public static void restartMatch(MainView view) {
-        TeamSelectView teamSelectView = new TeamSelectView(KeyboardController.getMatch().getFormat());
+    public static void restartMatch(Match match, MainView view) {
+        TeamSelectView teamSelectView = new TeamSelectView(match.getType());
         view.setCurrentControl(teamSelectView);
         view.updateConfigView(teamSelectView.getTeamSelectView());
     }

@@ -25,16 +25,7 @@ public class VolleyballController {
             volleyballMatchView.setTeam1(team2);
             volleyballMatchView.setTeam2(team1);
             volleyballMatchView.reverseTeams();
-
-            resetGame(team1, team2);
         }
-    }
-
-    private static void resetGame(TeamView team1, TeamView team2) {
-        team1.setScore(0);
-        team1.setScoreLabel(team1.getScore());
-        team2.setScore(0);
-        team2.setScoreLabel(team2.getScore());
     }
 
     public static void easterEgg(MainView view) {

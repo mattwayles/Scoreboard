@@ -26,7 +26,7 @@ public class PiController {
 
     public static void openGameFormatSelectView(String matchType) {
         removeEventListeners();
-        GameFormatSelectView gameFormatSelectView = new GameFormatSelectView();
+        GameFormatSelectView gameFormatSelectView = new GameFormatSelectView(matchType);
         view.setCurrentControl(gameFormatSelectView);
         view.updateConfigView(gameFormatSelectView.getGameFormatSelectView());
 
@@ -34,9 +34,13 @@ public class PiController {
         match = new Match(matchType);
     }
 
-    public static void openTeamSelect(String format) {
+    public static void openTeamSelect() {
+        openTeamSelect(match.getGameScores());
+    }
+
+    public static void openTeamSelect(int[] scores) {
         removeEventListeners();
-        match.setFormat(format);
+        match.setGameScores(scores);
         TeamSelectView teamSelectView = new TeamSelectView(match.getType());
         view.setCurrentControl(teamSelectView);
         view.updateConfigView(teamSelectView.getTeamSelectView());

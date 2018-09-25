@@ -2,7 +2,6 @@ package com.advancedsportstechnologies.modules.games.cornhole.view;
 
 import com.advancedsportstechnologies.PiController;
 import com.advancedsportstechnologies.Run;
-import com.advancedsportstechnologies.config.model.Match;
 import com.advancedsportstechnologies.config.view.MainView;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
 import com.advancedsportstechnologies.config.view.ViewCreator;
@@ -10,7 +9,6 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
-import javafx.stage.Screen;
 
 public class CornholeMatchView extends MainView {
     private static final String CORNHOLE_ID = "cornhole";
@@ -43,6 +41,13 @@ public class CornholeMatchView extends MainView {
     public TeamView getTeam1() { return this.team1; }
 
     public TeamView getTeam2() { return this.team2; }
+
+    public void resetScores() {
+        this.team1.setScore(0);
+        this.team2.setScore(0);
+        this.team1.setScoreLabel(this.team1.getScore());
+        this.team2.setScoreLabel(this.team2.getScore());
+    }
 
     private void setEventListeners() {
         PiController.controller1Up.addListener((GpioPinListenerDigital) event -> {
@@ -80,10 +85,7 @@ public class CornholeMatchView extends MainView {
         });
         PiController.reset.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
-                Platform.runLater(() -> {
-                    PiController.openTeamSelect(PiController.getMatch().getFormat());
-
-                });
+                Platform.runLater(PiController::openTeamSelect);
             }
         });
     }

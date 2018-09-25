@@ -19,17 +19,7 @@ public class CornholeController {
         int winScore = KeyboardController.getMatch().getGameScores()[KeyboardController.getMatch().getCurrentGame()];
         TeamView team1 = cornholeMatchView.getTeam1();
         TeamView team2 = cornholeMatchView.getTeam2();
-
-        if(GameController.changeScore(e, team1, team2, winScore, view, cornholeMatchView)) {
-            resetGame(team1, team2);
-        }
-    }
-
-    private static void resetGame(TeamView team1, TeamView team2) {
-        team1.setScore(0);
-        team1.setScoreLabel(team1.getScore());
-        team2.setScore(0);
-        team2.setScoreLabel(team2.getScore());
+        GameController.changeScore(e, team1, team2, winScore, view, cornholeMatchView);
     }
 
     public static void easterEgg(MainView view) {

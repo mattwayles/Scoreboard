@@ -17,6 +17,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Paint;
 
 public class GameController {
+    private static boolean cancelCountdown;
+
     public static boolean changeScore(KeyEvent e, TeamView team1, TeamView team2, int winScore, MainView view, MainView matchView) {
         boolean winner = false;
 
@@ -33,10 +35,14 @@ public class GameController {
             team2.setScore(team2.getScore() - 1);
             team2.setScoreLabel(team2.getScore());
         } else if (e.getCode() == KeyCode.Q) {
-            KeyboardController.openTeamSelect(KeyboardController.getMatch().getFormat());
+            cancelCountdown = true;
+            KeyboardController.openTeamSelect();
         }
 
         if (team1.getScore() == winScore || team2.getScore() == winScore) {
+            if (cancelCountdown && e.getCode() != KeyCode.Q) {
+                cancelCountdown = false;
+            }
             if (team1.getScore() == winScore) {
                 winner(team1, team2, view);
             }
@@ -62,30 +68,35 @@ public class GameController {
 
             Thread thread = new Thread(() -> {
                 int i = 2;
-                while (i >= 0) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    }
-                    Platform.runLater(() -> {
-                        winnerView.decrementSeconds();
-                        winnerView.displayGameWinner(winningTeam, KeyboardController.getMatch().getCurrentGame());
-                        //view.setCurrentControl(winnerView);
-                        view.updateMainView(winnerView.getView());
-                    });
-                    i--;
-                }
+                    while (i >= 0) {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e1) {
+                                e1.printStackTrace();
+                            }
+                            Platform.runLater(() -> {
+                                winnerView.decrementSeconds();
+                                winnerView.displayGameWinner(winningTeam, KeyboardController.getMatch().getCurrentGame());
+                                if (!cancelCountdown) {
+                                    view.updateMainView(winnerView.getView());
+                                }
+                            });
+                            i--;
+                        }
                 Platform.runLater(() -> {
-                    switch (KeyboardController.getMatch().getType()) {
-                        case "Cornhole":
-                            CornholeMatchView cornholeMatchView = (CornholeMatchView) view.getCurrentControl();
-                            view.updateMainView(cornholeMatchView.getView());
-                            break;
-                        case "Trampoline Volleyball":
-                            VolleyballMatchView volleyballMatchView = (VolleyballMatchView) view.getCurrentControl();
-                            view.updateMainView(volleyballMatchView.getView());
-                            break;
+                    if (!cancelCountdown) {
+                        switch (KeyboardController.getMatch().getType()) {
+                            case "Cornhole":
+                                CornholeMatchView cornholeMatchView = (CornholeMatchView) view.getCurrentControl();
+                                cornholeMatchView.resetScores();
+                                view.updateMainView(cornholeMatchView.getView());
+                                break;
+                            case "Trampoline Volleyball":
+                                VolleyballMatchView volleyballMatchView = (VolleyballMatchView) view.getCurrentControl();
+                                volleyballMatchView.resetScores();
+                                view.updateMainView(volleyballMatchView.getView());
+                                break;
+                        }
                     }
                 });
 

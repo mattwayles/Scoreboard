@@ -14,9 +14,10 @@ public class Run extends Application {
     private static Stage stage;
     public static boolean debug;
 
-    //TODO: This Version Goals:
-        //TODO: Complete GPIO Pin operations
-        //TODO: GameFormatSelectView label with the game scores on selection
+    //TODO: Bugs / Features:
+        //TODO: Complete GPIO Pin operations (Reset game/ restart match/ Easter Egg/ Volleyball)
+
+    //TODO: Aesthetic:
         //TODO: Select team name color, select background
         //TODO: Dark theme
         //TODO: Label CSS buffing; shadows, gradients, add personality to labels
@@ -40,12 +41,10 @@ public class Run extends Application {
             PiController.setView(mainView);
         }
         else {
-            KeyboardController.setView(mainView);
-            scene.setOnKeyPressed(e ->
-                    KeyboardController.routeKeyPress(e, mainView));
-
-            //TODO: Currently, this is resetting the game on the GameSelect screen (keyboard)
-            //scene.setOnKeyReleased(e -> controller.releaseKey(e, mainView));
+            KeyboardController controller = new KeyboardController();
+            controller.setView(mainView);
+            scene.setOnKeyPressed(e -> controller.routeKeyPress(e, mainView));
+            scene.setOnKeyReleased(e -> controller.releaseKey(e, mainView));
         }
 
         scene.getStylesheets().add(getClass().getResource("config/css/configStyle.css").toExternalForm());
