@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class MainView extends Node {
     private static final String TITLE = "Chucktown Social Scoreboard";
-    private static final String VERSION = "v0.4";
+    private static final String VERSION = Run.version;
 
     private Pane mainView;
     private Node currentControl;
