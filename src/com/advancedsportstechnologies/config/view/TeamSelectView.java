@@ -3,6 +3,7 @@ package com.advancedsportstechnologies.config.view;
 import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
 import com.advancedsportstechnologies.config.controller.PiController;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -94,39 +95,24 @@ public class TeamSelectView extends MainView {
     }
 
     private void setEventListeners() {
-        PiController.controller1Up.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> team1Select.getSelectionModel().selectPrevious());
-            }
-        });
-        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> team1Select.getSelectionModel().selectNext());
-            }
-        });
-        PiController.controller2Up.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> team2Select.getSelectionModel().selectPrevious());
-            }
-        });
-        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> team2Select.getSelectionModel().selectNext());
-            }
-        });
-        PiController.reset.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isLow()) {
-                Controller.getView().setKeyPressTime(System.currentTimeMillis());
-            }
-            else {
-                Platform.runLater(() -> {
-                    if (!Controller.resetButtonHeld()) {
-                        Platform.runLater(() -> PiController.startMatch(this));
-                    }
-                    Controller.getView().setKeyPressTime(0);
-                });
-            }
-        });
+        PiController.controller1Up.addListener((GpioPinListenerDigital) event -> PiController.selectComboBoxPrevious(event, team1Select));
+        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> PiController.selectComboBoxNext(event, team1Select));
+        PiController.controller2Up.addListener((GpioPinListenerDigital) event -> PiController.selectComboBoxPrevious(event, team2Select));
+        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> PiController.selectComboBoxNext(event, team2Select));
+        PiController.reset.addListener((GpioPinListenerDigital) this::reset);
+    }
+
+    private void reset(GpioPinDigitalStateChangeEvent event) {
+        if (event.getState().isLow()) {
+            Controller.getView().setKeyPressTime(System.currentTimeMillis());
+        } else {
+            Platform.runLater(() -> {
+                if (Controller.resetButtonHeld()) {
+                    Platform.runLater(() -> PiController.startMatch(this));
+                }
+                Controller.getView().setKeyPressTime(0);
+            });
+        }
     }
 
     private void setKeyPressListeners() {
@@ -137,7 +123,7 @@ public class TeamSelectView extends MainView {
             } else if (e.getCode() == KeyCode.Z || e.getCode() == KeyCode.X) {
                 team1Select.getSelectionModel().selectNext();
             } else if (e.getCode() == KeyCode.Q) {
-                if (!Controller.resetButtonHeld()) {
+                if (Controller.resetButtonHeld()) {
                     Controller.startMatch(this);
                 }
             }

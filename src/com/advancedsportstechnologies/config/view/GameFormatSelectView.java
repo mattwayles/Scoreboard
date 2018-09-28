@@ -4,6 +4,7 @@ import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
 import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.config.model.Match;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -91,50 +92,46 @@ public class GameFormatSelectView extends MainView {
         this.setGameFormatView(gameBox);
     }
 
+    private void selectPrevious(GpioPinDigitalStateChangeEvent event) {
+        if (event.getState().isHigh()) {
+            Platform.runLater(() -> {
+                selectionBox.getSelectionModel().selectPrevious();
+                this.updateScoreLabel();
+            });
+        }
+    }
+
+    private void selectNext(GpioPinDigitalStateChangeEvent event) {
+        if (event.getState().isHigh()) {
+            Platform.runLater(() -> {
+                selectionBox.getSelectionModel().selectNext();
+                this.updateScoreLabel();
+            });
+        }
+    }
+
+    private void reset(GpioPinDigitalStateChangeEvent event) {
+        if (event.getState().isLow()) {
+            Controller.getView().setKeyPressTime(System.currentTimeMillis());
+        }
+        else {
+            Platform.runLater(() -> {
+                if (Controller.resetButtonHeld()) {
+                    int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
+                    int[] scoreArr = this.getAllScores()[selectionBoxIndex];
+                    PiController.openTeamSelect(scoreArr);
+                }
+                Controller.getView().setKeyPressTime(0);
+            });
+        }
+    }
+
     private void setEventListeners() {
-        PiController.controller1Up.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> {
-                    selectionBox.getSelectionModel().selectPrevious();
-                    this.updateScoreLabel();
-                });
-            }
-        });
-        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> {
-                    selectionBox.getSelectionModel().selectNext();
-                    this.updateScoreLabel();
-                });
-            }
-        });
-        PiController.controller2Up.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> selectionBox.getSelectionModel().selectPrevious());
-                this.updateScoreLabel();
-            }
-        });
-        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> selectionBox.getSelectionModel().selectNext());
-                this.updateScoreLabel();
-            }
-        });
-        PiController.reset.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isLow()) {
-                Controller.getView().setKeyPressTime(System.currentTimeMillis());
-            }
-            else {
-                Platform.runLater(() -> {
-                    if (!Controller.resetButtonHeld()) {
-                        int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
-                        int[] scoreArr = this.getAllScores()[selectionBoxIndex];
-                        PiController.openTeamSelect(scoreArr);
-                    }
-                    Controller.getView().setKeyPressTime(0);
-                });
-            }
-        });
+        PiController.controller1Up.addListener((GpioPinListenerDigital) this::selectPrevious);
+        PiController.controller1Down.addListener((GpioPinListenerDigital) this::selectNext);
+        PiController.controller2Up.addListener((GpioPinListenerDigital) this::selectPrevious);
+        PiController.controller2Down.addListener((GpioPinListenerDigital) this::selectNext);
+        PiController.reset.addListener((GpioPinListenerDigital) this::reset);
     }
 
     private void setKeyPressListeners() {
@@ -147,7 +144,7 @@ public class GameFormatSelectView extends MainView {
                 selectionBox.getSelectionModel().selectNext();
                 this.updateScoreLabel();
             } else if (e.getCode() == KeyCode.Q) {
-                if (!Controller.resetButtonHeld()) {
+                if (Controller.resetButtonHeld()) {
                     int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
                     int[] scoreArr = this.getAllScores()[selectionBoxIndex];
                     Controller.openTeamSelect(scoreArr);

@@ -26,6 +26,7 @@ public class Controller extends Run {
         GameSelectView gameSelectView = new GameSelectView();
         view.setCurrentControl(gameSelectView);
         view.updateConfigView(gameSelectView.getGameSelectView());
+        System.runFinalization();
     }
 
     public static void openGameFormatSelectView(String matchType) {
@@ -49,6 +50,7 @@ public class Controller extends Run {
         TeamSelectView teamSelectView = new TeamSelectView(match.getType());
         view.setCurrentControl(teamSelectView);
         view.updateConfigView(teamSelectView.getTeamSelectView());
+        System.runFinalization();
     }
 
     public static void startMatch(TeamSelectView teamSelect) {
@@ -81,6 +83,8 @@ public class Controller extends Run {
         winnerView.setView(imageBox);
         view.setCurrentControl(winnerView);
         view.updateMainView(winnerView.getView());
+        image = null;
+        winnerView = null;
     }
 
     public static void keyPress() {
@@ -96,10 +100,7 @@ public class Controller extends Run {
         });
     }
 
-    private static int count = 0;
-
     public static boolean resetButtonHeld() {
-        count++;
         if (System.currentTimeMillis() - view.getKeyPressTime() >= 3000L) {
             if (Run.debug) {
                 Controller.openGameSelectView();
@@ -108,8 +109,8 @@ public class Controller extends Run {
                 PiController.openGameSelectView();
             }
             view.setKeyPressTime(0);
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 }

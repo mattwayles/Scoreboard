@@ -12,13 +12,14 @@ import javafx.stage.Stage;
 public class Run extends Application {
     public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
     public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
-    public static final String version = "v0.5";
+    public static final String version = "v1.0_rc1";
 
     private static Stage stage;
     private static Scene scene;
     public static boolean debug;
 
-    //TODO: Aesthetic:
+    //TODO: Future Versions:
+        //TODO: Start and Championship Easter Eggs
         //TODO: Select team name color, select background
         //TODO: Dark theme
         //TODO: Label CSS buffing; shadows, gradients, add personality to labels

@@ -1,12 +1,10 @@
 .teamBox{
-    -fx-spacing: 20;
     -fx-alignment: center;
-    -fx-padding: 20;
+    -fx-padding: 0 20 0 20;
 }
 .team1NameLabel, .team2NameLabel {
     -fx-font-family: "Cooper Black";
     -fx-text-fill: #0800ad;
-    -fx-font-size: 60px;
 }
 
 .team2NameLabel {

@@ -4,6 +4,7 @@ import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
 import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
@@ -25,7 +26,7 @@ public class MatchWinnerView extends MainView {
 
     public void displayMatchWinner(TeamView team, int games, String gameType) {
         String winStr = team.getTeamName().toLowerCase().endsWith("s") ? " win in " + games + " games!"
-                : " wins game " + games + "!";
+                : " wins in " + games + " games!";
 
         Label winningTeam = new Label(team.getTeamName());
         winningTeam.getStyleClass().add("winnerLabelTeam");
@@ -37,9 +38,9 @@ public class MatchWinnerView extends MainView {
 
         VBox winnerBox = new VBox(winningTeam, winner);
         winnerBox.getStyleClass().add("winnerBox");
-        Label press = new Label("Press Start for new " + gameType + " match");
+        Label press = new Label("Press Start for new " + gameType + " Match");
         press.getStyleClass().add("pressStartLabel");
-        Label hold = new Label("Hold Start for New Sport");
+        Label hold = new Label("Hold Start for new Sport");
         hold.getStyleClass().add("pressStartLabel");
         VBox message = new VBox(winnerBox, press, hold);
         message.getStyleClass().add("winnerMessage");
@@ -54,39 +55,44 @@ public class MatchWinnerView extends MainView {
 
     private void setEventListeners() {
         PiController.removeEventListeners();
-        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isLow()) {
-                Controller.getView().setKeyPressTime(System.currentTimeMillis());
-                controller2DownPressed = true;
-            }
-            else {
-                Controller.getView().setKeyPressTime(0);
-                controller2DownPressed = false;
-            }
-        });
+        PiController.controller2Down.addListener((GpioPinListenerDigital) this::controller2DownPress);
 
-        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isLow()) {
-                if (controller2DownPressed && System.currentTimeMillis() - Controller.getView().getKeyPressTime() >= 3000L) {
-                    Platform.runLater(() -> Controller.easterEgg("img/easterEgg.gif"));
+        PiController.controller1Down.addListener((GpioPinListenerDigital) this::controller1DownPress);
+
+        PiController.reset.addListener((GpioPinListenerDigital) this::reset);
+    }
+
+    private void controller2DownPress(GpioPinDigitalStateChangeEvent event) {
+        if (event.getState().isLow()) {
+            Controller.getView().setKeyPressTime(System.currentTimeMillis());
+            controller2DownPressed = true;
+        }
+        else {
+            Controller.getView().setKeyPressTime(0);
+            controller2DownPressed = false;
+        }
+    }
+
+    private void controller1DownPress(GpioPinDigitalStateChangeEvent event) {
+        if (event.getState().isLow()) {
+            if (controller2DownPressed && System.currentTimeMillis() - Controller.getView().getKeyPressTime() >= 3000L) {
+                Platform.runLater(() -> Controller.easterEgg("img/finishHimEasterEgg.gif"));
+            }
+        }
+    }
+
+    private void reset(GpioPinDigitalStateChangeEvent event) {
+        if (event.getState().isLow()) {
+            Controller.getView().setKeyPressTime(System.currentTimeMillis());
+        }
+        else {
+            Platform.runLater(() -> {
+                if (Controller.resetButtonHeld()) {
+                    Platform.runLater(PiController::openTeamSelect);
                 }
-            }
-        });
-
-        PiController.reset.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isLow()) {
-                Controller.getView().setKeyPressTime(System.currentTimeMillis());
-            }
-            else {
-                Platform.runLater(() -> {
-                    if (!Controller.resetButtonHeld()) {
-                        Platform.runLater(PiController::openTeamSelect);
-                    }
-                    Controller.getView().setKeyPressTime(0);
-                    //view.getKeysDown().remove(event.getCode());
-                });
-            }
-        });
+                Controller.getView().setKeyPressTime(0);
+            });
+        }
     }
 
     private void setKeyPressListeners() {
@@ -98,7 +104,7 @@ public class MatchWinnerView extends MainView {
                         Controller.easterEgg("img/easterEgg.gif");
                 }
             } else if (e.getCode() == KeyCode.Q) {
-                if (!Controller.resetButtonHeld()) {
+                if (Controller.resetButtonHeld()) {
                     Controller.openTeamSelect();
                 }
             }

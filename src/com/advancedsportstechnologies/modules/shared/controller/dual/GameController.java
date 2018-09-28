@@ -35,7 +35,7 @@ public class GameController {
         }
 
         if (e.getCode() == KeyCode.Q) {
-            if (!Controller.resetButtonHeld()) {
+            if (Controller.resetButtonHeld()) {
                 cancelCountdown = true;
                 restartMatch(team1, team2);
                 Controller.openTeamSelect();

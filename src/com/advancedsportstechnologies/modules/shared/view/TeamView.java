@@ -1,5 +1,6 @@
 package com.advancedsportstechnologies.modules.shared.view;
 
+import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.modules.shared.model.Team;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -17,9 +18,12 @@ public class TeamView extends Team {
     public TeamView(String teamName) {
         super(teamName);
         this.nameLabel = new Label(getTeamName());
+        nameLabel.setFont(Run.WIDTH > 1280 ? new Font(82) : new Font(60));
         this.nameLabel.getStyleClass().add("team" + count + "NameLabel");
         this.scoreLabel = new Label(String.valueOf(getScore()));
-        scoreLabel.setFont(new Font(350));
+        System.out.println("HEIGHT: " + Run.HEIGHT);
+        System.out.println("WIDTH: " + Run.WIDTH);
+        scoreLabel.setFont(Run.WIDTH > 1280 ? new Font(500) : new Font(350));
         this.scoreLabel.getStyleClass().add("scoreLabel");
         this.gamesWonImgs = new HBox(50);
         this.getGamesWonImgs().getChildren().add(new ImageView(new Image("/img/placeholder.png")));

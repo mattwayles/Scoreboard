@@ -3,6 +3,7 @@ package com.advancedsportstechnologies.config.view;
 import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
 import com.advancedsportstechnologies.config.controller.PiController;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -59,34 +60,20 @@ public class GameSelectView extends MainView {
     }
 
     private void setEventListeners() {
-        PiController.controller1Up.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> selectionBox.getSelectionModel().selectPrevious());
-            }
-        });
-        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> selectionBox.getSelectionModel().selectNext());
-            }
-        });
-        PiController.controller2Up.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> selectionBox.getSelectionModel().selectPrevious());
-            }
-        });
-        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> selectionBox.getSelectionModel().selectNext());
-            }
-        });
-        PiController.reset.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                Platform.runLater(() -> {
-                    String matchType = selectionBox.getSelectionModel().getSelectedItem().toString();
-                    PiController.openGameFormatSelectView(matchType);
-                });
-            }
-        });
+        PiController.controller1Up.addListener((GpioPinListenerDigital) event -> PiController.selectComboBoxPrevious(event, selectionBox));
+        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> PiController.selectComboBoxNext(event, selectionBox));
+        PiController.controller2Up.addListener((GpioPinListenerDigital) event -> PiController.selectComboBoxPrevious(event, selectionBox));
+        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> PiController.selectComboBoxNext(event, selectionBox));
+        PiController.reset.addListener((GpioPinListenerDigital) this::reset);
+    }
+
+    private void reset(GpioPinDigitalStateChangeEvent event) {
+        if (event.getState().isHigh()) {
+            Platform.runLater(() -> {
+                String matchType = selectionBox.getSelectionModel().getSelectedItem().toString();
+                PiController.openGameFormatSelectView(matchType);
+            });
+        }
     }
 
     private void setKeyPressListeners() {
