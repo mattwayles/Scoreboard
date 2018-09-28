@@ -21,8 +21,6 @@ public class TeamView extends Team {
         nameLabel.setFont(Run.WIDTH > 1280 ? new Font(82) : new Font(60));
         this.nameLabel.getStyleClass().add("team" + count + "NameLabel");
         this.scoreLabel = new Label(String.valueOf(getScore()));
-        System.out.println("HEIGHT: " + Run.HEIGHT);
-        System.out.println("WIDTH: " + Run.WIDTH);
         scoreLabel.setFont(Run.WIDTH > 1280 ? new Font(500) : new Font(350));
         this.scoreLabel.getStyleClass().add("scoreLabel");
         this.gamesWonImgs = new HBox(50);
