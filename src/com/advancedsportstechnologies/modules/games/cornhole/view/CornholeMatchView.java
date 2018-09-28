@@ -4,9 +4,9 @@ import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
 import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.config.view.MainView;
+import com.advancedsportstechnologies.config.view.ViewCreator;
 import com.advancedsportstechnologies.modules.shared.controller.dual.GameController;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
-import com.advancedsportstechnologies.config.view.ViewCreator;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.layout.HBox;
@@ -74,10 +74,13 @@ public class CornholeMatchView extends MainView {
             }
         });
         PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()  && team1.getScore() > 0) {
+            if (event.getState().isHigh()) {
+                System.out.println("Controller 2 Down LOW");
                 Platform.runLater(() -> {
-                    team2.setScore(team2.getScore() - 1);
-                    team2.setScoreLabel(team2.getScore());
+                    if (event.getState().isHigh() && team1.getScore() > 0) {
+                        team2.setScore(team2.getScore() - 1);
+                        team2.setScoreLabel(team2.getScore());
+                    }
                 });
             }
         });
@@ -91,7 +94,6 @@ public class CornholeMatchView extends MainView {
                         Platform.runLater(PiController::openTeamSelect);
                     }
                     Controller.getView().setKeyPressTime(0);
-                    //view.getKeysDown().remove(event.getCode());
                 });
             }
         });

@@ -1,6 +1,5 @@
 package com.advancedsportstechnologies.modules.shared.view;
 
-import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.modules.shared.model.Team;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -8,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
-import javafx.stage.Screen;
 
 public class TeamView extends Team {
     private Label nameLabel;

@@ -5,7 +5,6 @@ import com.advancedsportstechnologies.modules.shared.view.TeamView;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
 
 public class ViewCreator {
     private static final double HEIGHT = Run.HEIGHT;

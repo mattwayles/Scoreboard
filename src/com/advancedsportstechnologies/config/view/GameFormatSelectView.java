@@ -1,8 +1,8 @@
 package com.advancedsportstechnologies.config.view;
 
+import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
 import com.advancedsportstechnologies.config.controller.PiController;
-import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.model.Match;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
@@ -14,8 +14,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
-
-import static com.advancedsportstechnologies.config.controller.Controller.resetButtonHeld;
 
 public class GameFormatSelectView extends MainView {
     private VBox gameFormatView;
@@ -134,7 +132,6 @@ public class GameFormatSelectView extends MainView {
                         PiController.openTeamSelect(scoreArr);
                     }
                     Controller.getView().setKeyPressTime(0);
-                    //view.getKeysDown().remove(event.getCode());
                 });
             }
         });

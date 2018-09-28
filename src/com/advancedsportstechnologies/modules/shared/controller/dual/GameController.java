@@ -1,8 +1,6 @@
 package com.advancedsportstechnologies.modules.shared.controller.dual;
 
-import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
-import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.config.model.Match;
 import com.advancedsportstechnologies.config.view.GameWinnerView;
 import com.advancedsportstechnologies.config.view.MainView;
@@ -10,7 +8,6 @@ import com.advancedsportstechnologies.config.view.MatchWinnerView;
 import com.advancedsportstechnologies.modules.games.cornhole.view.CornholeMatchView;
 import com.advancedsportstechnologies.modules.games.trampolinevolleyball.view.VolleyballMatchView;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
-import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

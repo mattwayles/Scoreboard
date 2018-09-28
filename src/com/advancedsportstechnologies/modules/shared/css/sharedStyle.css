@@ -6,7 +6,7 @@
 .team1NameLabel, .team2NameLabel {
     -fx-font-family: "Cooper Black";
     -fx-text-fill: #0800ad;
-    -fx-font-size: 72px;
+    -fx-font-size: 60px;
 }
 
 .team2NameLabel {

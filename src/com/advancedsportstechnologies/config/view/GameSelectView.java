@@ -1,8 +1,8 @@
 package com.advancedsportstechnologies.config.view;
 
+import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
 import com.advancedsportstechnologies.config.controller.PiController;
-import com.advancedsportstechnologies.Run;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -23,6 +23,7 @@ public class GameSelectView extends MainView {
     public GameSelectView() {
         createGameSelectView();
         if (!Run.debug) {
+            PiController.setDebounce();
             this.setEventListeners();
         }
         else {

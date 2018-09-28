@@ -1,8 +1,8 @@
 package com.advancedsportstechnologies.config.view;
 
+import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
 import com.advancedsportstechnologies.config.controller.PiController;
-import com.advancedsportstechnologies.Run;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -124,7 +124,6 @@ public class TeamSelectView extends MainView {
                         Platform.runLater(() -> PiController.startMatch(this));
                     }
                     Controller.getView().setKeyPressTime(0);
-                    //view.getKeysDown().remove(event.getCode());
                 });
             }
         });

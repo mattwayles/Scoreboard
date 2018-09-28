@@ -10,7 +10,6 @@ import com.advancedsportstechnologies.modules.shared.view.TeamView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.stage.Screen;
 
 public class Controller extends Run {
     private static MainView view;

@@ -1,3 +1,11 @@
+@font-face {
+    src: url("fonts/HarlowSolidItalic.ttf");
+}
+
+@font-face {
+    src: url("fonts/CooperBlackRegular.ttf");
+}
+
 #root {
     -fx-background-image: url("/img/background.jpg");
     -fx-background-size: cover;

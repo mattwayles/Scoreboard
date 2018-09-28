@@ -8,12 +8,8 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class MatchWinnerView extends MainView {
     private HBox view;
@@ -43,7 +39,7 @@ public class MatchWinnerView extends MainView {
         winnerBox.getStyleClass().add("winnerBox");
         Label press = new Label("Press Start for new " + gameType + " match");
         press.getStyleClass().add("pressStartLabel");
-        Label hold = new Label("Hold Start to Restart");
+        Label hold = new Label("Hold Start for New Sport");
         hold.getStyleClass().add("pressStartLabel");
         VBox message = new VBox(winnerBox, press, hold);
         message.getStyleClass().add("winnerMessage");
@@ -72,10 +68,7 @@ public class MatchWinnerView extends MainView {
         PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isLow()) {
                 if (controller2DownPressed && System.currentTimeMillis() - Controller.getView().getKeyPressTime() >= 3000L) {
-                    Platform.runLater(() -> {
-                        //TODO: Easter egg on Pi
-                        //Controller.easterEgg("img/easterEgg.gif");
-                    });
+                    Platform.runLater(() -> Controller.easterEgg("img/easterEgg.gif"));
                 }
             }
         });

@@ -4,8 +4,6 @@ import com.advancedsportstechnologies.modules.shared.view.TeamView;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
-import com.advancedsportstechnologies.config.model.Match;
 
 public class GameWinnerView extends MainView {
     private static final String GAME_WINNER_ID = "gameWinner";

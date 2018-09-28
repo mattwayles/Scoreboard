@@ -1,7 +1,8 @@
 package com.advancedsportstechnologies.config.controller;
 
 import com.advancedsportstechnologies.config.model.Match;
-import com.advancedsportstechnologies.config.view.*;
+import com.advancedsportstechnologies.config.view.MainView;
+import com.advancedsportstechnologies.config.view.TeamSelectView;
 import com.pi4j.io.gpio.*;
 
 public class PiController {
@@ -12,12 +13,22 @@ public class PiController {
     final public static GpioPinDigitalInput controller1Down = gpio.provisionDigitalInputPin(RaspiPin.GPIO_05, PinPullResistance.PULL_UP);
     final public static GpioPinDigitalInput controller1Up = gpio.provisionDigitalInputPin(RaspiPin.GPIO_06, PinPullResistance.PULL_UP);
 
+    final private static int DEBOUNCE_MS = 10;
+
     private static MainView view;
     static Match match;
 
     public static Match getMatch() { return match; }
     public static MainView getView() { return view; }
     public static void setView(MainView mainView) { view = mainView; }
+
+    public static void setDebounce() {
+        controller2Down.setDebounce(DEBOUNCE_MS);
+        controller2Up.setDebounce(DEBOUNCE_MS);
+        controller1Down.setDebounce(DEBOUNCE_MS);
+        controller1Up.setDebounce(DEBOUNCE_MS);
+        reset.setDebounce(DEBOUNCE_MS);
+    }
 
     static void openGameSelectView() {
         removeEventListeners();
