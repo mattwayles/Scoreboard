@@ -4,7 +4,7 @@ import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
 import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.config.view.MainView;
-import com.advancedsportstechnologies.config.view.ViewCreator;
+import com.advancedsportstechnologies.modules.shared.view.ViewCreator;
 import com.advancedsportstechnologies.modules.shared.controller.dual.GameController;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;

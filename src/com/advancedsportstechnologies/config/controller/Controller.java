@@ -2,7 +2,9 @@ package com.advancedsportstechnologies.config.controller;
 
 import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.model.Match;
+import com.advancedsportstechnologies.modules.shared.model.Timer;
 import com.advancedsportstechnologies.config.view.*;
+import com.advancedsportstechnologies.modules.games.basketball.view.BasketballMatchView;
 import com.advancedsportstechnologies.modules.games.cornhole.view.CornholeMatchView;
 import com.advancedsportstechnologies.modules.games.trampolinevolleyball.view.VolleyballMatchView;
 import com.advancedsportstechnologies.modules.shared.controller.dual.GameController;
@@ -40,8 +42,21 @@ public class Controller extends Run {
         }
     }
 
+    public static void openTeamSelect(String matchType) {
+        match = new Match(matchType);
+        GameController.match = match;
+        if (!Run.debug) {
+            PiController.match = match;
+        }
+        TeamSelectView teamSelectView = new TeamSelectView(match.getType());
+        view.setCurrentControl(teamSelectView);
+        view.updateConfigView(teamSelectView.getTeamSelectView());
+        System.runFinalization();
+    }
+
     public static void openTeamSelect() {
         openTeamSelect(match.getGameScores());
+
     }
 
     public static void openTeamSelect(int[] scores) {
@@ -67,6 +82,12 @@ public class Controller extends Run {
                 view.setCurrentControl(volleyballMatchView);
                 view.updateMainView(volleyballMatchView.getView());
                 break;
+            case "Basketball":
+                BasketballMatchView basketballMatchView = new BasketballMatchView(teamSelect.getTeam1Select().getValue().toString(),
+                        teamSelect.getTeam2Select().getValue().toString());
+                view.setCurrentControl(basketballMatchView);
+                view.updateMainView(basketballMatchView.getView());
+                basketballMatchView.startQuarter();
         }
     }
 

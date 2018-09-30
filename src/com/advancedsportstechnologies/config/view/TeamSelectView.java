@@ -78,6 +78,9 @@ public class TeamSelectView extends MainView {
             case "Trampoline Volleyball":
                 file = new File(System.getProperty("user.dir") + "/VolleyballTeams.txt");
                 break;
+            case "Basketball":
+                file = new File(System.getProperty("user.dir") + "/BasketballTeams.txt");
+                break;
             default:
                 throw new FileNotFoundException();
         }

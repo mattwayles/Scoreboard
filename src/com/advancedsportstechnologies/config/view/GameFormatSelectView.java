@@ -18,16 +18,31 @@ import java.util.Arrays;
 
 public class GameFormatSelectView extends MainView {
     private VBox gameFormatView;
-    private String gameScores;
-    private int[][] allScores;
+    private String gameSelection;
+    private int[][] allSelections;
     private ComboBox selectionBox;
     private Label scoreLabel;
-    private String[] formats = new String[] {"Regular", "Championship"};
+    private String[] formats;
 
     public GameFormatSelectView(String matchType) {
-        this.allScores = matchType.equals("Cornhole") ? Match.CORNHOLE_DEFAULTS : Match.TRAMPOLINE_VOLLEYBALL_DEFAULTS;
-        this.gameScores = this.formatGameScores(this.allScores[0]);
-
+        switch (matchType) {
+            case "Cornhole":
+                formats = new String[] {"Regular", "Championship"};
+                this.allSelections = Match.CORNHOLE_DEFAULTS;
+                this.gameSelection = this.formatGameSelections(this.allSelections[0]);
+                break;
+            case "Trampoline Volleyball":
+                formats = new String[] {"Regular", "Championship"};
+                this.allSelections = Match.TRAMPOLINE_VOLLEYBALL_DEFAULTS;
+                this.gameSelection = this.formatGameSelections(this.allSelections[0]);
+                break;
+            case "Basketball":
+                String[] strs = new String[Match.BASKETBALL_DEFAULTS.length];
+                for (int i = 0; i < Match.BASKETBALL_DEFAULTS.length; i++) {
+                    strs[i] = String.valueOf(Match.BASKETBALL_DEFAULTS[i]) + " mins";
+                }
+                formats = strs;
+        }
         createGameFormatView();
 
         if (!Run.debug) {
@@ -37,22 +52,22 @@ public class GameFormatSelectView extends MainView {
         }
     }
 
-    private String getGameScores() { return this.gameScores; }
+    private String getGameSelections() { return this.gameSelection; }
 
-    private void setGameScores(String gameScoreStr) { this.gameScores = gameScoreStr; }
+    private void setGameSelections(String gameScoreStr) { this.gameSelection = gameScoreStr; }
 
     private void updateScoreLabel() {
         int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
-        int[] scoreArr = this.getAllScores()[selectionBoxIndex];
-        this.setGameScores(this.formatGameScores(scoreArr));
-        this.scoreLabel.textProperty().setValue(this.getGameScores());
+        int[] scoreArr = this.getAllSelections()[selectionBoxIndex];
+        this.setGameSelections(this.formatGameSelections(scoreArr));
+        this.scoreLabel.textProperty().setValue(this.getGameSelections());
     }
 
-    private int[][] getAllScores() { return this.allScores; }
+    private int[][] getAllSelections() { return this.allSelections; }
 
     public VBox getGameFormatSelectView() { return this.gameFormatView; }
 
-    private String formatGameScores(int[] scores) {
+    private String formatGameSelections(int[] scores) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < scores.length; i++) {
             sb.append(scores[i]);
@@ -72,12 +87,6 @@ public class GameFormatSelectView extends MainView {
         //Create game selection label
         //TODO: Create label with game score on selection
 
-        Label gameFormatLabel = new Label("Select Format:");
-        gameFormatLabel.getStyleClass().add("gameSelectionLabel");
-
-        this.scoreLabel = new Label(this.gameScores);
-        scoreLabel.getStyleClass().add("gameFormatLabel");
-
         //Create game selection drop-down
         ObservableList<String> options = FXCollections.observableArrayList();
         options.addAll(Arrays.asList(this.formats));
@@ -85,8 +94,20 @@ public class GameFormatSelectView extends MainView {
         gameFormatComboBox.getSelectionModel().selectNext();
         this.setSelectionBox(gameFormatComboBox);
 
-        //Create game select VBox
-        VBox gameBox = new VBox(gameFormatLabel, scoreLabel, gameFormatComboBox);
+        VBox gameBox;
+        Label gameFormatLabel;
+        if (this.allSelections != null) {
+            gameFormatLabel = new Label("Select Format:");
+            this.scoreLabel = new Label(this.gameSelection);
+            scoreLabel.getStyleClass().add("gameFormatLabel");
+
+            //Create game select VBox
+            gameBox = new VBox(gameFormatLabel, scoreLabel, gameFormatComboBox);
+        } else {
+            gameFormatLabel = new Label("Select Quarter Length");
+            gameBox = new VBox(gameFormatLabel, gameFormatComboBox);
+        }
+        gameFormatLabel.getStyleClass().add("gameSelectionLabel");
         gameBox.getStyleClass().add("gameBox");
 
         this.setGameFormatView(gameBox);
@@ -118,7 +139,7 @@ public class GameFormatSelectView extends MainView {
             Platform.runLater(() -> {
                 if (Controller.resetButtonHeld()) {
                     int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
-                    int[] scoreArr = this.getAllScores()[selectionBoxIndex];
+                    int[] scoreArr = this.getAllSelections()[selectionBoxIndex];
                     PiController.openTeamSelect(scoreArr);
                 }
                 Controller.getView().setKeyPressTime(0);
@@ -146,7 +167,7 @@ public class GameFormatSelectView extends MainView {
             } else if (e.getCode() == KeyCode.Q) {
                 if (Controller.resetButtonHeld()) {
                     int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
-                    int[] scoreArr = this.getAllScores()[selectionBoxIndex];
+                    int[] scoreArr = this.getAllSelections()[selectionBoxIndex];
                     Controller.openTeamSelect(scoreArr);
                 }
                 view.setKeyPressTime(0);

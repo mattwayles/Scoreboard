@@ -1,8 +1,10 @@
 package com.advancedsportstechnologies.config.controller;
 
+import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.model.Match;
 import com.advancedsportstechnologies.config.view.MainView;
 import com.advancedsportstechnologies.config.view.TeamSelectView;
+import com.advancedsportstechnologies.modules.shared.controller.dual.GameController;
 import com.pi4j.io.gpio.*;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.wiringpi.Gpio;
@@ -51,6 +53,14 @@ public class PiController {
     public static void openTeamSelect(int[] scores) {
         removeEventListeners();
         Controller.openTeamSelect(scores);
+    }
+
+    public static void openTeamSelect(String matchType) {
+        match = new Match(matchType);
+        GameController.match = match;
+        TeamSelectView teamSelectView = new TeamSelectView(match.getType());
+        view.setCurrentControl(teamSelectView);
+        view.updateConfigView(teamSelectView.getTeamSelectView());
     }
 
     public static void startMatch(TeamSelectView teamSelect) {

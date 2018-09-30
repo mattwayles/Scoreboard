@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
@@ -19,7 +20,11 @@ import java.util.Arrays;
 public class GameSelectView extends MainView {
     private VBox gameSelectView;
     private ComboBox selectionBox;
-    private String[] games = new String[] {"Cornhole", "Trampoline Volleyball", "More Games Soon!"};
+    private String[] games = new String[] {
+            "Cornhole",
+            "Trampoline Volleyball",
+            "Basketball",
+            "More Games Soon!"};
 
     public GameSelectView() {
         createGameSelectView();

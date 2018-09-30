@@ -1,30 +1,35 @@
-package com.advancedsportstechnologies.modules.games.cornhole.view;
+package com.advancedsportstechnologies.modules.games.basketball.view;
 
 import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
 import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.config.view.MainView;
+import com.advancedsportstechnologies.modules.shared.model.Timer;
 import com.advancedsportstechnologies.modules.shared.view.ViewCreator;
 import com.advancedsportstechnologies.modules.shared.controller.dual.GameController;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 
-public class CornholeMatchView extends MainView {
+public class BasketballMatchView extends MainView {
     private HBox view;
+    private Label timer;
     private TeamView team1;
     private TeamView team2;
 
+    private final int QUARTER_SECONDS = 720;
 
-    public CornholeMatchView(String team1Name, String team2Name) {
+
+    public BasketballMatchView(String team1Name, String team2Name) {
         this.team1 = new TeamView(team1Name);
         team1.setColor(Paint.valueOf("#0800ad"));
         this.team2 = new TeamView(team2Name);
         team2.setColor(Paint.valueOf("#a05500"));
-        createCornholeView();
+        createBasketballView();
         if (!Run.debug) {
             setEventListeners(team1, team2);
         } else {
@@ -33,11 +38,18 @@ public class CornholeMatchView extends MainView {
     }
 
     public HBox getView() { return view; }
+    private Label getTimer() { return timer; }
 
-    private void createCornholeView() {
+    private void createBasketballView() {
         ViewCreator vc = new ViewCreator();
-        this.view = vc.createView(this.team1, this.team2);
-        this.view.getStyleClass().add("cornholeMatchView");
+        this.timer = new Label("00");
+        timer.getStyleClass().add("timer");
+        this.view = vc.createTimedView(this.team1, this.team2, this.timer);
+        this.view.getStyleClass().add("basketballMatchView");
+    }
+
+    public void startQuarter() {
+        Timer.start(QUARTER_SECONDS, this.getTimer());
     }
 
     public void resetScores() {

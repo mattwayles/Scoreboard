@@ -1,7 +1,8 @@
-package com.advancedsportstechnologies.config.view;
+package com.advancedsportstechnologies.modules.shared.view;
 
 import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,6 +16,21 @@ public class ViewCreator {
         separator.setPrefHeight(HEIGHT);
         separator.getStyleClass().add("separator");
         HBox view = new HBox(createTeamView(team1), separator, createTeamView(team2));
+        view.getStyleClass().add("matchView");
+        view.setMaxWidth(WIDTH);
+
+        return view;
+    }
+
+    public HBox createTimedView(TeamView team1, TeamView team2, Label timer) {
+        VBox topSeparator = new VBox(timer);
+        topSeparator.setPrefHeight(HEIGHT / 2 - 20);
+        topSeparator.getStyleClass().add("separator");
+        VBox bottomSeparator = new VBox(timer);
+        bottomSeparator.setPrefHeight(HEIGHT / 2 - 20);
+        bottomSeparator.getStyleClass().add("separator");
+        VBox middle = new VBox(topSeparator, timer, bottomSeparator);
+        HBox view = new HBox(createTeamView(team1), middle, createTeamView(team2));
         view.getStyleClass().add("matchView");
         view.setMaxWidth(WIDTH);
 

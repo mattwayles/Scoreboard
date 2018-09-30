@@ -44,7 +44,8 @@ public class GameController {
                 restartMatch(team1, team2);
             }
         } else {
-            return checkWinner(team1, team2);
+            //TODO: check winner needs to occur when time runs out
+            //return checkWinner(team1, team2);
         }
         view.setKeyPressTime(0);
         view.getKeysDown().remove(e.getCode());

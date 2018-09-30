@@ -1,0 +1,4 @@
+.basketballMatchView {
+    -fx-background-image: url("/img/cornholebg.jpg");
+    -fx-background-size: cover;
+}
