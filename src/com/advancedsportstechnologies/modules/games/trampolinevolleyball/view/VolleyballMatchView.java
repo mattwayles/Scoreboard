@@ -4,7 +4,7 @@ import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
 import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.config.view.MainView;
-import com.advancedsportstechnologies.config.view.ViewCreator;
+import com.advancedsportstechnologies.modules.shared.view.ViewCreator;
 import com.advancedsportstechnologies.modules.shared.controller.dual.GameController;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
@@ -113,7 +113,8 @@ public class VolleyballMatchView extends MainView {
             else {
                 Platform.runLater(() -> {
                     if (!Controller.resetButtonHeld()) {
-                        Platform.runLater(PiController::openTeamSelect);
+                        PiController.removeEventListeners();
+                        Platform.runLater(Controller::openTeamSelect);
                     }
                     Controller.getView().setKeyPressTime(0);
                     //view.getKeysDown().remove(event.getCode());
@@ -124,7 +125,7 @@ public class VolleyballMatchView extends MainView {
 
     private void setKeyPressListeners(TeamView team1, TeamView team2) {
         Run.getScene().setOnKeyReleased(e -> {
-            boolean winner = GameController.changeScore(e, team1, team2);
+            boolean winner = GameController.changeScore(e, team1, team2, false);
             if (winner) {
                 this.setTeam1(team2);
                 this.setTeam2(team1);

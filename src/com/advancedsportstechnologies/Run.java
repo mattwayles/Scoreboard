@@ -46,6 +46,7 @@ public class Run extends Application {
         rootScene.getStylesheets().add(getClass().getResource("modules/shared/css/sharedStyle.css").toExternalForm());
         rootScene.getStylesheets().add(getClass().getResource("modules/games/cornhole/css/cornholeStyle.css").toExternalForm());
         rootScene.getStylesheets().add(getClass().getResource("modules/games/trampolinevolleyball/css/volleyballStyle.css").toExternalForm());
+        rootScene.getStylesheets().add(getClass().getResource("modules/games/basketball/css/basketballStyle.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
     }

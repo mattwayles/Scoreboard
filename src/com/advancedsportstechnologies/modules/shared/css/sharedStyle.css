@@ -6,7 +6,6 @@
 .team1NameLabel, .team2NameLabel {
     -fx-font-family: "Cooper Black";
     -fx-text-fill: #0800ad;
-    -fx-font-size: 60px;
 }
 
 .team2NameLabel {
@@ -25,9 +24,20 @@
     -fx-text-fill: #a05500;
 }
 
+.timer {
+    -fx-min-width: 150;
+    -fx-font-family: "Cooper Black";
+    -fx-text-fill: #FFF;
+    -fx-font-size: 60px;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-background-color: #000;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
 
 .separator {
-    -fx-pref-width: 10px;
+    -fx-max-width: 10px;
     -fx-border-color: black;
     -fx-background-color: black;
 }
@@ -44,4 +54,13 @@
     -fx-font-family: "Cooper Black";
     -fx-alignment: center;
     -fx-display-caret: false;
+}
+
+
+.matchView {
+    -fx-padding: 40, 10, 10, 10;
+}
+
+.middle {
+    -fx-alignment: center;
 }

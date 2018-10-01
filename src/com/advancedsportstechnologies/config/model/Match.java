@@ -8,6 +8,8 @@ public class Match {
     private String type;
     private int currentGame;
     private int[] gameScores;
+    private int periods;
+    private int periodLen;
 
     public Match(String type) {
         this.type = type;
@@ -25,4 +27,14 @@ public class Match {
     public void setGameScores(int[] scores) {
         this.gameScores = scores;
     }
+
+    public int getNumPeriods() { return this.periods; }
+
+    public void setNumPeriods(int periods) { this.periods = periods; }
+
+    public int getPeriodMins() { return this.periodLen; }
+
+    public int getPeriodSeconds() { return this.periodLen * 60; }
+
+    public void setPeriodLen(int len) { this.periodLen = len; }
 }

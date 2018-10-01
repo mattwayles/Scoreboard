@@ -127,7 +127,8 @@ public class UntimedGameFormatSelectView extends MainView {
                 Platform.runLater(() -> {
                     int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
                     int[] scoreArr = this.getAllScores()[selectionBoxIndex];
-                    PiController.openTeamSelect(scoreArr);
+                    PiController.removeEventListeners();
+                    Controller.openTeamSelect(scoreArr);
 
 
 

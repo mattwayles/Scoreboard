@@ -3,6 +3,7 @@ package com.advancedsportstechnologies.config.controller;
 import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.model.Match;
 import com.advancedsportstechnologies.config.view.*;
+import com.advancedsportstechnologies.modules.games.basketball.view.BasketballMatchView;
 import com.advancedsportstechnologies.modules.games.cornhole.view.CornholeMatchView;
 import com.advancedsportstechnologies.modules.games.trampolinevolleyball.view.VolleyballMatchView;
 import com.advancedsportstechnologies.modules.shared.controller.dual.GameController;
@@ -19,7 +20,7 @@ public class Controller extends Run {
     public static MainView getView() { return view; }
     public void setView(MainView mainView) { view = mainView; }
 
-    static void openGameSelectView() {
+    private static void openGameSelectView() {
         if (match != null) {
             restoreState();
         }
@@ -36,15 +37,12 @@ public class Controller extends Run {
         GameController.match = match;
     }
 
-    public static void openTimedGameFormatSelectView(String matchType, int[] times) {
-        TimedGameFormatSelectView gameFormatSelectView = new TimedGameFormatSelectView(times);
+    public static void openTimedGameFormatSelectView(String matchType, int periods, int[] times) {
+        TimedGameFormatSelectView gameFormatSelectView = new TimedGameFormatSelectView(periods, times);
         view.setCurrentControl(gameFormatSelectView);
         view.updateConfigView(gameFormatSelectView.getGameFormatSelectView());
         match = new Match(matchType);
         GameController.match = match;
-        if (!Run.debug) {
-            PiController.match = match;
-        }
     }
 
     public static void openTeamSelect() {
@@ -54,6 +52,15 @@ public class Controller extends Run {
     public static void openTeamSelect(int[] scores) {
         restoreState();
         match.setGameScores(scores);
+        TeamSelectView teamSelectView = new TeamSelectView(match.getType());
+        view.setCurrentControl(teamSelectView);
+        view.updateConfigView(teamSelectView.getTeamSelectView());
+    }
+
+    public static void openTeamSelect(int periods, int length) {
+        restoreState();
+        match.setNumPeriods(periods);
+        match.setPeriodLen(length);
         TeamSelectView teamSelectView = new TeamSelectView(match.getType());
         view.setCurrentControl(teamSelectView);
         view.updateConfigView(teamSelectView.getTeamSelectView());
@@ -73,6 +80,13 @@ public class Controller extends Run {
                 view.setCurrentControl(volleyballMatchView);
                 view.updateMainView(volleyballMatchView.getView());
                 break;
+            case "Basketball":
+                BasketballMatchView basketballMatchView = new BasketballMatchView(teamSelect.getTeam1Select().getValue().toString(),
+                        teamSelect.getTeam2Select().getValue().toString());
+                view.setCurrentControl(basketballMatchView);
+                view.updateMainView(basketballMatchView.getView());
+                basketballMatchView.startPeriod();
+
         }
     }
 
@@ -113,7 +127,8 @@ public class Controller extends Run {
                 Controller.openGameSelectView();
             }
             else {
-                PiController.openGameSelectView();
+                PiController.removeEventListeners();
+                Controller.openGameSelectView();
             }
             view.setKeyPressTime(0);
             return true;

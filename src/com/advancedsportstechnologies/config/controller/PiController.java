@@ -1,8 +1,4 @@
 package com.advancedsportstechnologies.config.controller;
-
-import com.advancedsportstechnologies.config.model.Match;
-import com.advancedsportstechnologies.config.view.MainView;
-import com.advancedsportstechnologies.config.view.TeamSelectView;
 import com.pi4j.io.gpio.*;
 
 public class PiController {
@@ -15,13 +11,6 @@ public class PiController {
 
     final private static int DEBOUNCE_MS = 10;
 
-    private static MainView view;
-    static Match match;
-
-    public static Match getMatch() { return match; }
-    public static MainView getView() { return view; }
-    public static void setView(MainView mainView) { view = mainView; }
-
     public static void setDebounce() {
         controller2Down.setDebounce(DEBOUNCE_MS);
         controller2Up.setDebounce(DEBOUNCE_MS);
@@ -29,40 +18,6 @@ public class PiController {
         controller1Up.setDebounce(DEBOUNCE_MS);
         reset.setDebounce(DEBOUNCE_MS);
     }
-
-    static void openGameSelectView() {
-        removeEventListeners();
-        Controller.openGameSelectView();
-    }
-    
-    public static void openGameFormatSelectView(String matchType, int[][] scores) {
-        removeEventListeners();
-        Controller.openGameFormatSelectView(matchType, scores);
-    }
-
-    public static void openTimedGameFormatSelectView(String matchType, int[] times) {
-        removeEventListeners();
-        Controller.openTimedGameFormatSelectView(matchType, times);
-    }
-
-    public static void openTeamSelect() {
-        openTeamSelect(match.getGameScores());
-    }
-
-    public static void openTeamSelect(int[] scores) {
-        removeEventListeners();
-        Controller.openTeamSelect(scores);
-    }
-
-    public static void startMatch(TeamSelectView teamSelect) {
-        removeEventListeners();
-        Controller.startMatch(teamSelect);
-    }
-    
-    public static void easterEgg(String location) {
-       Controller.easterEgg(location);
-    }
-
 
     public static void removeEventListeners() {
         controller1Up.removeAllListeners();

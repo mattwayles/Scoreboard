@@ -1,4 +1,4 @@
-package com.advancedsportstechnologies.modules.games.cornhole.view;
+package com.advancedsportstechnologies.modules.games.basketball.view;
 
 import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
@@ -6,81 +6,79 @@ import com.advancedsportstechnologies.config.controller.PiController;
 import com.advancedsportstechnologies.config.view.MainView;
 import com.advancedsportstechnologies.modules.shared.view.ViewCreator;
 import com.advancedsportstechnologies.modules.shared.controller.dual.GameController;
+import com.advancedsportstechnologies.modules.shared.model.Timer;
 import com.advancedsportstechnologies.modules.shared.view.TeamView;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 
-public class CornholeMatchView extends MainView {
+public class BasketballMatchView extends MainView {
+
+
     private HBox view;
     private TeamView team1;
     private TeamView team2;
+    private Label timer;
 
 
-    public CornholeMatchView(String team1Name, String team2Name) {
+    public BasketballMatchView(String team1Name, String team2Name) {
         this.team1 = new TeamView(team1Name);
         team1.setColor(Paint.valueOf("#0800ad"));
         this.team2 = new TeamView(team2Name);
         team2.setColor(Paint.valueOf("#a05500"));
-        createCornholeView();
+        createBasketballView();
         if (!Run.debug) {
-            setEventListeners(team1, team2);
+            this.setEventListeners();
         } else {
-            setKeyPressListeners(team1, team2);
+            this.setKeyPressListeners(team1, team2);
         }
     }
 
     public HBox getView() { return view; }
 
-    private void createCornholeView() {
+    private void createBasketballView() {
         ViewCreator vc = new ViewCreator();
-        this.view = vc.createView(this.team1, this.team2);
-        this.view.getStyleClass().add("cornholeMatchView");
+        this.timer = new Label(Controller.getMatch().getPeriodMins() + ":00");
+        this.view = vc.createTimedView(this.team1, this.team2, this.timer);
+        this.view.getStyleClass().add("basketballMatchView");
     }
 
-    public void resetScores() {
-        this.team1.setScore(0);
-        this.team2.setScore(0);
-        this.team1.setScoreLabel(this.team1.getScore());
-        this.team2.setScoreLabel(this.team2.getScore());
+    public void startPeriod() {
+        Timer.startCountdown(Controller.getMatch().getPeriodSeconds(), this.timer);
     }
 
-    private static void setEventListeners(TeamView team1, TeamView team2) {
+    private void setEventListeners() {
         PiController.controller1Up.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
                 Platform.runLater(() -> {
-                    team1.setScore(team1.getScore() + 1);
-                    team1.setScoreLabel(team1.getScore());
-                    GameController.checkWinner(team1, team2);
+                    this.team1.setScore(this.team1.getScore() + 1);
+                    this.team1.setScoreLabel(team1.getScore());
                 });
             }
         });
         PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh() && team1.getScore() > 0) {
                 Platform.runLater(() -> {
-                    team1.setScore(team1.getScore() - 1);
-                    team1.setScoreLabel(team1.getScore());
+                    this.team1.setScore(this.team1.getScore() - 1);
+                    this.team1.setScoreLabel(this.team1.getScore());
                 });
             }
         });
         PiController.controller2Up.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
                 Platform.runLater(() -> {
-                    team2.setScore(team2.getScore() + 1);
-                    team2.setScoreLabel(team2.getScore());
-                    GameController.checkWinner(team1, team2);
+                    this.team2.setScore(this.team2.getScore() + 1);
+                    this.team2.setScoreLabel(this.team2.getScore());
                 });
             }
         });
         PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh()) {
-                System.out.println("Controller 2 Down LOW");
+            if (event.getState().isHigh()  && this.team2.getScore() > 0) {
                 Platform.runLater(() -> {
-                    if (event.getState().isHigh() && team1.getScore() > 0) {
-                        team2.setScore(team2.getScore() - 1);
-                        team2.setScoreLabel(team2.getScore());
-                    }
+                    this.team2.setScore(this.team2.getScore() - 1);
+                    this.team2.setScoreLabel(this.team2.getScore());
                 });
             }
         });
@@ -100,7 +98,9 @@ public class CornholeMatchView extends MainView {
         });
     }
 
-    private static void setKeyPressListeners(TeamView team1, TeamView team2) {
-        Run.getScene().setOnKeyReleased(e -> GameController.changeScore(e, team1, team2, false));
+    private void setKeyPressListeners(TeamView team1, TeamView team2) {
+        Run.getScene().setOnKeyReleased(e -> {
+            GameController.changeScore(e, team1, team2, true);
+        });
     }
 }

@@ -20,6 +20,9 @@ public class GameSelectView extends MainView {
     private VBox gameSelectView;
     private ComboBox selectionBox;
     private String[] games = new String[] {"Cornhole", "Volleyball", "Basketball", "More Games Soon!"};
+    private static final int QUARTERS = 4;
+    private static final int HALVES = 2;
+    private static final int PERIODS = 3;
 
     public GameSelectView() {
         createGameSelectView();
@@ -81,6 +84,7 @@ public class GameSelectView extends MainView {
             if (event.getState().isHigh()) {
                 Platform.runLater(() -> {
                     String matchType = selectionBox.getSelectionModel().getSelectedItem().toString();
+                    PiController.setDebounce();
                     PiController.removeEventListeners();
                     selectGame(matchType);
 
@@ -113,8 +117,8 @@ public class GameSelectView extends MainView {
             case "Volleyball":
                 Controller.openGameFormatSelectView(game, Match.TRAMPOLINE_VOLLEYBALL_DEFAULTS);
                 break;
-            case "Basektball":
-                Controller.openTimedGameFormatSelectView(game, Match.BASKETBALL_DEFAULTS);
+            case "Basketball":
+                Controller.openTimedGameFormatSelectView(game, QUARTERS, Match.BASKETBALL_DEFAULTS);
                 break;
         }
     }

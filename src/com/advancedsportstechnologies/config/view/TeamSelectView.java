@@ -111,7 +111,8 @@ public class TeamSelectView extends MainView {
             else {
                 Platform.runLater(() -> {
                     if (!Controller.resetButtonHeld()) {
-                        Platform.runLater(() -> PiController.startMatch(this));
+                        PiController.removeEventListeners();
+                        Platform.runLater(() -> Controller.startMatch(this));
                     }
                     Controller.getView().setKeyPressTime(0);
                 });

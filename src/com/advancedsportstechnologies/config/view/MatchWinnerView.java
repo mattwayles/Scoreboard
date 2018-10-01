@@ -80,10 +80,10 @@ public class MatchWinnerView extends MainView {
             else {
                 Platform.runLater(() -> {
                     if (!Controller.resetButtonHeld()) {
-                        Platform.runLater(PiController::openTeamSelect);
+                        PiController.removeEventListeners();
+                        Platform.runLater(Controller::openTeamSelect);
                     }
                     Controller.getView().setKeyPressTime(0);
-                    //view.getKeysDown().remove(event.getCode());
                 });
             }
         });

@@ -19,7 +19,7 @@ public class GameController {
     private static MainView view = Controller.getView();
     public static Match match = Controller.getMatch();
 
-    public static boolean changeScore(KeyEvent e, TeamView team1, TeamView team2) {
+    public static boolean changeScore(KeyEvent e, TeamView team1, TeamView team2, boolean timed) {
         if (e.getCode() == KeyCode.A) {
             team1.setScore(team1.getScore() + 1);
             team1.setScoreLabel(team1.getScore());
@@ -43,7 +43,7 @@ public class GameController {
             else {
                 restartMatch(team1, team2);
             }
-        } else {
+        } else if (!timed) {
             return checkWinner(team1, team2);
         }
         view.setKeyPressTime(0);

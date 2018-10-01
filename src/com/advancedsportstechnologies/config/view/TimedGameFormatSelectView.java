@@ -18,10 +18,13 @@ import java.util.Arrays;
 public class TimedGameFormatSelectView extends MainView {
     private VBox gameFormatView;
     private ComboBox selectionBox;
-    private Label scoreLabel;
+    private int periods;
+    private int[] times;
 
-    public TimedGameFormatSelectView(int[] times) {
-        createGameFormatView(times);
+    public TimedGameFormatSelectView(int periods, int[] times) {
+        this.periods = periods;
+        this.times = times;
+        createGameFormatView();
 
         if (!Run.debug) {
             this.setEventListeners();
@@ -37,21 +40,27 @@ public class TimedGameFormatSelectView extends MainView {
 
     private void setSelectionBox(ComboBox box) { this.selectionBox = box; }
 
-    private void createGameFormatView(int[] lengths) {
+    private void createGameFormatView() {
         //Create game selection label
         //TODO: Create label with game score on selection
 
-        Label gameFormatLabel = new Label("Select Format:");
+        Label gameFormatLabel =
+                periods == 2 ?  new Label("Select Half Length:") :
+                        periods == 3 ? new Label("Select Period Length:") :
+                                periods == 4 ? new Label("Select Quarter Length:") :
+                                        new Label("Select Length:");
         gameFormatLabel.getStyleClass().add("gameSelectionLabel");
         //Create game selection drop-down
         ObservableList<String> options = FXCollections.observableArrayList();
-        options.addAll(String.valueOf(Arrays.asList(lengths)));
+        for (int i : this.times) {
+            options.add(i + " mins");
+        }
         ComboBox gameFormatComboBox = new ComboBox<>(options);
         gameFormatComboBox.getSelectionModel().selectNext();
         this.setSelectionBox(gameFormatComboBox);
 
         //Create game select VBox
-        VBox gameBox = new VBox(gameFormatLabel, scoreLabel, gameFormatComboBox);
+        VBox gameBox = new VBox(gameFormatLabel, gameFormatComboBox);
         gameBox.getStyleClass().add("gameBox");
 
         this.setGameFormatView(gameBox);
@@ -105,7 +114,7 @@ public class TimedGameFormatSelectView extends MainView {
             } else if (e.getCode() == KeyCode.Q) {
                 if (!Controller.resetButtonHeld()) {
                     int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
-                    //Controller.openTeamSelect(scoreArr);
+                    Controller.openTeamSelect(periods , this.times[selectionBoxIndex]);
                 }
                 view.setKeyPressTime(0);
                 view.getKeysDown().remove(e.getCode());
