@@ -7,6 +7,7 @@ public class Match {
 
     private String type;
     private int currentGame;
+    private int currentPeriod;
     private int[] gameScores;
     private int periods;
     private int periodLen;
@@ -14,6 +15,7 @@ public class Match {
     public Match(String type) {
         this.type = type;
         this.currentGame = 0;
+        this.currentPeriod = 1;
     }
 
     public String getType() { return this.type; }
@@ -21,6 +23,10 @@ public class Match {
     public int getCurrentGame() { return currentGame; }
 
     public void setCurrentGame(int game) { this.currentGame = game; }
+
+    public int getCurrentPeriod() { return currentPeriod; }
+
+    public void setCurrentPeriod(int period) { this.currentPeriod = period; }
 
     public int[] getGameScores() { return this.gameScores; }
 

@@ -22,16 +22,18 @@ public class ViewCreator {
         return view;
     }
 
-    public HBox createTimedView(TeamView team1, TeamView team2, Label timer) {
+    public HBox createTimedView(TeamView team1, TeamView team2, Label period, Label timer) {
         VBox separator = new VBox();
         separator.setPrefHeight(HEIGHT / 3);
         separator.getStyleClass().add("separator");
-        separator.setAlignment(Pos.CENTER_RIGHT);
         VBox separator2 = new VBox();
         separator2.setPrefHeight(HEIGHT - HEIGHT / 3);
         separator2.getStyleClass().add("separator");
         timer.getStyleClass().add("timer");
-        VBox middle = new VBox(separator, timer, separator2);
+        period.getStyleClass().add("period");
+        VBox timeBox = new VBox(period, timer);
+        timeBox.getStyleClass().add("timeBox");
+        VBox middle = new VBox(separator, timeBox, separator2);
         middle.getStyleClass().add("middle");
         HBox view = new HBox(createTeamView(team1), middle, createTeamView(team2));
         view.getStyleClass().add("matchView");

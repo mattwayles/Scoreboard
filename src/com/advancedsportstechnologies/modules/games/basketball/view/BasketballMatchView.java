@@ -22,6 +22,7 @@ public class BasketballMatchView extends MainView {
     private TeamView team1;
     private TeamView team2;
     private Label timer;
+    private Label currentPeriod;
 
 
     public BasketballMatchView(String team1Name, String team2Name) {
@@ -42,7 +43,12 @@ public class BasketballMatchView extends MainView {
     private void createBasketballView() {
         ViewCreator vc = new ViewCreator();
         this.timer = new Label(Controller.getMatch().getPeriodMins() + ":00");
-        this.view = vc.createTimedView(this.team1, this.team2, this.timer);
+        String periodLetter =
+                Controller.getMatch().getNumPeriods() == 2 ? "H" :
+                        Controller.getMatch().getNumPeriods() == 3 ? "P" :
+                                Controller.getMatch().getNumPeriods() == 4 ? "Q" : "P";
+        this.currentPeriod = new Label(periodLetter + Controller.getMatch().getCurrentPeriod());
+        this.view = vc.createTimedView(this.team1, this.team2, this.currentPeriod, this.timer);
         this.view.getStyleClass().add("basketballMatchView");
     }
 
@@ -52,9 +58,9 @@ public class BasketballMatchView extends MainView {
 
     private void setEventListeners(TeamView team1, TeamView team2) {
         PiController.controller1Up.addListener((GpioPinListenerDigital) event -> increaseScore(event, team1, team2));
-        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> decreaseScore(event, team1, team2));
+        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> decreaseScore(event, team1));
         PiController.controller2Up.addListener((GpioPinListenerDigital) event -> increaseScore(event, team2, team1));
-        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> decreaseScore(event, team2, team1));
+        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> decreaseScore(event, team2));
         PiController.reset.addListener((GpioPinListenerDigital) this::reset);
     }
 
@@ -67,7 +73,7 @@ public class BasketballMatchView extends MainView {
         }
     }
 
-    private void decreaseScore(GpioPinDigitalStateChangeEvent event, TeamView activeTeam, TeamView passiveTeam) {
+    private void decreaseScore(GpioPinDigitalStateChangeEvent event, TeamView activeTeam) {
         if (event.getState().isHigh() && activeTeam.getScore() > 0) {
             Platform.runLater(() -> {
                 activeTeam.setScore(activeTeam.getScore() - 1);

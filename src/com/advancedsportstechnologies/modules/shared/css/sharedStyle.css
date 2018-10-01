@@ -23,29 +23,31 @@
     -fx-text-fill: #a05500;
 }
 
-.timer {
-    -fx-min-width: 150;
+.timeBox {
+    -fx-min-width: 450;
     -fx-font-family: "Cooper Black";
     -fx-text-fill: #FFF;
-    -fx-font-size: 60px;
-    -fx-border-width: 1px;
-    -fx-border-style: solid;
-    -fx-background-color: #000;
+    -fx-font-size: 162px;
     -fx-alignment: center;
     -fx-text-alignment: center;
+    -fx-border-width: 20px;
+    -fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-radius: 25px;
+}
+
+.timer {
+    -fx-text-fill: red;
+}
+
+.period {
+    -fx-font-size: 72px;
 }
 
 .separator {
     -fx-max-width: 10px;
     -fx-border-color: black;
     -fx-background-color: black;
-}
-
-.timer {
-    -fx-font-family: "Cooper Black";
-    -fx-font-size: 48px;
-    -fx-text-fill: #0800ad;
-    -fx-min-width: 150px;
 }
 
 .scoreField {
