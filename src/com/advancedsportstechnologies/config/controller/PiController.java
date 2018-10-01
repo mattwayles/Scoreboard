@@ -1,5 +1,8 @@
 package com.advancedsportstechnologies.config.controller;
 import com.pi4j.io.gpio.*;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import javafx.application.Platform;
+import javafx.scene.control.ComboBox;
 
 public class PiController {
     private final static GpioController gpio = GpioFactory.getInstance();
@@ -25,5 +28,17 @@ public class PiController {
         controller2Up.removeAllListeners();
         controller1Down.removeAllListeners();
         reset.removeAllListeners();
+    }
+
+    public static void selectComboBoxPrevious(GpioPinDigitalStateChangeEvent event, ComboBox selectionBox) {
+        if (event.getState().isHigh()) {
+            Platform.runLater(() -> selectionBox.getSelectionModel().selectPrevious());
+        }
+    }
+
+    public static void selectComboBoxNext(GpioPinDigitalStateChangeEvent event, ComboBox selectionBox) {
+        if (event.getState().isHigh()) {
+            Platform.runLater(() -> selectionBox.getSelectionModel().selectNext());
+        }
     }
 }

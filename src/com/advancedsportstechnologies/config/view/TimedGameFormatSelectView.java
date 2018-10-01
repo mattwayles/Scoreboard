@@ -67,22 +67,6 @@ public class TimedGameFormatSelectView extends MainView {
         this.setGameFormatView(gameBox);
     }
 
-    private void selectPrevious(GpioPinDigitalStateChangeEvent event) {
-        if (event.getState().isHigh()) {
-            Platform.runLater(() -> {
-                selectionBox.getSelectionModel().selectPrevious();
-            });
-        }
-    }
-
-    private void selectNext(GpioPinDigitalStateChangeEvent event) {
-        if (event.getState().isHigh()) {
-            Platform.runLater(() -> {
-                selectionBox.getSelectionModel().selectNext();
-            });
-        }
-    }
-
     private void reset(GpioPinDigitalStateChangeEvent event) {
         if (event.getState().isLow()) {
             Controller.getView().setKeyPressTime(System.currentTimeMillis());
@@ -100,10 +84,10 @@ public class TimedGameFormatSelectView extends MainView {
     }
 
     private void setEventListeners() {
-        PiController.controller1Up.addListener((GpioPinListenerDigital) this::selectPrevious);
-        PiController.controller1Down.addListener((GpioPinListenerDigital) this::selectNext);
-        PiController.controller2Up.addListener((GpioPinListenerDigital) this::selectPrevious);
-        PiController.controller2Down.addListener((GpioPinListenerDigital) this::selectNext);
+        PiController.controller1Up.addListener((GpioPinListenerDigital) event -> PiController.selectComboBoxPrevious(event, selectionBox));
+        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> PiController.selectComboBoxNext(event, selectionBox));
+        PiController.controller2Up.addListener((GpioPinListenerDigital) event -> PiController.selectComboBoxPrevious(event, selectionBox));
+        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> PiController.selectComboBoxNext(event, selectionBox));
         PiController.reset.addListener((GpioPinListenerDigital) this::reset);
     }
 
