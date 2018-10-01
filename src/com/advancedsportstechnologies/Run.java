@@ -26,6 +26,12 @@ public class Run extends Application {
         //TODO: Dark theme
         //TODO: Label CSS buffing; shadows, gradients, add personality to labels
         //TODO: CSS Transitions; make "Press Start to Play" bounce
+    //TODO: Timed Sports:
+        //TODO: At period end, display splash screen and require button press
+        //TODO: Reset button press for timeout
+        //TODO: Increment periods
+        //TODO: Match win view after final period time expires
+        //TODO: Overtime
 
     @Override
     public void start(Stage primaryStage) {
