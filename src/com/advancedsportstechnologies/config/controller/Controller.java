@@ -29,8 +29,16 @@ public class Controller extends Run {
         view.updateConfigView(gameSelectView.getGameSelectView());
     }
 
-    public static void openGameFormatSelectView(String matchType) {
-        GameFormatSelectView gameFormatSelectView = new GameFormatSelectView(matchType);
+    public static void openGameFormatSelectView(String matchType, int[][] scores) {
+        UntimedGameFormatSelectView gameFormatSelectView = new UntimedGameFormatSelectView(scores);
+        view.setCurrentControl(gameFormatSelectView);
+        view.updateConfigView(gameFormatSelectView.getGameFormatSelectView());
+        match = new Match(matchType);
+        GameController.match = match;
+    }
+
+    public static void openTimedGameFormatSelectView(String matchType, int[] times) {
+        TimedGameFormatSelectView gameFormatSelectView = new TimedGameFormatSelectView(times);
         view.setCurrentControl(gameFormatSelectView);
         view.updateConfigView(gameFormatSelectView.getGameFormatSelectView());
         match = new Match(matchType);
@@ -57,7 +65,7 @@ public class Controller extends Run {
                 view.setCurrentControl(cornholeMatchView);
                 view.updateMainView(cornholeMatchView.getView());
                 break;
-            case "Trampoline Volleyball":
+            case "Volleyball":
                 VolleyballMatchView volleyballMatchView = new VolleyballMatchView(teamSelect.getTeam1Select().getValue().toString(),
                         teamSelect.getTeam2Select().getValue().toString());
                 view.setCurrentControl(volleyballMatchView);

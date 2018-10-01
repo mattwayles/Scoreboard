@@ -69,17 +69,7 @@ public class TeamSelectView extends MainView {
 
     private void populateTeamOptions(String id) throws IOException {
         ObservableList<String> options = FXCollections.observableArrayList();
-        File file;
-        switch (id) {
-            case "Cornhole":
-                file = new File(System.getProperty("user.dir") + "/CornholeTeams.txt");
-                break;
-            case "Trampoline Volleyball":
-                file = new File(System.getProperty("user.dir") + "/VolleyballTeams.txt");
-                break;
-            default:
-                throw new FileNotFoundException();
-        }
+        File file = new File(System.getProperty("user.dir") + "/" + id + "Teams.txt");
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 options.add(scanner.nextLine());
