@@ -1,5 +1,6 @@
 package com.advancedsportstechnologies;
 
+import com.advancedsportstechnologies.view.MatchView;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,9 +15,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage){
-        Parent root = new StackPane();
+        StackPane root = new StackPane();
         primaryStage.setTitle("Scoreboard");
-        primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        root.getChildren().add(new MatchView(root, scene).getView());
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
