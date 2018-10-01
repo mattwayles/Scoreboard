@@ -128,7 +128,7 @@ public class GameController {
                             cornholeMatchView.resetScores();
                             view.updateMainView(cornholeMatchView.getView());
                             break;
-                        case "Trampoline Volleyball":
+                        case "Volleyball":
                             VolleyballMatchView volleyballMatchView = (VolleyballMatchView) view.getCurrentControl();
                             volleyballMatchView.resetScores();
                             view.updateMainView(volleyballMatchView.getView());

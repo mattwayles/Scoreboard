@@ -1,8 +1,8 @@
 package com.advancedsportstechnologies.config.view;
 
+import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.controller.Controller;
 import com.advancedsportstechnologies.config.controller.PiController;
-import com.advancedsportstechnologies.Run;
 import com.advancedsportstechnologies.config.model.Match;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
@@ -15,56 +15,61 @@ import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
 
-
-public class GameSelectView extends MainView {
-    private VBox gameSelectView;
+public class TimedGameFormatSelectView extends MainView {
+    private VBox gameFormatView;
     private ComboBox selectionBox;
-    private String[] games = new String[] {"Cornhole", "Volleyball", "Basketball", "More Games Soon!"};
+    private Label scoreLabel;
 
-    public GameSelectView() {
-        createGameSelectView();
+    public TimedGameFormatSelectView(int[] times) {
+        createGameFormatView(times);
+
         if (!Run.debug) {
             this.setEventListeners();
-        }
-        else {
+        } else {
             this.setKeyPressListeners();
         }
     }
 
-    public VBox getGameSelectView() { return this.gameSelectView; }
+    public VBox getGameFormatSelectView() { return this.gameFormatView; }
 
-    private void setGameSelectView(VBox view) { this.gameSelectView = view; }
+
+    private void setGameFormatView(VBox view) { this.gameFormatView = view; }
 
     private void setSelectionBox(ComboBox box) { this.selectionBox = box; }
 
-    private void createGameSelectView() {
+    private void createGameFormatView(int[] lengths) {
         //Create game selection label
-        Label gameSelectionLabel = new Label("Select Game:");
-        gameSelectionLabel.getStyleClass().add("gameSelectionLabel");
+        //TODO: Create label with game score on selection
 
+        Label gameFormatLabel = new Label("Select Format:");
+        gameFormatLabel.getStyleClass().add("gameSelectionLabel");
         //Create game selection drop-down
         ObservableList<String> options = FXCollections.observableArrayList();
-        options.addAll(Arrays.asList(this.games));
-        ComboBox gameSelectComboBox = new ComboBox<>(options);
-        gameSelectComboBox.getSelectionModel().selectNext();
-        this.setSelectionBox(gameSelectComboBox);
+        options.addAll(String.valueOf(Arrays.asList(lengths)));
+        ComboBox gameFormatComboBox = new ComboBox<>(options);
+        gameFormatComboBox.getSelectionModel().selectNext();
+        this.setSelectionBox(gameFormatComboBox);
 
         //Create game select VBox
-        VBox gameBox = new VBox(gameSelectionLabel, gameSelectComboBox);
+        VBox gameBox = new VBox(gameFormatLabel, scoreLabel, gameFormatComboBox);
         gameBox.getStyleClass().add("gameBox");
 
-        this.setGameSelectView(gameBox);
+        this.setGameFormatView(gameBox);
     }
 
     private void setEventListeners() {
         PiController.controller1Up.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
-                Platform.runLater(() -> selectionBox.getSelectionModel().selectPrevious());
+                Platform.runLater(() -> {
+                    selectionBox.getSelectionModel().selectPrevious();
+                });
             }
         });
         PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
-                Platform.runLater(() -> selectionBox.getSelectionModel().selectNext());
+                Platform.runLater(() -> {
+                    selectionBox.getSelectionModel().selectNext();
+                });
             }
         });
         PiController.controller2Up.addListener((GpioPinListenerDigital) event -> {
@@ -80,9 +85,10 @@ public class GameSelectView extends MainView {
         PiController.reset.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
                 Platform.runLater(() -> {
-                    String matchType = selectionBox.getSelectionModel().getSelectedItem().toString();
-                    PiController.removeEventListeners();
-                    selectGame(matchType);
+                    int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
+                    //PiController.openTeamSelect(scoreArr);
+
+
 
                 });
             }
@@ -97,25 +103,13 @@ public class GameSelectView extends MainView {
             } else if (e.getCode() == KeyCode.Z || e.getCode() == KeyCode.X) {
                 selectionBox.getSelectionModel().selectNext();
             } else if (e.getCode() == KeyCode.Q) {
-                String matchType = selectionBox.getSelectionModel().getSelectedItem().toString();
-                selectGame(matchType);
+                if (!Controller.resetButtonHeld()) {
+                    int selectionBoxIndex = selectionBox.getSelectionModel().getSelectedIndex();
+                    //Controller.openTeamSelect(scoreArr);
+                }
+                view.setKeyPressTime(0);
+                view.getKeysDown().remove(e.getCode());
             }
-            view.setKeyPressTime(0);
-            view.getKeysDown().remove(e.getCode());
         });
-    }
-
-    private void selectGame(String game) {
-        switch (game) {
-            case "Cornhole":
-                Controller.openGameFormatSelectView(game, Match.CORNHOLE_DEFAULTS);
-                break;
-            case "Volleyball":
-                Controller.openGameFormatSelectView(game, Match.TRAMPOLINE_VOLLEYBALL_DEFAULTS);
-                break;
-            case "Basektball":
-                Controller.openTimedGameFormatSelectView(game, Match.BASKETBALL_DEFAULTS);
-                break;
-        }
     }
 }

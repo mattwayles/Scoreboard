@@ -3,6 +3,7 @@ package com.advancedsportstechnologies.config.model;
 public class Match {
     public static final int[][] CORNHOLE_DEFAULTS = new int[][] {{21, 21, 15}, {21, 21, 21}};
     public static final int[][] TRAMPOLINE_VOLLEYBALL_DEFAULTS = new int[][] {{25, 25, 15}, {25, 25, 25}};
+    public static final int[] BASKETBALL_DEFAULTS = new int[] {3, 6, 8, 10, 12, 15, 20};
 
     private String type;
     private int currentGame;

@@ -35,9 +35,14 @@ public class PiController {
         Controller.openGameSelectView();
     }
     
-    public static void openGameFormatSelectView(String matchType) {
+    public static void openGameFormatSelectView(String matchType, int[][] scores) {
         removeEventListeners();
-        Controller.openGameFormatSelectView(matchType);
+        Controller.openGameFormatSelectView(matchType, scores);
+    }
+
+    public static void openTimedGameFormatSelectView(String matchType, int[] times) {
+        removeEventListeners();
+        Controller.openTimedGameFormatSelectView(matchType, times);
     }
 
     public static void openTeamSelect() {
