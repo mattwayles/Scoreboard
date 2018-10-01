@@ -1,7 +1,6 @@
 .teamBox{
-    -fx-spacing: 20;
     -fx-alignment: center;
-    -fx-padding: 20;
+    -fx-padding: 0 20 0 20;
 }
 .team1NameLabel, .team2NameLabel {
     -fx-font-family: "Cooper Black";
@@ -40,6 +39,13 @@
     -fx-max-width: 10px;
     -fx-border-color: black;
     -fx-background-color: black;
+}
+
+.timer {
+    -fx-font-family: "Cooper Black";
+    -fx-font-size: 48px;
+    -fx-text-fill: #0800ad;
+    -fx-min-width: 150px;
 }
 
 .scoreField {
