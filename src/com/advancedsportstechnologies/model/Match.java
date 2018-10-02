@@ -1,5 +1,6 @@
 package com.advancedsportstechnologies.model;
 
+import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.view.GameView;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -16,18 +17,20 @@ public class Match {
         team2 = new Team("Team 2");
     }
 
-    public static void start(StackPane root, Scene scene) {
-        if (root.getChildren() != null) {
-            root.getChildren().clear();
+    public static void start() {
+        if (Main.getRoot().getChildren() != null) {
+            Main.getRoot().getChildren().clear();
+            Main.getRoot().getChildren().add(new GameView().getView());
         }
-        root.getChildren().add(new GameView(root, scene).getView());
     }
 
-    public static int getGames() { return maxGames; }
+    public static int getMaxGames() { return maxGames; }
 
-    public static void setGames(int games) { maxGames = games; }
+    public static void setMaxGames(int games) { maxGames = games; }
 
     public static int getCurrentGame() { return currentGame; }
+
+    public static void setCurrentGame(int game) { currentGame = game; }
 
     public static void nextGame() { currentGame = currentGame + 1; }
 

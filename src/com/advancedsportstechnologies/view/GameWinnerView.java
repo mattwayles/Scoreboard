@@ -16,12 +16,23 @@ public class GameWinnerView {
         updateView();
     }
 
+    //TODO: Color of winning team!
+    //TODO: Separation of top elements and "Next Game" label!
+
     private void updateView() {
+        String winnerStr = winningTeam.getTeamName().toLowerCase().endsWith("s") ? " win game " + (Match.getCurrentGame() + 1) + "!"
+                : " wins game " + (Match.getCurrentGame() + 1) + "!";
+
         Label teamName = new Label(winningTeam.getTeamName());
-        Label winStr = new Label("wins game " + (Match.getCurrentGame() + 1) + "!");
+        teamName.getStyleClass().add("winnerTeamLabel");
+        Label winnerStrLabel = new Label(winnerStr);
+        winnerStrLabel.getStyleClass().add("winnerLabel");
         Label score = new Label(winningTeam.getScore() + " - " + losingTeam.getScore());
+        score.getStyleClass().add("splashScoreLabel");
         Label countdown = new Label("Next Game in " + seconds);
-        this.view = new VBox(teamName, winStr, score, countdown);
+        countdown.getStyleClass().add("countdownLabel");
+        this.view = new VBox(teamName, winnerStrLabel, score, countdown);
+        this.view.getStyleClass().add("winnerView");
     }
 
     public VBox getView() { return this.view; }

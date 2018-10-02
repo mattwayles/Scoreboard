@@ -11,19 +11,31 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
-    private static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
+    public static final String VERSION = "v0.1";
+    public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
+    public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
+    private static StackPane root;
+    private static Scene scene;
 
     @Override
     public void start(Stage primaryStage){
-        StackPane root = new StackPane();
+        root = new StackPane();
+        root.setId("root");
         primaryStage.setTitle("Scoreboard");
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        scene = new Scene(root, WIDTH, HEIGHT);
         Match.setTeams();
-        Match.start(root, scene);
+        Match.start();
         primaryStage.setScene(scene);
+
+        scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
+
+
         primaryStage.show();
     }
+
+    public static StackPane getRoot() { return root; }
+
+    public static Scene getScene() { return scene; }
 
 
     public static void main(String[] args) {

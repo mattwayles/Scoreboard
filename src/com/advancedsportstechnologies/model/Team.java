@@ -3,10 +3,12 @@ package com.advancedsportstechnologies.model;
 public class Team {
     private String teamName;
     private int score;
+    private int gamesWon;
 
     Team(String name) {
         this.teamName = name;
         this.score = 0;
+        this.gamesWon = 0;
     }
 
     public String getTeamName() { return this.teamName; }
@@ -17,7 +19,13 @@ public class Team {
 
     public void setScore(int score) { this.score = score; }
 
-    public void increaseScore() { this.score = this.score + 1; }
+    public int getGamesWon() { return this.gamesWon; }
 
-    public void decreaseScore() { this.score = this.score - 1; }
+    public void setGamesWon(int won) { this.gamesWon = won; }
+
+    public void increaseGamesWon() { this.gamesWon++; }
+
+    public void increaseScore() { this.score++; }
+
+    public void decreaseScore() { this.score--; }
 }
