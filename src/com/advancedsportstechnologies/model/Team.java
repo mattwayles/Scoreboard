@@ -15,6 +15,8 @@ public class Team {
 
     public int getScore() { return this.score; }
 
+    public void setScore(int score) { this.score = score; }
+
     public void increaseScore() { this.score = this.score + 1; }
 
     public void decreaseScore() { this.score = this.score - 1; }

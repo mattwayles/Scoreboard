@@ -1,6 +1,7 @@
 package com.advancedsportstechnologies;
 
-import com.advancedsportstechnologies.view.MatchView;
+import com.advancedsportstechnologies.model.Match;
+import com.advancedsportstechnologies.view.GameView;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,7 +19,8 @@ public class Main extends Application {
         StackPane root = new StackPane();
         primaryStage.setTitle("Scoreboard");
         Scene scene = new Scene(root, WIDTH, HEIGHT);
-        root.getChildren().add(new MatchView(root, scene).getView());
+        Match.setTeams();
+        Match.start(root, scene);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

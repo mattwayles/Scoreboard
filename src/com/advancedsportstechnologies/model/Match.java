@@ -1,30 +1,41 @@
 package com.advancedsportstechnologies.model;
 
-public class Match {
-    private int maxGames = 3;
-    private int currentGame = 0;
-    private Team team1;
-    private Team team2;
-    private int[] gameScores = new int[] {21, 21, 15};
+import com.advancedsportstechnologies.view.GameView;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 
-    protected Match() {
-        this.team1 = new Team("Team 1");
-        this.team2 = new Team("Team 2");
+public class Match {
+    private static int maxGames = 3;
+    private static int currentGame = 0;
+    private static Team team1;
+    private static Team team2;
+    private static int[] gameScores = new int[] {21, 21, 15};
+
+    public static void setTeams() {
+        team1 = new Team("Team 1");
+        team2 = new Team("Team 2");
     }
 
-    public int getGames() { return this.maxGames; }
+    public static void start(StackPane root, Scene scene) {
+        if (root.getChildren() != null) {
+            root.getChildren().clear();
+        }
+        root.getChildren().add(new GameView(root, scene).getView());
+    }
 
-    public void setGames(int games) { this.maxGames = games; }
+    public static int getGames() { return maxGames; }
 
-    protected int getCurrentGame() { return this.currentGame; }
+    public static void setGames(int games) { maxGames = games; }
 
-    public void nextGame() { this.currentGame = this.currentGame + 1; }
+    public static int getCurrentGame() { return currentGame; }
 
-    protected Team getTeamOne() { return this.team1; }
+    public static void nextGame() { currentGame = currentGame + 1; }
 
-    protected Team getTeamTwo() { return this.team2; }
+    public static Team getTeamOne() { return team1; }
 
-    public int[] getGameScore() { return this.gameScores; }
+    public static Team getTeamTwo() { return team2; }
 
-    protected int getCurrentGameScore() { return this.gameScores[this.currentGame]; }
+    public static int[] getGameScore() { return gameScores; }
+
+    public static int getCurrentGameScore() { return gameScores[currentGame]; }
 }
