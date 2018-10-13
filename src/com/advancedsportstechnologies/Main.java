@@ -26,16 +26,17 @@ public class Main extends Application {
         root.setId("root");
         primaryStage.setTitle("Scoreboard");
         scene = new Scene(root, WIDTH, HEIGHT);
-        //Match.setTeams();
-        //Match.start();
-        Thread waitThread = new Thread(new WaitThread());
-        waitThread.start();
+        Match.setTeams();
+        Match.start();
         primaryStage.setScene(scene);
 
         scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
 
 
         primaryStage.show();
+
+        Thread waitThread = new Thread(new WaitThread());
+        waitThread.start();
 
     }
 

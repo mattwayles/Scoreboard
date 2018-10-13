@@ -1,6 +1,8 @@
 package com.advancedsportstechnologies.bluetooth;
 
 import com.advancedsportstechnologies.model.Match;
+import com.advancedsportstechnologies.view.TeamView;
+import javafx.application.Platform;
 
 import javax.microedition.io.StreamConnection;
 import java.io.InputStream;
@@ -57,7 +59,10 @@ public class ProcessConnectionThread implements Runnable{
 	 */
 	private void processResult(String result) {
 		String[] teamNames = result.split("/");
-		Match.setTeams(teamNames[0], teamNames[1]);
-		Match.start();
+		Platform.runLater(() ->
+		{
+			TeamView.resetCount();
+			Match.setTeams(teamNames[0], teamNames[1]);
+			Match.start();});
 	}
 }
