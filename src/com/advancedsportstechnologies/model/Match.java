@@ -17,6 +17,11 @@ public class Match {
         team2 = new Team("Team 2");
     }
 
+    public static void setTeams(String team1Name, String team2Name) {
+        team1 = new Team(team1Name);
+        team2 = new Team(team2Name);
+    }
+
     public static void start() {
         if (Main.getRoot().getChildren() != null) {
             Main.getRoot().getChildren().clear();
