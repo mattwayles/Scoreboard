@@ -25,9 +25,9 @@ public class GameView {
 
     public GameView() {
         this.teamView1 = new TeamView(Match.getTeamOne());
-        teamView1.setColor(Paint.valueOf(TEAM_ONE_COLOR));
+        Match.getTeamOne().setColor(Paint.valueOf(TEAM_ONE_COLOR));
         this.teamView2 = new TeamView(Match.getTeamTwo());
-        teamView2.setColor(Paint.valueOf(TEAM_TWO_COLOR));
+        Match.getTeamTwo().setColor(Paint.valueOf(TEAM_TWO_COLOR));
         VBox topSeparator = createSeparator(Main.HEIGHT / 3);
         topSeparator.getStyleClass().add("separator");
         VBox bottomSeparator = createSeparator(Main.HEIGHT);

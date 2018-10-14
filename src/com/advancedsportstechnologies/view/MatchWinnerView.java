@@ -25,14 +25,15 @@ public class MatchWinnerView {
         String winStr = winningTeam.getTeamName().toLowerCase().endsWith("s") ? " win in " + (Match.getCurrentGame() + 1) + " games!"
                 : " wins in " + (Match.getCurrentGame() + 1) + " games!";
 
-        Label teamName = new Label(winningTeam.getTeamName());
-        teamName.getStyleClass().add("winnerTeamLabel");
+        Label teamNameLabel = new Label(winningTeam.getTeamName());
+        teamNameLabel.getStyleClass().add("winnerTeamLabel");
+        teamNameLabel.setTextFill(winningTeam.getColor());
         Label winStrLabel = new Label(winStr);
         winStrLabel.setTextFill(winningTeam.getColor());
         winStrLabel.getStyleClass().add("winnerLabel");
         Label pressStart = new Label("Press Start for New Game");
         pressStart.getStyleClass().add("pressStartLabel");
-        this.view = new VBox(teamName, winStrLabel, pressStart);
+        this.view = new VBox(teamNameLabel, winStrLabel, pressStart);
         this.view.getStyleClass().add("winnerView");
 
         this.setKeyPressListeners();

@@ -12,7 +12,6 @@ public class Team {
         this.teamName = name;
         this.score = 0;
         this.gamesWon = 0;
-        this.color = Paint.valueOf("#000000");
     }
 
     public String getTeamName() { return this.teamName; }
