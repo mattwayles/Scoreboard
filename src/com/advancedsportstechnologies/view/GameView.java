@@ -7,7 +7,6 @@ import com.advancedsportstechnologies.model.Match;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,7 +18,6 @@ public class GameView {
     private HBox view;
     private TeamView teamView1;
     private TeamView teamView2;
-    private long keyPressTime;
 
     public GameView() {
         this.teamView1 = new TeamView(Match.getTeamOne());
@@ -93,9 +91,7 @@ public class GameView {
     }
 
     private void reset(GpioPinDigitalStateChangeEvent event) {
-            Platform.runLater(() -> {
-                //Do resetButtonHeld code
-            });
+            Platform.runLater(Match::start);
     }
 
 

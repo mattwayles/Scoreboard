@@ -23,7 +23,7 @@ public class MatchWinnerView {
 
     private void updateView() {
         String winStr = winningTeam.getTeamName().toLowerCase().endsWith("s") ? " win in " + (Match.getCurrentGame() + 1) + " games!"
-                : " wins game " + (Match.getCurrentGame() + 1) + "!";
+                : " wins in " + (Match.getCurrentGame() + 1) + " games!";
 
         Label teamName = new Label(winningTeam.getTeamName());
         teamName.getStyleClass().add("winnerTeamLabel");
