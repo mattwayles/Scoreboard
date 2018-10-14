@@ -28,6 +28,7 @@ public class MatchWinnerView {
         Label teamName = new Label(winningTeam.getTeamName());
         teamName.getStyleClass().add("winnerTeamLabel");
         Label winStrLabel = new Label(winStr);
+        winStrLabel.setTextFill(winningTeam.getColor());
         winStrLabel.getStyleClass().add("winnerLabel");
         Label pressStart = new Label("Press Start for New Game");
         pressStart.getStyleClass().add("pressStartLabel");

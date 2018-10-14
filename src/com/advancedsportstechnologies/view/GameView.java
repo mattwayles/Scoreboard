@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 
 public class GameView {
     private HBox view;
@@ -21,7 +22,9 @@ public class GameView {
 
     public GameView() {
         this.teamView1 = new TeamView(Match.getTeamOne());
+        teamView1.setColor(Paint.valueOf("#000000"));
         this.teamView2 = new TeamView(Match.getTeamTwo());
+        teamView2.setColor(Paint.valueOf("#000000"));
         VBox topSeparator = createSeparator(Main.HEIGHT / 3);
         topSeparator.getStyleClass().add("separator");
         VBox bottomSeparator = createSeparator(Main.HEIGHT);

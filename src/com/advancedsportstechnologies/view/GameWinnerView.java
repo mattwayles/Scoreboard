@@ -26,9 +26,11 @@ public class GameWinnerView {
         Label teamName = new Label(winningTeam.getTeamName());
         teamName.getStyleClass().add("winnerTeamLabel");
         Label winnerStrLabel = new Label(winnerStr);
+        winnerStrLabel.setTextFill(winningTeam.getColor());
         winnerStrLabel.getStyleClass().add("winnerLabel");
         Label score = new Label(winningTeam.getScore() + " - " + losingTeam.getScore());
         score.getStyleClass().add("splashScoreLabel");
+        score.setTextFill(winningTeam.getColor());
         Label countdown = new Label("Next Game in " + seconds);
         countdown.getStyleClass().add("countdownLabel");
         this.view = new VBox(teamName, winnerStrLabel, score, countdown);
