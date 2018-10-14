@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class TeamView{
+public class TeamView extends Team{
     private VBox view;
     private Label teamNameLabel;
     private Label scoreLabel;
@@ -19,6 +19,7 @@ public class TeamView{
     private static int count = 1;
 
     TeamView(Team team) {
+        super(team.getTeamName());
         this.team = team;
         this.teamNameLabel = new Label(team.getTeamName());
         this.teamNameLabel.getStyleClass().add("team" + count + "NameLabel");
@@ -42,6 +43,8 @@ public class TeamView{
     public Label getTeamNameLabel() { return this.teamNameLabel; }
 
     Label getScoreLabel() { return this.scoreLabel; }
+
+    void setScoreLabel(int score) { this.scoreLabel.textProperty().setValue(String.valueOf(score));}
 
     public HBox getGamesWonBox() { return this.gamesWonBox; }
 

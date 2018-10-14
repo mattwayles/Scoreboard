@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 public class Controller {
-    public static void checkWinner(TeamView winningTeam, TeamView losingTeam) {
+    public static boolean checkWinner(TeamView winningTeam, TeamView losingTeam) {
         if (winningTeam.getTeam().getScore() == Match.getCurrentGameScore()) {
             Main.getScene().setOnKeyReleased(null);
             winningTeam.getTeam().increaseGamesWon();
@@ -28,7 +28,9 @@ public class Controller {
                 Thread thread = displayGameWinnerView(gameWinnerView);
                 thread.start();
             }
+            return true;
         }
+        return false;
     }
 
     private static Thread displayGameWinnerView(GameWinnerView winnerView) {

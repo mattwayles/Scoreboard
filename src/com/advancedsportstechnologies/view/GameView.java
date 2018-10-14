@@ -4,6 +4,9 @@ import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -16,6 +19,7 @@ public class GameView {
     private HBox view;
     private TeamView teamView1;
     private TeamView teamView2;
+    private long keyPressTime;
 
     public GameView() {
         this.teamView1 = new TeamView(Match.getTeamOne());
@@ -52,6 +56,50 @@ public class GameView {
         separator.getStyleClass().add("separator");
         return separator;
     }
+
+
+    private void setEventListeners() {
+        PiController.controller1Up.addListener((GpioPinListenerDigital) event -> increaseScore(event, this.teamView1, this.teamView2));
+        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> decreaseScore(event, teamView1));
+        PiController.controller2Up.addListener((GpioPinListenerDigital) event -> increaseScore(event, this.teamView2, this.teamView1));
+        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> decreaseScore(event, teamView2));
+        PiController.reset.addListener((GpioPinListenerDigital) this::reset);
+    }
+
+    private void increaseScore(GpioPinDigitalStateChangeEvent event, TeamView activeTeam, TeamView passiveTeam) {
+        if (event.getState().isHigh()) {
+            Platform.runLater(() -> {
+                activeTeam.setScore(activeTeam.getScore() + 1);
+                activeTeam.setScoreLabel(activeTeam.getScore());
+                boolean winner = Controller.checkWinner(activeTeam, passiveTeam);
+                //TODO: Execute this code if scoreboard type = 'switch
+//                if (winner) {
+//                    TeamView temp = team1;
+//                    this.team1 = this.team2;
+//                    this.team2 = temp;
+//                    this.reverseTeams();
+//                }
+            });
+        }
+    }
+
+    private void decreaseScore(GpioPinDigitalStateChangeEvent event, TeamView activeTeam) {
+        if (event.getState().isHigh() && activeTeam.getScore() > 0) {
+            Platform.runLater(() -> {
+                activeTeam.setScore(activeTeam.getScore() - 1);
+                activeTeam.setScoreLabel(activeTeam.getScore());
+            });
+        }
+    }
+
+    private void reset(GpioPinDigitalStateChangeEvent event) {
+            Platform.runLater(() -> {
+                //Do resetButtonHeld code
+            });
+    }
+
+
+
 
     private void setKeyPressListeners() {
        Main.getScene().setOnKeyReleased(e -> {
