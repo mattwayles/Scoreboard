@@ -2,6 +2,7 @@ package com.advancedsportstechnologies.view;
 
 import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.Main;
+import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -34,9 +35,14 @@ public class GameView {
         this.view.getStyleClass().add("gameView");
         this.view.setMaxHeight(Main.HEIGHT);
         this.view.setSpacing(Main.HEIGHT / 7);
-        //PiController.setDebounce();
-        //this.setEventListeners();
         this.setKeyPressListeners();
+
+
+        if (!Main.debug) {
+            PiController.setDebounce();
+            this.setEventListeners();
+        }
+
     }
     public HBox getView() { return this.view; }
 
