@@ -20,11 +20,14 @@ public class GameView {
     private TeamView teamView1;
     private TeamView teamView2;
 
+    private final String TEAM_ONE_COLOR = "#0800ad";
+    private final String TEAM_TWO_COLOR = "#a05500";
+
     public GameView() {
         this.teamView1 = new TeamView(Match.getTeamOne());
-        teamView1.setColor(Paint.valueOf("#000000"));
+        teamView1.setColor(Paint.valueOf(TEAM_ONE_COLOR));
         this.teamView2 = new TeamView(Match.getTeamTwo());
-        teamView2.setColor(Paint.valueOf("#000000"));
+        teamView2.setColor(Paint.valueOf(TEAM_TWO_COLOR));
         VBox topSeparator = createSeparator(Main.HEIGHT / 3);
         topSeparator.getStyleClass().add("separator");
         VBox bottomSeparator = createSeparator(Main.HEIGHT);
