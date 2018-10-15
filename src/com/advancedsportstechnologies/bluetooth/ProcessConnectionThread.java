@@ -3,8 +3,11 @@ package com.advancedsportstechnologies.bluetooth;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.view.TeamView;
 import javafx.application.Platform;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.microedition.io.StreamConnection;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 public class ProcessConnectionThread implements Runnable{
@@ -13,8 +16,6 @@ public class ProcessConnectionThread implements Runnable{
 	
 	// Constant that indicate command from devices
 	private static final int EXIT_CMD = -1;
-	private static final int KEY_RIGHT = 1;
-	private static final int KEY_LEFT = 2;
 	
 	public ProcessConnectionThread(StreamConnection connection)
 	{
@@ -32,18 +33,21 @@ public class ProcessConnectionThread implements Runnable{
 	        
 	        while (true) {
 				StringBuilder result = new StringBuilder();
-				int data = inputStream.read();
 
-				if (data == EXIT_CMD)
+				int buffer = inputStream.read();
+
+
+				if (buffer == EXIT_CMD)
 				{
 					System.out.println("finish process");
 					break;
 				}
 
-				while (data != 124) {
-					char c = (char) data;
+
+				while (buffer > 0) {
+					char c = (char) inputStream.read();
 					result.append(c);
-				    data = inputStream.read();
+					buffer--;
 				}
 
 	        	processResult(result.toString());
@@ -58,11 +62,25 @@ public class ProcessConnectionThread implements Runnable{
 	 * @param result the result string
 	 */
 	private void processResult(String result) {
-		String[] teamNames = result.split("/");
-		Platform.runLater(() ->
-		{
-			TeamView.resetCount();
-			Match.setTeams(teamNames[0], teamNames[1]);
-			Match.start();});
+
+		if (result.startsWith("{") || result.startsWith("[")) {
+			JSONObject resultObj;
+			try {
+				resultObj = new JSONObject(result);
+				String matchType = resultObj.getString("type");
+				String team1Name = resultObj.getString("team1");
+				String team2Name = resultObj.getString("team2");
+				Platform.runLater(() ->
+				{
+					TeamView.resetCount();
+					Match.setType(matchType);
+					Match.setTeams(team1Name, team2Name);
+					Match.start();
+				});
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

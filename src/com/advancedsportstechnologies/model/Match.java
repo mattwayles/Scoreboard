@@ -10,6 +10,7 @@ public class Match {
     private static int currentGame = 0;
     private static Team team1;
     private static Team team2;
+    private static String type = "standard";
     private static int[] gameScores = new int[] {21, 21, 15};
 
     public static void setTeams() {
@@ -44,6 +45,10 @@ public class Match {
     public static Team getTeamTwo() { return team2; }
 
     public static int[] getGameScore() { return gameScores; }
+
+    public static String getType() { return type; }
+
+    public static void setType(String scoreboardType) { type = scoreboardType; }
 
     public static int getCurrentGameScore() { return gameScores[currentGame]; }
 }

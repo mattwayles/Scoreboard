@@ -76,13 +76,12 @@ public class GameView {
                 activeTeam.setScore(activeTeam.getScore() + 1);
                 activeTeam.setScoreLabel(activeTeam.getScore());
                 boolean winner = Controller.checkWinner(activeTeam, passiveTeam);
-                //TODO: Execute this code if scoreboard type = 'switch
-//                if (winner) {
-//                    TeamView temp = team1;
-//                    this.team1 = this.team2;
-//                    this.team2 = temp;
-//                    this.reverseTeams();
-//                }
+                if (winner && Match.getType().equals("switch")) {
+                    TeamView temp = activeTeam;
+                    this.teamView1 = this.teamView2;
+                    this.teamView2 = temp;
+                    this.reverseTeams();
+                }
             });
         }
     }
