@@ -67,4 +67,8 @@ public class Match {
     public static void setType(String scoreboardType) { type = scoreboardType; }
 
     public static int getCurrentGameScore() { return gameScores[currentGame]; }
+
+    public static int[] getGameScores() { return gameScores; }
+
+    public static void setGameScores(int[] scores) { gameScores = scores; }
 }
