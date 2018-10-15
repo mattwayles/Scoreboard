@@ -50,7 +50,13 @@ public class Controller {
             }
             Platform.runLater(() -> {
                 resetGame();
-                Main.getRoot().getChildren().set(0, new GameView().getView());
+
+                GameView newGameView = new GameView();
+                if(Match.getType().equals("switch")) {
+                    newGameView.reverseTeams();
+                }
+
+                Main.getRoot().getChildren().set(0, newGameView.getView());
             });
         });
     }
@@ -58,7 +64,6 @@ public class Controller {
     private static void resetGame() {
         Match.getTeamOne().setScore(0);
         Match.getTeamTwo().setScore(0);
-        TeamView.resetCount();
         Match.nextGame();
     }
 
@@ -68,7 +73,6 @@ public class Controller {
         Match.getTeamTwo().setScore(0);
         Match.getTeamTwo().setGamesWon(0);
         Match.setCurrentGame(0);
-        TeamView.resetCount();
     }
 
 }

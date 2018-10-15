@@ -37,13 +37,8 @@
 }
 
 /* Team View */
-.team1NameLabel, .team2NameLabel {
+.teamNameLabel {
     -fx-font-family: "Cooper Black";
-    -fx-text-fill: #0800ad;
-}
-
-.team2NameLabel {
-    -fx-text-fill: #a05500;
 }
 
 .scoreLabel {

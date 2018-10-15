@@ -4,6 +4,7 @@ import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
+import com.advancedsportstechnologies.model.Team;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
@@ -20,26 +21,10 @@ public class GameView {
     private TeamView teamView1;
     private TeamView teamView2;
 
-    private final String TEAM_ONE_COLOR = "#0800ad";
-    private final String TEAM_TWO_COLOR = "#a05500";
-
     public GameView() {
         this.teamView1 = new TeamView(Match.getTeamOne());
-        Match.getTeamOne().setColor(Paint.valueOf(TEAM_ONE_COLOR));
         this.teamView2 = new TeamView(Match.getTeamTwo());
-        Match.getTeamTwo().setColor(Paint.valueOf(TEAM_TWO_COLOR));
-        VBox topSeparator = createSeparator(Main.HEIGHT / 3);
-        topSeparator.getStyleClass().add("separator");
-        VBox bottomSeparator = createSeparator(Main.HEIGHT);
-        bottomSeparator.getStyleClass().add("separator");
-        ImageView logo = new ImageView(new Image("img/astLogo.png"));
-        Label version = new Label(Main.VERSION);
-        version.getStyleClass().add("version");
-        VBox logoBox = new VBox(logo, version);
-        logoBox.getStyleClass().add("logoBox");
-        VBox separator = new VBox(topSeparator, logoBox, bottomSeparator);
-        separator.getStyleClass().add("center");
-        this.view = new HBox(teamView1.getView(), separator, teamView2.getView());
+        this.view = new HBox(teamView1.getView(), createSeparator(), teamView2.getView());
         this.view.getStyleClass().add("gameView");
         this.view.setMaxHeight(Main.HEIGHT);
         this.view.setSpacing(Main.HEIGHT / 7);
@@ -53,6 +38,34 @@ public class GameView {
 
     }
     public HBox getView() { return this.view; }
+
+    public void reverseTeams() {
+        Match.reverseTeams();
+
+        Team one = Match.getTeamOne();
+        Team two = Match.getTeamTwo();
+        this.teamView1 = new TeamView(Match.getTeamOne());
+        this.teamView2 = new TeamView(Match.getTeamTwo());
+
+        this.view = new HBox(teamView1.getView(), createSeparator(), teamView2.getView());
+    }
+
+    private VBox createSeparator() {
+        VBox topSeparator = createSeparator(Main.HEIGHT / 3);
+        topSeparator.getStyleClass().add("separator");
+        VBox bottomSeparator = createSeparator(Main.HEIGHT);
+        bottomSeparator.getStyleClass().add("separator");
+        ImageView logo = new ImageView(new Image("img/astLogo.png"));
+        Label version = new Label(Main.VERSION);
+        version.getStyleClass().add("version");
+        VBox logoBox = new VBox(logo, version);
+        logoBox.getStyleClass().add("logoBox");
+        VBox separator = new VBox(topSeparator, logoBox, bottomSeparator);
+        separator.getStyleClass().add("center");
+
+        return separator;
+    }
+
 
     private VBox createSeparator(double height) {
         VBox separator = new VBox();
@@ -73,35 +86,25 @@ public class GameView {
     private void increaseScore(GpioPinDigitalStateChangeEvent event, TeamView activeTeam, TeamView passiveTeam) {
         if (event.getState().isHigh()) {
             Platform.runLater(() -> {
-                activeTeam.setScore(activeTeam.getScore() + 1);
-                activeTeam.setScoreLabel(activeTeam.getScore());
+                activeTeam.getTeam().setScore(activeTeam.getTeam().getScore() + 1);
+                activeTeam.setScoreLabel(activeTeam.getTeam().getScore());
                 boolean winner = Controller.checkWinner(activeTeam, passiveTeam);
-                if (winner && Match.getType().equals("switch")) {
-                    TeamView temp = activeTeam;
-                    this.teamView1 = this.teamView2;
-                    this.teamView2 = temp;
-                    this.reverseTeams();
-                }
             });
         }
     }
 
     private void decreaseScore(GpioPinDigitalStateChangeEvent event, TeamView activeTeam) {
-        if (event.getState().isHigh() && activeTeam.getScore() > 0) {
+        if (event.getState().isHigh() && activeTeam.getTeam().getScore() > 0) {
             Platform.runLater(() -> {
-                activeTeam.setScore(activeTeam.getScore() - 1);
-                activeTeam.setScoreLabel(activeTeam.getScore());
+                activeTeam.getTeam().setScore(activeTeam.getTeam().getScore() - 1);
+                activeTeam.setScoreLabel(activeTeam.getTeam().getScore());
             });
         }
     }
 
     private void reset(GpioPinDigitalStateChangeEvent event) {
-        TeamView.resetCount();
         Platform.runLater(Match::start);
     }
-
-
-
 
     private void setKeyPressListeners() {
        Main.getScene().setOnKeyReleased(e -> {

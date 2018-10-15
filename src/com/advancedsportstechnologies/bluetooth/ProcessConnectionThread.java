@@ -17,7 +17,7 @@ public class ProcessConnectionThread implements Runnable{
 	// Constant that indicate command from devices
 	private static final int EXIT_CMD = -1;
 	
-	public ProcessConnectionThread(StreamConnection connection)
+	ProcessConnectionThread(StreamConnection connection)
 	{
 		mConnection = connection;
 	}
@@ -72,7 +72,6 @@ public class ProcessConnectionThread implements Runnable{
 				String team2Name = resultObj.getString("team2");
 				Platform.runLater(() ->
 				{
-					TeamView.resetCount();
 					Match.setType(matchType);
 					Match.setTeams(team1Name, team2Name);
 					Match.start();

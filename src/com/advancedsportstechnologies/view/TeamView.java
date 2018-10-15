@@ -10,19 +10,18 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class TeamView extends Team{
+public class TeamView {
     private VBox view;
     private Label teamNameLabel;
     private Label scoreLabel;
     private HBox gamesWonBox;
     private Team team;
-    private static int count = 1;
 
     TeamView(Team team) {
-        super(team.getTeamName());
         this.team = team;
         this.teamNameLabel = new Label(team.getTeamName());
-        this.teamNameLabel.getStyleClass().add("team" + count + "NameLabel");
+        this.teamNameLabel.getStyleClass().add("teamNameLabel");
+        teamNameLabel.setTextFill(team.getColor());
         teamNameLabel.setFont(Main.WIDTH > 1280 ? new Font(82) : new Font(60));
         this.scoreLabel = new Label(String.valueOf(team.getScore()));
         this.scoreLabel.setFont(Main.WIDTH > 1280 ? new Font(500) : new Font(350));
@@ -35,7 +34,6 @@ public class TeamView extends Team{
         this.view = new VBox(this.teamNameLabel, this.gamesWonBox, this.scoreLabel);
         this.view.setAlignment(Pos.CENTER);
         this.view.setPrefWidth(Main.WIDTH / 2);
-        count++;
     }
 
     VBox getView() { return this.view; }
@@ -49,6 +47,4 @@ public class TeamView extends Team{
     public HBox getGamesWonBox() { return this.gamesWonBox; }
 
     public Team getTeam() { return this.team; }
-
-    public static void resetCount() { count = 1; }
 }
