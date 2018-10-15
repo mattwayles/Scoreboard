@@ -97,7 +97,8 @@ public class GameView {
     }
 
     private void reset(GpioPinDigitalStateChangeEvent event) {
-            Platform.runLater(Match::start);
+        TeamView.resetCount();
+        Platform.runLater(Match::start);
     }
 
 

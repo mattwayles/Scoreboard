@@ -13,12 +13,9 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static final String VERSION = "v0.1";
-    public static final double HEIGHT = 1080;
+    public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
+    public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
     public static boolean debug;
-
-   // public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
-    public static final double WIDTH = 1980;
-    //public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
     private static StackPane root;
     private static Scene scene;
 
