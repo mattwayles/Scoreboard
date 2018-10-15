@@ -26,10 +26,18 @@ public class TeamView {
         this.scoreLabel = new Label(String.valueOf(team.getScore()));
         this.scoreLabel.setFont(Main.WIDTH > 1280 ? new Font(500) : new Font(350));
         this.scoreLabel.getStyleClass().add("scoreLabel");
-        this.gamesWonBox = new HBox(50);
-        this.gamesWonBox.getChildren().add(team.getGamesWon() > 0 ?
-                new ImageView(new Image("/img/gameWon.png")) :
-                new ImageView(new Image("/img/placeholder.png")));
+        this.gamesWonBox = new HBox(10);
+        if (team.getGamesWon() == 0) {
+            new ImageView(new Image("/img/gameWon.png"));
+        }
+        else {
+            this.gamesWonBox.getChildren().clear();
+            for (int i = 0; i < team.getGamesWon(); i++) {
+                this.gamesWonBox.getChildren().add(
+                        new ImageView(new Image("/img/gameWon.png")));
+            }
+        }
+
         this.gamesWonBox.setAlignment(Pos.CENTER);
         this.view = new VBox(this.teamNameLabel, this.gamesWonBox, this.scoreLabel);
         this.view.setAlignment(Pos.CENTER);

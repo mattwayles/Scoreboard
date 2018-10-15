@@ -18,7 +18,7 @@ public class Controller {
         if (winningTeam.getTeam().getScore() == Match.getCurrentGameScore()) {
             Main.getScene().setOnKeyReleased(null);
             winningTeam.getTeam().increaseGamesWon();
-            if (winningTeam.getTeam().getGamesWon() == Match.getMaxGames() - 1) {
+            if (winningTeam.getTeam().getGamesWon() >= (double) Match.getMaxGames() / 2) {
                 MatchWinnerView winnerView = new MatchWinnerView(winningTeam.getTeam());
                 Main.getRoot().getChildren().set(0, winnerView.getView());
             }

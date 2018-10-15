@@ -1,5 +1,6 @@
 package com.advancedsportstechnologies.bluetooth;
 
+import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.model.Match;
 import javafx.application.Platform;
 import org.json.JSONArray;
@@ -71,20 +72,24 @@ public class ProcessConnectionThread implements Runnable{
 				String team1Name = resultObj.getString("team1");
 				String team2Name = resultObj.getString("team2");
 
-                JSONArray gameScores = resultObj.getJSONArray("gameScores");
-                int[] scores = new int[gameScores.length()];
-                for (int i = 0; i < gameScores.length(); i++) {
-                    scores[i] = gameScores.getInt(i);
+				String gameScoreStr = resultObj.getString("gameScores");
+				gameScoreStr = gameScoreStr.replace("[", "").replace("]","");
+				String[] gameScores = gameScoreStr.split(",");
+
+                int[] scores = new int[gameScores.length];
+                for (int i = 0; i < gameScores.length; i++) {
+                    scores[i] = Integer.parseInt(gameScores[i].trim());
                 }
 
-
-                //TODO: This should be setting all the match information appropriately. Now I need to make sure there aren't any hard-coded values, and that the Match properties are being used throughout!
 				Platform.runLater(() ->
 				{
 					Match.setType(matchType);
 					Match.setMaxGames(numGames);
 					Match.setGameScores(scores);
 					Match.setTeams(team1Name, team2Name);
+
+					Controller.restartScoreboard();
+
 					Match.start();
 				});
 
