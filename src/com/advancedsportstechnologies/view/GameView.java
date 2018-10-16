@@ -47,65 +47,13 @@ public class GameView {
     }
 
     private VBox createSeparator() {
+        VBox topSeparator = createMiddleLine();
+        VBox bottomSeparator = createMiddleLine();
+        VBox logoBox = createLogoBox();
+        VBox gameBox = createGameBox();
+        VBox scoreToWinBox = createScoreToWinBox();
+        VBox gamesToWinBox = createGamesToWin();
 
-        //Middle line
-        VBox topSeparator = createSeparator(Main.HEIGHT / 3);
-        topSeparator.getStyleClass().add("separator");
-        VBox bottomSeparator = createSeparator(Main.HEIGHT / 3);
-        bottomSeparator.getStyleClass().add("separator");
-
-        //Logo box
-        ImageView logo = new ImageView(new Image("img/astLogo.png"));
-        Label version = new Label("Scoreboard " + Main.VERSION);
-        version.getStyleClass().add("smallerText");
-        VBox logoBox = new VBox(logo, version);
-        logoBox.getStyleClass().add("center");
-
-        //GameBox
-        Label game = new Label("Game");
-        game.getStyleClass().add("middleText");
-        Label currentGameNum = new Label(String.valueOf(Match.getCurrentGame() + 1));
-        currentGameNum.getStyleClass().add("gameStr");
-        Label of = new Label(" of ");
-        of.getStyleClass().addAll("smallerText", "topPadding");
-        Label maxGameNum = new Label(String.valueOf(Match.getMaxGames()));
-        maxGameNum.getStyleClass().add("gameStr");
-        HBox gameNumBox = new HBox(5, currentGameNum, of, maxGameNum);
-        gameNumBox.getStyleClass().add("center");
-        VBox gameBox = new VBox(game, gameNumBox);
-        gameBox.getStyleClass().add("center");
-
-        //ScoreToWinBox
-        Label scoreToWin = new Label("Score to Win");
-        scoreToWin.getStyleClass().addAll("middleText", "smallerLabel");
-
-        Node scoreToWinVal;
-        if (Match.getCurrentGameScore() > 0) {
-            scoreToWinVal = new Label(String.valueOf(Match.getCurrentGameScore()));
-        }
-        else {
-            scoreToWinVal = new ImageView(new Image("/img/infinity.png"));
-            scoreToWinVal.getStyleClass().add("topMargin");
-        }
-        scoreToWinVal.getStyleClass().add("gameStr");
-        VBox scoreToWinBox = new VBox(scoreToWin, scoreToWinVal);
-        scoreToWinBox.getStyleClass().add("center");
-
-        //GamesToWinBox
-        Label gamesToWin = new Label("Games to Win");
-        gamesToWin.getStyleClass().addAll("middleText", "smallerLabel");
-        Node gamesToWinVal;
-        if (Match.getGamesToWin() > 0) {
-            gamesToWinVal = new Label(String.valueOf(Match.getCurrentGameScore()));
-        }
-        else {
-            gamesToWinVal = new ImageView(new Image("/img/infinity.png"));
-        }
-        gamesToWinVal.getStyleClass().add("gameStr");
-        VBox gamesToWinBox = new VBox(gamesToWin, gamesToWinVal);
-        gamesToWinBox.getStyleClass().add( "center");
-
-        //InfoBox
         VBox infoBox;
         if (Match.isConnected()) {
             ImageView connected = new ImageView(new Image("/img/bt.png"));
@@ -124,11 +72,75 @@ public class GameView {
     }
 
 
-    private VBox createSeparator(double height) {
+    private VBox createMiddleLine() {
         VBox separator = new VBox();
-        separator.setMinHeight(height);
+        separator.setMinHeight(Main.HEIGHT / 3);
         separator.getStyleClass().add("separator");
         return separator;
+    }
+
+    private VBox createLogoBox() {
+        ImageView logo = new ImageView(new Image("img/astLogo.png"));
+        Label version = new Label(Main.VERSION);
+        version.getStyleClass().add("smallerText");
+        VBox logoBox = new VBox(10, logo, version);
+        logoBox.getStyleClass().add("center");
+
+        return logoBox;
+    }
+
+    private VBox createGameBox() {
+        Label game = new Label("Game");
+        game.getStyleClass().add("middleText");
+        Label currentGameNum = new Label(String.valueOf(Match.getCurrentGame() + 1));
+        currentGameNum.getStyleClass().add("gameStr");
+        Label of = new Label(" of ");
+        of.getStyleClass().addAll("smallerText", "topPadding");
+        Label maxGameNum = new Label(String.valueOf(Match.getMaxGames()));
+        maxGameNum.getStyleClass().add("gameStr");
+        HBox gameNumBox = new HBox(5, currentGameNum, of, maxGameNum);
+        gameNumBox.getStyleClass().add("center");
+        VBox gameBox = new VBox(game, gameNumBox);
+        gameBox.getStyleClass().add("center");
+
+        return gameBox;
+    }
+
+    private VBox createScoreToWinBox() {
+        Label scoreToWin = new Label("Score to Win");
+        scoreToWin.getStyleClass().addAll("middleText", "smallerLabel");
+
+        Node scoreToWinVal;
+        if (Match.getCurrentGameScore() > 0) {
+            scoreToWinVal = new Label(String.valueOf(Match.getCurrentGameScore()));
+        }
+        else {
+            scoreToWin.getStyleClass().add("bottomPadding");
+            scoreToWinVal = new ImageView(new Image("/img/infinity.png"));
+        }
+        scoreToWinVal.getStyleClass().add("gameStr");
+        VBox scoreToWinBox = new VBox(scoreToWin, scoreToWinVal);
+        scoreToWinBox.getStyleClass().add("center");
+
+        return scoreToWinBox;
+    }
+
+    private VBox createGamesToWin() {
+        Label gamesToWin = new Label("Games to Win");
+        gamesToWin.getStyleClass().addAll("middleText", "smallerLabel");
+        Node gamesToWinVal;
+        if (Match.getGamesToWin() > 0) {
+            gamesToWinVal = new Label(String.valueOf(Match.getGamesToWin()));
+        }
+        else {
+            gamesToWin.getStyleClass().add("bottomPadding");
+            gamesToWinVal = new ImageView(new Image("/img/infinity.png"));
+        }
+        gamesToWinVal.getStyleClass().add("gameStr");
+        VBox gamesToWinBox = new VBox(gamesToWin, gamesToWinVal);
+        gamesToWinBox.getStyleClass().add( "center");
+
+        return gamesToWinBox;
     }
 
 

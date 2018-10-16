@@ -33,12 +33,14 @@
 .smallerText {
     -fx-alignment: center;
     -fx-font-family: "Cooper Black";
+    -fx-text-fill: #005975;
     -fx-font-size: 16px;
 }
 
 .middleText, .gameStr {
     -fx-alignment: center;
     -fx-font-family: "Cooper Black";
+    -fx-text-fill: #005975;
     -fx-font-size: 42px;
 }
 
@@ -55,11 +57,11 @@
     -fx-border-width: 10px;
     -fx-border-style: solid;
     -fx-border-radius: 25px;
-    -fx-padding: 10px 10px 20px 10px;
+    -fx-padding: 10px 10px 30px 10px;
 }
 
-.topMargin {
-    -fx-margin: 25px;
+.bottomPadding {
+    -fx-padding: 0 0 15px 0;
 }
 
 /* Team View */
@@ -80,7 +82,7 @@
 }
 
 .winnerLabel {
-    -fx-padding: 0 40px 40px 40px;
+    -fx-padding: 0 40px;
 }
 
 .winnerTeamLabel {

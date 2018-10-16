@@ -2,10 +2,7 @@ package com.advancedsportstechnologies.controller;
 
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.Match;
-import com.advancedsportstechnologies.view.GameView;
-import com.advancedsportstechnologies.view.GameWinnerView;
-import com.advancedsportstechnologies.view.MatchWinnerView;
-import com.advancedsportstechnologies.view.TeamView;
+import com.advancedsportstechnologies.view.*;
 import javafx.application.Platform;
 
 public class Controller {
@@ -13,9 +10,13 @@ public class Controller {
         if (winningTeam.getTeam().getScore() == Match.getCurrentGameScore()) {
             Main.getScene().setOnKeyReleased(null);
             winningTeam.getTeam().increaseGamesWon();
-            if (winningTeam.getTeam().getGamesWon() >= (double) Match.getMaxGames() / 2) {
+            if (winningTeam.getTeam().getGamesWon() >= Match.getGamesToWin()) {
                 MatchWinnerView winnerView = new MatchWinnerView(winningTeam.getTeam());
                 Main.getRoot().getChildren().set(0, winnerView.getView());
+            }
+            else if (Match.getCurrentGame() + 1 == Match.getMaxGames()) {
+                MatchTieView tieView = new MatchTieView();
+                Main.getRoot().getChildren().set(0, tieView.getView());
             }
             else {
                 GameWinnerView gameWinnerView = new GameWinnerView(winningTeam.getTeam(), losingTeam.getTeam());

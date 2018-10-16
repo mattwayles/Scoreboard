@@ -17,6 +17,9 @@ public class Main extends Application {
     private static StackPane root;
     private static Scene scene;
 
+    //TODO: Comment and cleanup
+
+
     @Override
     public void start(Stage primaryStage){
         root = new StackPane();
