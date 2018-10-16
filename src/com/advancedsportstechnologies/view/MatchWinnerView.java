@@ -2,8 +2,11 @@ package com.advancedsportstechnologies.view;
 
 import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.Main;
+import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
@@ -37,9 +40,22 @@ public class MatchWinnerView {
         this.view.getStyleClass().add("winnerView");
 
         this.setKeyPressListeners();
+        if (!Main.debug) {
+            PiController.removeEventListeners();
+            this.setEventListeners();
+        }
     }
 
     public VBox getView() { return this.view; }
+
+    private void setEventListeners() {
+        PiController.reset.addListener((GpioPinListenerDigital) event -> reset());
+    }
+
+    private void reset() {
+        Platform.runLater(Match::startOrRefresh);
+    }
+
 
     private void setKeyPressListeners() {
         Main.getScene().setOnKeyReleased(e -> {

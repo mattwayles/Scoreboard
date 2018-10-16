@@ -24,10 +24,10 @@ public class WaitThread implements Runnable{
 	/** Waiting for connection from devices */
 	private void waitForConnection() {
 		// retrieve the local Bluetooth device object
-		LocalDevice local = null;
+		LocalDevice local;
 		
 		StreamConnectionNotifier notifier;
-		StreamConnection connection = null;
+		StreamConnection connection;
 		
 		// setup the server to listen for connection
 		try {

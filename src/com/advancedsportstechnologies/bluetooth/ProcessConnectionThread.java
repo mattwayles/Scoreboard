@@ -3,7 +3,6 @@ package com.advancedsportstechnologies.bluetooth;
 import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.model.Match;
 import javafx.application.Platform;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

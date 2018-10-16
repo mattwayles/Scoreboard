@@ -2,8 +2,6 @@ package com.advancedsportstechnologies.model;
 
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.view.GameView;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 
 public class Match {
@@ -65,8 +63,6 @@ public class Match {
     public static int getGamesToWin() { return gamesToWin; }
 
     public static void setGamesToWin(int win) { gamesToWin = win; }
-
-    public static int[] getGameScore() { return gameScores; }
 
     public static String getType() { return type; }
 

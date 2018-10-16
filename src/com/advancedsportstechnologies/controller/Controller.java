@@ -2,19 +2,14 @@ package com.advancedsportstechnologies.controller;
 
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.Match;
-import com.advancedsportstechnologies.model.Team;
 import com.advancedsportstechnologies.view.GameView;
 import com.advancedsportstechnologies.view.GameWinnerView;
 import com.advancedsportstechnologies.view.MatchWinnerView;
 import com.advancedsportstechnologies.view.TeamView;
 import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 
 public class Controller {
-    public static boolean checkWinner(TeamView winningTeam, TeamView losingTeam) {
+    public static void checkWinner(TeamView winningTeam, TeamView losingTeam) {
         if (winningTeam.getTeam().getScore() == Match.getCurrentGameScore()) {
             Main.getScene().setOnKeyReleased(null);
             winningTeam.getTeam().increaseGamesWon();
@@ -28,9 +23,7 @@ public class Controller {
                 Thread thread = displayGameWinnerView(gameWinnerView);
                 thread.start();
             }
-            return true;
         }
-        return false;
     }
 
     private static Thread displayGameWinnerView(GameWinnerView winnerView) {

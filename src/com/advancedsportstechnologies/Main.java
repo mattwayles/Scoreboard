@@ -2,9 +2,7 @@ package com.advancedsportstechnologies;
 
 import com.advancedsportstechnologies.bluetooth.WaitThread;
 import com.advancedsportstechnologies.model.Match;
-import com.advancedsportstechnologies.view.GameView;
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;

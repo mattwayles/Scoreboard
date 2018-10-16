@@ -8,15 +8,13 @@ public class Team {
     private int gamesWon;
     private Paint color;
 
-    public Team(String name) {
+    Team(String name) {
         this.teamName = name;
         this.score = 0;
         this.gamesWon = 0;
     }
 
     public String getTeamName() { return this.teamName; }
-
-    public void setTeamName(String name) { this.teamName = name; }
 
     public int getScore() { return this.score; }
 
@@ -28,7 +26,7 @@ public class Team {
 
     public Paint getColor() { return this.color; }
 
-    public void setColor(Paint color) { this.color = color; }
+    void setColor(Paint color) { this.color = color; }
 
     public void increaseGamesWon() { this.gamesWon++; }
 

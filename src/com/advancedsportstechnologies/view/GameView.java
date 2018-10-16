@@ -4,7 +4,6 @@ import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
-import com.advancedsportstechnologies.model.Team;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
@@ -15,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 
 public class GameView {
     private HBox view;
@@ -139,7 +137,7 @@ public class GameView {
         PiController.controller1Down.addListener((GpioPinListenerDigital) event -> decreaseScore(event, teamView1));
         PiController.controller2Up.addListener((GpioPinListenerDigital) event -> increaseScore(event, this.teamView2, this.teamView1));
         PiController.controller2Down.addListener((GpioPinListenerDigital) event -> decreaseScore(event, teamView2));
-        PiController.reset.addListener((GpioPinListenerDigital) this::reset);
+        PiController.reset.addListener((GpioPinListenerDigital) event -> reset());
     }
 
     private void increaseScore(GpioPinDigitalStateChangeEvent event, TeamView activeTeam, TeamView passiveTeam) {
@@ -147,7 +145,7 @@ public class GameView {
             Platform.runLater(() -> {
                 activeTeam.getTeam().setScore(activeTeam.getTeam().getScore() + 1);
                 activeTeam.setScoreLabel(activeTeam.getTeam().getScore());
-                boolean winner = Controller.checkWinner(activeTeam, passiveTeam);
+                Controller.checkWinner(activeTeam, passiveTeam);
             });
         }
     }
@@ -161,7 +159,7 @@ public class GameView {
         }
     }
 
-    private void reset(GpioPinDigitalStateChangeEvent event) {
+    private void reset() {
         Platform.runLater(Match::startOrRefresh);
     }
 
