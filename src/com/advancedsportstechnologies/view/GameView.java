@@ -8,6 +8,7 @@ import com.advancedsportstechnologies.model.Team;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,9 +42,6 @@ public class GameView {
 
     public void reverseTeams() {
         Match.reverseTeams();
-
-        Team one = Match.getTeamOne();
-        Team two = Match.getTeamTwo();
         this.teamView1 = new TeamView(Match.getTeamOne());
         this.teamView2 = new TeamView(Match.getTeamTwo());
 
@@ -51,17 +49,78 @@ public class GameView {
     }
 
     private VBox createSeparator() {
+
+        //Middle line
         VBox topSeparator = createSeparator(Main.HEIGHT / 3);
         topSeparator.getStyleClass().add("separator");
-        VBox bottomSeparator = createSeparator(Main.HEIGHT);
+        VBox bottomSeparator = createSeparator(Main.HEIGHT / 3);
         bottomSeparator.getStyleClass().add("separator");
+
+        //Logo box
         ImageView logo = new ImageView(new Image("img/astLogo.png"));
-        Label version = new Label(Main.VERSION);
-        version.getStyleClass().add("version");
+        Label version = new Label("Scoreboard " + Main.VERSION);
+        version.getStyleClass().add("smallerText");
         VBox logoBox = new VBox(logo, version);
-        logoBox.getStyleClass().add("logoBox");
-        VBox separator = new VBox(topSeparator, logoBox, bottomSeparator);
-        separator.getStyleClass().add("center");
+        logoBox.getStyleClass().add("center");
+
+        //GameBox
+        Label game = new Label("Game");
+        game.getStyleClass().add("middleText");
+        Label currentGameNum = new Label(String.valueOf(Match.getCurrentGame() + 1));
+        currentGameNum.getStyleClass().add("gameStr");
+        Label of = new Label(" of ");
+        of.getStyleClass().addAll("smallerText", "topPadding");
+        Label maxGameNum = new Label(String.valueOf(Match.getMaxGames()));
+        maxGameNum.getStyleClass().add("gameStr");
+        HBox gameNumBox = new HBox(5, currentGameNum, of, maxGameNum);
+        gameNumBox.getStyleClass().add("center");
+        VBox gameBox = new VBox(game, gameNumBox);
+        gameBox.getStyleClass().add("center");
+
+        //ScoreToWinBox
+        Label scoreToWin = new Label("Score to Win");
+        scoreToWin.getStyleClass().addAll("middleText", "smallerLabel");
+
+        Node scoreToWinVal;
+        if (Match.getCurrentGameScore() > 0) {
+            scoreToWinVal = new Label(String.valueOf(Match.getCurrentGameScore()));
+        }
+        else {
+            scoreToWinVal = new ImageView(new Image("/img/infinity.png"));
+            scoreToWinVal.getStyleClass().add("topMargin");
+        }
+        scoreToWinVal.getStyleClass().add("gameStr");
+        VBox scoreToWinBox = new VBox(scoreToWin, scoreToWinVal);
+        scoreToWinBox.getStyleClass().add("center");
+
+        //GamesToWinBox
+        Label gamesToWin = new Label("Games to Win");
+        gamesToWin.getStyleClass().addAll("middleText", "smallerLabel");
+        Node gamesToWinVal;
+        if (Match.getGamesToWin() > 0) {
+            gamesToWinVal = new Label(String.valueOf(Match.getCurrentGameScore()));
+        }
+        else {
+            gamesToWinVal = new ImageView(new Image("/img/infinity.png"));
+        }
+        gamesToWinVal.getStyleClass().add("gameStr");
+        VBox gamesToWinBox = new VBox(gamesToWin, gamesToWinVal);
+        gamesToWinBox.getStyleClass().add( "center");
+
+        //InfoBox
+        VBox infoBox;
+        if (Match.isConnected()) {
+            ImageView connected = new ImageView(new Image("/img/bt.png"));
+            infoBox = new VBox(50, logoBox, gameBox, scoreToWinBox, gamesToWinBox, connected);
+            infoBox.getStyleClass().add("infoBox");
+        } else {
+            infoBox = new VBox(50, logoBox, gameBox, scoreToWinBox, gamesToWinBox);
+            infoBox.getStyleClass().add("infoBox");
+        }
+
+            //Put it all together
+            VBox separator = new VBox(topSeparator, infoBox, bottomSeparator);
+            separator.getStyleClass().add("padding");
 
         return separator;
     }
@@ -103,7 +162,7 @@ public class GameView {
     }
 
     private void reset(GpioPinDigitalStateChangeEvent event) {
-        Platform.runLater(Match::start);
+        Platform.runLater(Match::startOrRefresh);
     }
 
     private void setKeyPressListeners() {
@@ -123,7 +182,8 @@ public class GameView {
                 Match.getTeamTwo().decreaseScore();
                 this.teamView2.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamTwo().getScore()));
             } else if (e.getCode() == KeyCode.Q) {
-                Match.start();
+                Controller.restartScoreboard();
+                Match.startOrRefresh();
             }
         });
     }

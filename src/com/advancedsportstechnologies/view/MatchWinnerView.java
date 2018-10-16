@@ -45,7 +45,7 @@ public class MatchWinnerView {
         Main.getScene().setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.Q) {
                 Controller.restartScoreboard();
-                Match.start();
+                Match.startOrRefresh();
             }
         });
     }

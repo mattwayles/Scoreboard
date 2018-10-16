@@ -28,14 +28,11 @@ public class TeamView {
         this.scoreLabel.getStyleClass().add("scoreLabel");
         this.gamesWonBox = new HBox(10);
         if (team.getGamesWon() == 0) {
-            new ImageView(new Image("/img/gameWon.png"));
+            this.gamesWonBox.getChildren().add(new ImageView(new Image("/img/placeholder.png")));
         }
         else {
             this.gamesWonBox.getChildren().clear();
-            for (int i = 0; i < team.getGamesWon(); i++) {
-                this.gamesWonBox.getChildren().add(
-                        new ImageView(new Image("/img/gameWon.png")));
-            }
+            this.gamesWonBox.getChildren().add(new ImageView(new Image("/img/gamesWon/gameWon" + this.team.getGamesWon() + ".png")));
         }
 
         this.gamesWonBox.setAlignment(Pos.CENTER);

@@ -25,7 +25,11 @@ public class ProcessConnectionThread implements Runnable{
 	@Override
 	public void run() {
 		try {
-			
+
+			//Inform UI of connection
+			Match.setConnected(true);
+			Platform.runLater(Match::startOrRefresh);
+
 			// prepare to receive data
 			InputStream inputStream = mConnection.openInputStream();
 
@@ -40,6 +44,8 @@ public class ProcessConnectionThread implements Runnable{
 				if (buffer == EXIT_CMD)
 				{
 					System.out.println("finish process");
+					Match.setConnected(false);
+					Platform.runLater(Match::startOrRefresh);
 					break;
 				}
 
@@ -67,8 +73,9 @@ public class ProcessConnectionThread implements Runnable{
 			JSONObject resultObj;
 			try {
 				resultObj = new JSONObject(result);
-				String matchType = resultObj.getString("type");
 				int numGames = resultObj.getInt("numGames");
+				int gamesToWin = resultObj.getInt("gamesToWin");
+				String matchType = resultObj.getString("type");
 				String team1Name = resultObj.getString("team1");
 				String team2Name = resultObj.getString("team2");
 
@@ -84,13 +91,14 @@ public class ProcessConnectionThread implements Runnable{
 				Platform.runLater(() ->
 				{
 					Match.setType(matchType);
+					Match.setGamesToWin(gamesToWin);
 					Match.setMaxGames(numGames);
 					Match.setGameScores(scores);
 					Match.setTeams(team1Name, team2Name);
 
 					Controller.restartScoreboard();
 
-					Match.start();
+					Match.startOrRefresh();
 				});
 
 			} catch (JSONException e) {

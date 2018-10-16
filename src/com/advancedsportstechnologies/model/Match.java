@@ -7,12 +7,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 
 public class Match {
-    private static int maxGames = 3;
+    private static int maxGames = 1;
     private static int currentGame = 0;
     private static Team team1;
     private static Team team2;
     private static String type = "standard";
-    private static int[] gameScores = new int[] {21, 21, 15};
+    private static int gamesToWin;
+    private static int[] gameScores = new int[1];
+    private static boolean connected = false;
 
     private static final String TEAM_ONE_COLOR = "#0800ad";
     private static final String TEAM_TWO_COLOR = "#a05500";
@@ -33,7 +35,7 @@ public class Match {
         team2.setColor(Paint.valueOf(TEAM_TWO_COLOR));
     }
 
-    public static void start() {
+    public static void startOrRefresh() {
         if (Main.getRoot().getChildren() != null) {
             Main.getRoot().getChildren().clear();
             Main.getRoot().getChildren().add(new GameView().getView());
@@ -60,6 +62,10 @@ public class Match {
 
     public static Team getTeamTwo() { return team2; }
 
+    public static int getGamesToWin() { return gamesToWin; }
+
+    public static void setGamesToWin(int win) { gamesToWin = win; }
+
     public static int[] getGameScore() { return gameScores; }
 
     public static String getType() { return type; }
@@ -68,7 +74,9 @@ public class Match {
 
     public static int getCurrentGameScore() { return gameScores[currentGame]; }
 
-    public static int[] getGameScores() { return gameScores; }
-
     public static void setGameScores(int[] scores) { gameScores = scores; }
+
+    public static boolean isConnected() { return connected; }
+
+    public static void setConnected(boolean conn) { connected = conn; }
 }
