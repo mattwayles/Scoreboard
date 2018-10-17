@@ -24,9 +24,7 @@ public class GameView {
         this.teamView1 = new TeamView(Match.getTeamOne());
         this.teamView2 = new TeamView(Match.getTeamTwo());
         this.view = new HBox(teamView1.getView(), createSeparator(), teamView2.getView());
-        this.view.getStyleClass().add("gameView");
         this.view.setMaxHeight(Main.HEIGHT);
-        this.view.setSpacing(Main.HEIGHT / 7);
         this.setKeyPressListeners();
 
 
@@ -66,7 +64,7 @@ public class GameView {
 
             //Put it all together
             VBox separator = new VBox(topSeparator, infoBox, bottomSeparator);
-            separator.getStyleClass().add("padding");
+            separator.getStyleClass().add("center");
 
         return separator;
     }

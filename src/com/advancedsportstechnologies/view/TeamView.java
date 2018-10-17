@@ -17,26 +17,20 @@ public class TeamView {
 
     TeamView(Team team) {
         this.team = team;
-        Label teamNameLabel = new Label(team.getTeamName());
-        teamNameLabel.getStyleClass().add("teamNameLabel");
-        teamNameLabel.setTextFill(team.getColor());
-        teamNameLabel.setFont(Main.WIDTH > 1280 ? new Font(82) : new Font(60));
         this.scoreLabel = new Label(String.valueOf(team.getScore()));
         this.scoreLabel.setFont(Main.WIDTH > 1280 ? new Font(500) : new Font(350));
         this.scoreLabel.getStyleClass().add("scoreLabel");
-        HBox gamesWonBox = new HBox(10);
-        if (team.getGamesWon() == 0) {
-            gamesWonBox.getChildren().add(new ImageView(new Image("/img/placeholder.png")));
-        }
-        else {
-            gamesWonBox.getChildren().clear();
-            gamesWonBox.getChildren().add(new ImageView(new Image("/img/gamesWon/gameWon" + this.team.getGamesWon() + ".png")));
-        }
+        Label teamNameLabel = new Label(team.getTeamName());
+        teamNameLabel.getStyleClass().add("teamNameLabel");
+        teamNameLabel.setTextFill(team.getColor());
+        teamNameLabel.setFont(Main.WIDTH > 1280 ? new Font(82) : new Font(48));
+        ImageView gamesWon = new ImageView(new Image(team.getGamesWon() == 0 ? "/img/placeholder.png" : "/img/gamesWon/gameWon" + this.team.getGamesWon() + ".png"));
 
-        gamesWonBox.setAlignment(Pos.CENTER);
-        this.view = new VBox(teamNameLabel, gamesWonBox, this.scoreLabel);
+        VBox titleBox = new VBox(10, teamNameLabel, gamesWon);
+        titleBox.setAlignment(Pos.CENTER);
+        this.view = new VBox(80, titleBox, this.scoreLabel);
         this.view.setAlignment(Pos.CENTER);
-        this.view.setPrefWidth(Main.WIDTH / 2);
+        this.view.setPrefWidth(Main.WIDTH);
     }
 
     VBox getView() { return this.view; }

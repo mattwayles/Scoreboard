@@ -13,12 +13,18 @@
     -fx-background-size: cover;
 }
 
+.debugBorder {
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-color: red;
+}
+
 .center {
     -fx-alignment: center;
 }
 
 /* Game View */
-.padding, .gameView, .winnerView {
+.padding, .winnerView {
     -fx-alignment: center;
     -fx-padding: 40, 10, 10, 10;
 }
@@ -67,6 +73,7 @@
 /* Team View */
 .teamNameLabel {
     -fx-font-family: "Cooper Black";
+    -fx-padding: 0 15px;
 }
 
 .scoreLabel {

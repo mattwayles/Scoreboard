@@ -79,7 +79,7 @@ public class ProcessConnectionThread implements Runnable{
 				String team2Name = resultObj.getString("team2");
 
 				String gameScoreStr = resultObj.getString("gameScores");
-				String[] gameScores = gameScoreStr.split("/");
+				String[] gameScores = gameScoreStr.split("-");
 
                 int[] scores = new int[gameScores.length];
                 for (int i = 0; i < gameScores.length; i++) {
