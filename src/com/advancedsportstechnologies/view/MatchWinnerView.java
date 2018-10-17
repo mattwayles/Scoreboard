@@ -11,12 +11,22 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 
+/**
+ * Create a Match Winner View
+ */
 public class MatchWinnerView {
     private VBox view;
     private Team winningTeam;
 
+    /**
+     * Create the MatchWinnerView screen and set listeners
+     * @param winningTeam The team that won the Match
+     */
     public MatchWinnerView(Team winningTeam) {
+        //Set keyboard listeners
         this.setKeyPressListeners();
+
+        //Always remove GPIO listeners before creating new ones!
         if (!Main.debug) {
             PiController.removeEventListeners();
             this.setEventListeners();
@@ -26,32 +36,53 @@ public class MatchWinnerView {
         updateView();
     }
 
-
+    /**
+     * Create the actual MatchWinnerView splash screen
+     */
     private void updateView() {
+        //Proper grammar, of course ;)
         String winStr = winningTeam.getTeamName().toLowerCase().endsWith("s") ? " win in " + (Match.getCurrentGame() + 1) + " games!"
                 : " wins in " + (Match.getCurrentGame() + 1) + " games!";
 
+        //Create label for winning team name
         Label teamNameLabel = new Label(winningTeam.getTeamName());
         teamNameLabel.getStyleClass().add("winnerTeamLabel");
         teamNameLabel.setTextFill(winningTeam.getColor());
+
+        //Create label for 'win(s) in x games!"
         Label winStrLabel = new Label(winStr);
         winStrLabel.setTextFill(winningTeam.getColor());
         winStrLabel.getStyleClass().add("winnerLabel");
+
+        //Put team name label, 'wins in x games', and score label in a VBox
         VBox winnerBox = new VBox(teamNameLabel, winStrLabel);
         winnerBox.getStyleClass().add("center");
 
+        //Press Start label
         Label pressStart = new Label("Press Start for New Game");
         pressStart.getStyleClass().add("pressStartLabel");
+
+        //Set the view with all components included
         this.view = new VBox(200, winnerBox, pressStart);
         this.view.getStyleClass().add("winnerView");
     }
 
+    /**
+     * Retrieve this MatchWinnerView Node instance
+     * @return this MatchWinnerView Node instance
+     */
     public VBox getView() { return this.view; }
 
+    /**
+     * Sent event listeners for Pi button presses
+     */
     private void setEventListeners() {
         PiController.reset.addListener((GpioPinListenerDigital) event -> reset());
     }
 
+    /**
+     * Reset the scoreboard if Pi Controller 'reset' button pressed
+     */
     private void reset() {
         Platform.runLater(() -> {
             Controller.restartScoreboard();
@@ -59,8 +90,10 @@ public class MatchWinnerView {
         });
     }
 
-
-        private void setKeyPressListeners() {
+    /**
+     * Set listeners for keyboard button presses
+     */
+    private void setKeyPressListeners() {
         Main.getScene().setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.Q) {
                 Controller.restartScoreboard();

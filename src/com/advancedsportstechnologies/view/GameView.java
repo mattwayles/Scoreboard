@@ -4,7 +4,7 @@ import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
-import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import com.advancedsportstechnologies.model.Team;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -15,26 +15,45 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * Scoreboard visual representation of a game. Contains two TeamViews separated by a middle line containing an informational panel
+ */
 public class GameView {
     private HBox view;
     private TeamView teamView1;
     private TeamView teamView2;
 
+    private final int MAX_SCORE = 99;
+    private final int MIN_SCORE = 0;
+
+    /**
+     * Create a new visual representation of a Game
+     */
     public GameView() {
+        //Create visual components from team objects
         this.teamView1 = new TeamView(Match.getTeamOne());
         this.teamView2 = new TeamView(Match.getTeamTwo());
         this.view = new HBox(teamView1.getView(), createSeparator(), teamView2.getView());
         this.view.setMaxHeight(Main.HEIGHT);
-        this.setKeyPressListeners();
 
+        //Set listeners for keyboard/Pi
+        this.setKeyPressListeners();
         if (!Main.debug) {
             PiController.removeEventListeners();
             this.setEventListeners();
         }
 
     }
+
+    /**
+     * Retrieve the View for this object
+     * @return  The GameView's fully-configured View
+     */
     public HBox getView() { return this.view; }
 
+    /**
+     * When scoreboard type is 'switch', the visual representation of the teams must switch sides after each game
+     */
     public void reverseTeams() {
         Match.reverseTeams();
         this.teamView1 = new TeamView(Match.getTeamOne());
@@ -43,14 +62,28 @@ public class GameView {
         this.view = new HBox(teamView1.getView(), createSeparator(), teamView2.getView());
     }
 
+    /**
+     * Create a middle Team separator and include informational panel
+     * @return  Separator Node element
+     */
     private VBox createSeparator() {
+        //Top & Bottom lines
         VBox topSeparator = createMiddleLine();
         VBox bottomSeparator = createMiddleLine();
+
+        //Logo and version
         VBox logoBox = createLogoBox();
+
+        //Game x of x
         VBox gameBox = createGameBox();
+
+        //Score needed to win game
         VBox scoreToWinBox = createScoreToWinBox();
+
+        //Games needed to win match
         VBox gamesToWinBox = createGamesToWin();
 
+        //Bluetooth logo if Bluetooth is currently connected
         VBox infoBox;
         if (Match.isConnected()) {
             ImageView connected = new ImageView(new Image("/img/bt.png"));
@@ -61,14 +94,17 @@ public class GameView {
             infoBox.getStyleClass().add("infoBox");
         }
 
-            //Put it all together
-            VBox separator = new VBox(topSeparator, infoBox, bottomSeparator);
-            separator.getStyleClass().add("center");
+        //Put it all together
+        VBox separator = new VBox(topSeparator, infoBox, bottomSeparator);
+        separator.getStyleClass().add("center");
 
         return separator;
     }
 
-
+    /**
+     * Create small middle lines that sit on top/bottom of the informational panel
+     * @return  A middle line View
+     */
     private VBox createMiddleLine() {
         VBox separator = new VBox();
         separator.setMinHeight(Main.HEIGHT / 3);
@@ -76,55 +112,94 @@ public class GameView {
         return separator;
     }
 
+    /**
+     * Create a View that contains the Logo and scoreboard version
+     * @return  A View that contains the Logo and scoreboard version
+     */
     private VBox createLogoBox() {
+        //Logo
         ImageView logo = new ImageView(new Image("img/astLogo.png"));
+
+        //Version
         Label version = new Label(Main.VERSION);
         version.getStyleClass().add("smallerText");
+
+        //Box containing logo & version
         VBox logoBox = new VBox(10, logo, version);
         logoBox.getStyleClass().add("center");
 
         return logoBox;
     }
 
+    /**
+     * Create a View that contains 'Game x of x'
+     * @return a View that contains 'Game x of x'
+     */
     private VBox createGameBox() {
+        //'Game' label
         Label game = new Label("Game");
         game.getStyleClass().add("middleText");
+
+        //Current game number
         Label currentGameNum = new Label(String.valueOf(Match.getCurrentGame() + 1));
         currentGameNum.getStyleClass().add("gameStr");
+
+        //'of' label
         Label of = new Label(" of ");
         of.getStyleClass().addAll("smallerText", "topPadding");
+
+        //Max game number
         Label maxGameNum = new Label(String.valueOf(Match.getMaxGames()));
         maxGameNum.getStyleClass().add("gameStr");
+
+        //Box containing current game number, 'of', max game number
         HBox gameNumBox = new HBox(5, currentGameNum, of, maxGameNum);
         gameNumBox.getStyleClass().add("center");
+
+        //Box containing Game + X of X
         VBox gameBox = new VBox(game, gameNumBox);
         gameBox.getStyleClass().add("center");
 
         return gameBox;
     }
 
+    /**
+     * Create a View that contains 'Score To Win = x'
+     * @return ScoreToWin Node element
+     */
     private VBox createScoreToWinBox() {
+        //'Score to Win' label
         Label scoreToWin = new Label("Score to Win");
         scoreToWin.getStyleClass().addAll("middleText", "smallerLabel");
 
+        //Score to win value
         Node scoreToWinVal;
-        if (Match.getCurrentGameScore() > 0) {
-            scoreToWinVal = new Label(String.valueOf(Match.getCurrentGameScore()));
+        if (Match.getCurrentGameWinScore() > 0) {
+            scoreToWinVal = new Label(String.valueOf(Match.getCurrentGameWinScore()));
         }
         else {
             scoreToWin.getStyleClass().add("bottomPadding");
             scoreToWinVal = new ImageView(new Image("/img/infinity.png"));
         }
         scoreToWinVal.getStyleClass().add("gameStr");
+
+        //Box containing 'Score to Win' + score to win value
         VBox scoreToWinBox = new VBox(scoreToWin, scoreToWinVal);
         scoreToWinBox.getStyleClass().add("center");
 
         return scoreToWinBox;
     }
 
+    /**
+     * Create a View that contains 'Games to Win = X'
+     * @return GamesToWin Node element
+     */
     private VBox createGamesToWin() {
+        //'Games to win' label
         Label gamesToWin = new Label("Games to Win");
         gamesToWin.getStyleClass().addAll("middleText", "smallerLabel");
+
+        //Games to win value
         Node gamesToWinVal;
         if (Match.getGamesToWin() > 0) {
             gamesToWinVal = new Label(String.valueOf(Match.getGamesToWin()));
@@ -134,51 +209,44 @@ public class GameView {
             gamesToWinVal = new ImageView(new Image("/img/infinity.png"));
         }
         gamesToWinVal.getStyleClass().add("gameStr");
+
+        //Box containing 'Games to Win' + games to win value
         VBox gamesToWinBox = new VBox(gamesToWin, gamesToWinVal);
         gamesToWinBox.getStyleClass().add( "center");
 
         return gamesToWinBox;
     }
 
-
+    /**
+     * Sent event listeners for Pi button presses
+     */
     private void setEventListeners() {
         PiController.controller1Up.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
-                Platform.runLater(() -> {
-                    Match.getTeamOne().increaseScore();
-                    this.teamView1.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamOne().getScore()));
-                    Controller.checkWinner(this.teamView1, this.teamView2);
-                });
+                Platform.runLater(() -> increaseScore(Match.getTeamOne(), this.teamView1, this.teamView2));
             }
         });
         PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh() && Match.getTeamOne().getScore() > 0) {
-                Platform.runLater(() -> {
-                    Match.getTeamOne().decreaseScore();
-                    this.teamView1.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamOne().getScore()));
-                });
+                Platform.runLater(() -> decreaseScore(Match.getTeamOne(), this.teamView1));
             }
         });
         PiController.controller2Up.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
-                Platform.runLater(() -> {
-                    Match.getTeamTwo().increaseScore();
-                    this.teamView2.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamTwo().getScore()));
-                    Controller.checkWinner(this.teamView2, this.teamView1);
-                });
+                Platform.runLater(() -> increaseScore(Match.getTeamTwo(), this.teamView2, this.teamView1));
             }
         });
         PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh() && Match.getTeamTwo().getScore() > 0) {
-                Platform.runLater(() -> {
-                    Match.getTeamTwo().decreaseScore();
-                    this.teamView2.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamTwo().getScore()));
-                });
+                Platform.runLater(() -> decreaseScore(Match.getTeamTwo(), this.teamView2));
             }
         });
         PiController.reset.addListener((GpioPinListenerDigital) event -> reset());
     }
 
+    /**
+     * Reset the scoreboard if Pi Controller 'reset' button pressed
+     */
     private void reset() {
         Platform.runLater(() -> {
             Controller.restartScoreboard();
@@ -186,26 +254,49 @@ public class GameView {
         });
     }
 
-        private void setKeyPressListeners() {
-       Main.getScene().setOnKeyReleased(e -> {
+    /**
+     * Set listeners for keyboard button presses
+     */
+    private void setKeyPressListeners() {
+        Main.getScene().setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.A) {
-                Match.getTeamOne().increaseScore();
-                this.teamView1.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamOne().getScore()));
-                Controller.checkWinner(this.teamView1, this.teamView2);
+                increaseScore(Match.getTeamOne(), this.teamView1, this.teamView2);
             } else if (e.getCode() == KeyCode.S) {
-                Match.getTeamTwo().increaseScore();
-                this.teamView2.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamTwo().getScore()));
-                Controller.checkWinner(this.teamView2, this.teamView1);
+                increaseScore(Match.getTeamTwo(), this.teamView2, this.teamView1);
             } else if (e.getCode() == KeyCode.Z && Match.getTeamOne().getScore() > 0) {
-                Match.getTeamOne().decreaseScore();
-                this.teamView1.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamOne().getScore()));
+                decreaseScore(Match.getTeamOne(), this.teamView1);
             } else if (e.getCode() == KeyCode.X && Match.getTeamTwo().getScore() > 0) {
-                Match.getTeamTwo().decreaseScore();
-                this.teamView2.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamTwo().getScore()));
+                decreaseScore(Match.getTeamTwo(), this.teamView2);
             } else if (e.getCode() == KeyCode.Q) {
                 Controller.restartScoreboard();
                 Match.startOrRefresh();
             }
         });
+    }
+
+    /**
+     * Increase the score of the specified team when the increase score event is raised
+     * @param activeTeam    The team receiving the score
+     * @param activeTeamView    The View representing the team receiving the score
+     * @param passiveTeamView   The View representing the team that did not receive the score
+     */
+    private void increaseScore(Team activeTeam, TeamView activeTeamView, TeamView passiveTeamView) {
+        if (activeTeam.getScore() > MAX_SCORE) {
+            activeTeam.increaseScore();
+            activeTeamView.getScoreLabel().textProperty().setValue(String.valueOf(activeTeam.getScore()));
+            Controller.checkWinner(activeTeamView, passiveTeamView);
+        }
+    }
+
+    /**
+     * Decrease the score of the specified team when the decrease score event is raised
+     * @param activeTeam    The team receiving the score
+     * @param activeTeamView    The View representing the team receiving the score
+     */
+    private void decreaseScore(Team activeTeam, TeamView activeTeamView) {
+        if (activeTeam.getScore() > MIN_SCORE) {
+            activeTeam.decreaseScore();
+            activeTeamView.getScoreLabel().textProperty().setValue(String.valueOf(activeTeam.getScore()));
+        }
     }
 }

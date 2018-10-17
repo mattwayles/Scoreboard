@@ -10,12 +10,21 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 import javax.microedition.io.StreamConnectionNotifier;
 
+/**
+ * Background thread to wait for Bluetooth connection
+ */
 public class WaitThread implements Runnable{
 
-	/** Constructor */
+	//Unique ID that is required for clients to connect to this device
+	private final String SERVER_UUID = "04c6093b00001000800000805f9b34fb";
+
+	/** Default Constructor Required **/
 	public WaitThread() {
 	}
-	
+
+	/**
+	 * When thread starts, wait for a Bluetooth connection
+	 */
 	@Override
 	public void run() {
 		waitForConnection();		
@@ -34,8 +43,8 @@ public class WaitThread implements Runnable{
 			local = LocalDevice.getLocalDevice();
 			local.setDiscoverable(DiscoveryAgent.GIAC);
 			
-			UUID uuid = new UUID("04c6093b00001000800000805f9b34fb", false);
-			System.out.println(uuid.toString());
+			UUID uuid = new UUID(SERVER_UUID, false);
+			System.out.println("Publishing services at: " + uuid.toString());
 			
             String url = "btspp://localhost:" + uuid.toString() + ";name=ScoreboardConfig";
             notifier = (StreamConnectionNotifier)Connector.open(url);
@@ -48,12 +57,13 @@ public class WaitThread implements Runnable{
 			return;
 		}
 		
-		// waiting for connection
+		// wait for connection
 		while(true) {
 			try {
-				System.out.println("waiting for connection...");
-	            connection = notifier.acceptAndOpen();
-	            
+				System.out.println("Waiting for client connection...");
+
+	            //When connection is established, create new worker thread to process messages
+				connection = notifier.acceptAndOpen();
 	            Thread processThread = new Thread(new ProcessConnectionThread(connection));
 	            processThread.start();
 	            
