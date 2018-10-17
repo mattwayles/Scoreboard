@@ -1,5 +1,7 @@
 package com.advancedsportstechnologies.view;
 
+import com.advancedsportstechnologies.Main;
+import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
 import javafx.scene.control.Label;
@@ -11,6 +13,10 @@ public class GameWinnerView {
     private Team winningTeam;
     private Team losingTeam;
     public GameWinnerView(Team winningTeam, Team losingTeam) {
+        if (!Main.debug) {
+            PiController.removeEventListeners();
+        }
+
         this.winningTeam = winningTeam;
         this.losingTeam = losingTeam;
         updateView();

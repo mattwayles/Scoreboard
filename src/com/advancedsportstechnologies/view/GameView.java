@@ -27,9 +27,8 @@ public class GameView {
         this.view.setMaxHeight(Main.HEIGHT);
         this.setKeyPressListeners();
 
-
         if (!Main.debug) {
-            PiController.setDebounce();
+            PiController.removeEventListeners();
             this.setEventListeners();
         }
 
@@ -143,37 +142,51 @@ public class GameView {
 
 
     private void setEventListeners() {
-        PiController.controller1Up.addListener((GpioPinListenerDigital) event -> increaseScore(event, this.teamView1, this.teamView2));
-        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> decreaseScore(event, teamView1));
-        PiController.controller2Up.addListener((GpioPinListenerDigital) event -> increaseScore(event, this.teamView2, this.teamView1));
-        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> decreaseScore(event, teamView2));
+        PiController.controller1Up.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()) {
+                Platform.runLater(() -> {
+                    Match.getTeamOne().increaseScore();
+                    this.teamView1.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamOne().getScore()));
+                    Controller.checkWinner(this.teamView1, this.teamView2);
+                });
+            }
+        });
+        PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh() && Match.getTeamOne().getScore() > 0) {
+                Platform.runLater(() -> {
+                    Match.getTeamOne().decreaseScore();
+                    this.teamView1.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamOne().getScore()));
+                });
+            }
+        });
+        PiController.controller2Up.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh()) {
+                Platform.runLater(() -> {
+                    Match.getTeamTwo().increaseScore();
+                    this.teamView2.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamTwo().getScore()));
+                    Controller.checkWinner(this.teamView2, this.teamView1);
+                });
+            }
+        });
+        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isHigh() && Match.getTeamTwo().getScore() > 0) {
+                Platform.runLater(() -> {
+                    Match.getTeamTwo().decreaseScore();
+                    this.teamView2.getScoreLabel().textProperty().setValue(String.valueOf(Match.getTeamTwo().getScore()));
+                });
+            }
+        });
         PiController.reset.addListener((GpioPinListenerDigital) event -> reset());
     }
 
-    private void increaseScore(GpioPinDigitalStateChangeEvent event, TeamView activeTeam, TeamView passiveTeam) {
-        if (event.getState().isHigh()) {
-            Platform.runLater(() -> {
-                activeTeam.getTeam().setScore(activeTeam.getTeam().getScore() + 1);
-                activeTeam.setScoreLabel(activeTeam.getTeam().getScore());
-                Controller.checkWinner(activeTeam, passiveTeam);
-            });
-        }
-    }
-
-    private void decreaseScore(GpioPinDigitalStateChangeEvent event, TeamView activeTeam) {
-        if (event.getState().isHigh() && activeTeam.getTeam().getScore() > 0) {
-            Platform.runLater(() -> {
-                activeTeam.getTeam().setScore(activeTeam.getTeam().getScore() - 1);
-                activeTeam.setScoreLabel(activeTeam.getTeam().getScore());
-            });
-        }
-    }
-
     private void reset() {
-        Platform.runLater(Match::startOrRefresh);
+        Platform.runLater(() -> {
+            Controller.restartScoreboard();
+            Match.startOrRefresh();
+        });
     }
 
-    private void setKeyPressListeners() {
+        private void setKeyPressListeners() {
        Main.getScene().setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.A) {
                 Match.getTeamOne().increaseScore();

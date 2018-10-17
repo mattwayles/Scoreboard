@@ -15,6 +15,12 @@ public class MatchTieView {
     private VBox view;
 
     public MatchTieView() {
+        this.setKeyPressListeners();
+        if (!Main.debug) {
+            PiController.removeEventListeners();
+            this.setEventListeners();
+        }
+
         updateView();
     }
 
@@ -31,12 +37,6 @@ public class MatchTieView {
         pressStart.getStyleClass().add("pressStartLabel");
         this.view = new VBox(200, tieBox, pressStart);
         this.view.getStyleClass().add("winnerView");
-
-        this.setKeyPressListeners();
-        if (!Main.debug) {
-            PiController.removeEventListeners();
-            this.setEventListeners();
-        }
     }
 
     public VBox getView() { return this.view; }
@@ -46,7 +46,10 @@ public class MatchTieView {
     }
 
     private void reset() {
-        Platform.runLater(Match::startOrRefresh);
+        Platform.runLater(() -> {
+            Controller.restartScoreboard();
+            Match.startOrRefresh();
+        });
     }
 
 
