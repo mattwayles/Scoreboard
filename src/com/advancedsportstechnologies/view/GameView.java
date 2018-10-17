@@ -83,16 +83,10 @@ public class GameView {
         //Games needed to win match
         VBox gamesToWinBox = createGamesToWin();
 
-        //Bluetooth logo if Bluetooth is currently connected
-        VBox infoBox;
-        if (Match.isConnected()) {
-            ImageView connected = new ImageView(new Image("/img/bt.png"));
-            infoBox = new VBox(50, logoBox, gameBox, scoreToWinBox, gamesToWinBox, connected);
-            infoBox.getStyleClass().add("infoBox");
-        } else {
-            infoBox = new VBox(50, logoBox, gameBox, scoreToWinBox, gamesToWinBox);
-            infoBox.getStyleClass().add("infoBox");
-        }
+        //Conditional icons
+        VBox infoBox = new VBox(35, logoBox, gameBox, scoreToWinBox, gamesToWinBox);
+        infoBox.getStyleClass().add("infoBox");
+        addToInfoBox(infoBox);
 
         //Put it all together
         VBox separator = new VBox(topSeparator, infoBox, bottomSeparator);
@@ -215,6 +209,22 @@ public class GameView {
         gamesToWinBox.getStyleClass().add( "center");
 
         return gamesToWinBox;
+    }
+
+    /**
+     * Add icons to the infoBox based off of certain conditions
+     * @param infoBox   The VBox View to add icons to
+     */
+    private void addToInfoBox(VBox infoBox) {
+        if (Match.getType().equals("switch")) {
+            ImageView switchIcon = new ImageView(new Image("/img/switch.png"));
+            infoBox.getChildren().add(switchIcon);
+        }
+
+        if (Match.isConnected()) {
+            ImageView connected = new ImageView(new Image("/img/bt.png"));
+            infoBox.getChildren().add(connected);
+        }
     }
 
     /**
