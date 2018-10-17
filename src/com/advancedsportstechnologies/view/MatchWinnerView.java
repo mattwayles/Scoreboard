@@ -8,7 +8,10 @@ import com.advancedsportstechnologies.model.Team;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -17,6 +20,7 @@ import javafx.scene.layout.VBox;
 public class MatchWinnerView {
     private VBox view;
     private Team winningTeam;
+    private long keyPressTime = 0;
 
     /**
      * Create the MatchWinnerView screen and set listeners
@@ -77,6 +81,24 @@ public class MatchWinnerView {
      * Sent event listeners for Pi button presses
      */
     private void setEventListeners() {
+        PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState().isLow()) {
+                keyPressTime = System.currentTimeMillis();
+            }
+            else {
+                if (System.currentTimeMillis() - keyPressTime > 3000) {
+                    Platform.runLater(() -> {
+                        System.out.println("Held for 3 secs");
+                        Image image = new Image("img/finishHimEasterEgg.gif", Main.WIDTH, Main.HEIGHT, false, false);
+                        ImageView imageView = new ImageView(image);
+                        this.view = new VBox(imageView);
+                        Main.getRoot().getChildren().set(0, this.getView());
+                            }
+                    );
+                }
+            }
+            keyPressTime = 0;
+        });
         PiController.reset.addListener((GpioPinListenerDigital) event -> reset());
     }
 
