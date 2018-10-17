@@ -16,6 +16,12 @@ public class MatchWinnerView {
     private Team winningTeam;
 
     public MatchWinnerView(Team winningTeam) {
+        this.setKeyPressListeners();
+        if (!Main.debug) {
+            PiController.removeEventListeners();
+            this.setEventListeners();
+        }
+
         this.winningTeam = winningTeam;
         updateView();
     }
@@ -38,12 +44,6 @@ public class MatchWinnerView {
         pressStart.getStyleClass().add("pressStartLabel");
         this.view = new VBox(200, winnerBox, pressStart);
         this.view.getStyleClass().add("winnerView");
-
-        this.setKeyPressListeners();
-        if (!Main.debug) {
-            PiController.removeEventListeners();
-            this.setEventListeners();
-        }
     }
 
     public VBox getView() { return this.view; }
@@ -53,11 +53,14 @@ public class MatchWinnerView {
     }
 
     private void reset() {
-        Platform.runLater(Match::startOrRefresh);
+        Platform.runLater(() -> {
+            Controller.restartScoreboard();
+            Match.startOrRefresh();
+        });
     }
 
 
-    private void setKeyPressListeners() {
+        private void setKeyPressListeners() {
         Main.getScene().setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.Q) {
                 Controller.restartScoreboard();

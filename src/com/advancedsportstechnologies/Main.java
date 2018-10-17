@@ -1,6 +1,7 @@
 package com.advancedsportstechnologies;
 
 import com.advancedsportstechnologies.bluetooth.WaitThread;
+import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -11,11 +12,15 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static final String VERSION = "v0.2";
-    public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
-    public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
+    public static final double HEIGHT = 1024;
+    //public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
+    public static final double WIDTH = 1280;
+    //public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
     public static boolean debug;
     private static StackPane root;
     private static Scene scene;
+
+    //Main: 1280x1024
 
     //TODO: Comment and cleanup
 
@@ -34,6 +39,11 @@ public class Main extends Application {
 
 
         primaryStage.show();
+
+        if (!Main.debug) {
+            PiController.setDebounce();
+        }
+
 
         Thread waitThread = new Thread(new WaitThread());
         waitThread.start();
