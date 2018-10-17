@@ -44,7 +44,7 @@ public class TeamView {
         titleBox.setAlignment(Pos.CENTER);
 
         //Set View with box containing all components
-        this.view = new VBox(80, titleBox, this.scoreLabel);
+        this.view = new VBox(Main.WIDTH > 1280 ? 20 : 80, titleBox, this.scoreLabel);
         this.view.setAlignment(Pos.CENTER);
         this.view.setPrefWidth(Main.WIDTH);
     }

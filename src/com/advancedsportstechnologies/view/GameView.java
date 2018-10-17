@@ -281,7 +281,7 @@ public class GameView {
      * @param passiveTeamView   The View representing the team that did not receive the score
      */
     private void increaseScore(Team activeTeam, TeamView activeTeamView, TeamView passiveTeamView) {
-        if (activeTeam.getScore() > MAX_SCORE) {
+        if (activeTeam.getScore() < MAX_SCORE) {
             activeTeam.increaseScore();
             activeTeamView.getScoreLabel().textProperty().setValue(String.valueOf(activeTeam.getScore()));
             Controller.checkWinner(activeTeamView, passiveTeamView);
