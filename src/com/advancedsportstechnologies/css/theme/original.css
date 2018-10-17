@@ -28,6 +28,10 @@
 }
 
 /* InfoBox */
+.infoBox {
+    -fx-border-color: #000000;
+}
+
 .smallerText, .middleText {
     -fx-text-fill: #005975;
 }
@@ -35,4 +39,8 @@
 /* Press Start + Countdown Labels */
 .pressStartLabel, .countdownLabel, .gameStr {
     -fx-text-fill: #006400;
+}
+
+.scoreLabel {
+    -fx-text-fill: #000000;
 }

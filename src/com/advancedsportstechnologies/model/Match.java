@@ -27,19 +27,22 @@ public class Match {
     private static int maxGames = 1;
     private static int currentGame = 0;
     private static String type = "standard";
+    private static String theme = "original";
     private static boolean connected = false;
+    private static String team1Color = "#0800ad";
+    private static String team2Color = "#a05500";
     private static int[] gameScores = new int[1];
 
     //TODO: Make the colors customizable via bluetooth
-    private static final String TEAM_ONE_COLOR = "#0800ad";
-    private static final String TEAM_TWO_COLOR = "#a05500";
+
 
     /**
      * Set defaults team names with default team colors
      */
     public static void setTeams() {
-        team1 = new Team("Team 1", TEAM_ONE_COLOR);
-        team2 = new Team("Team 2", TEAM_TWO_COLOR);
+        setTeamColors();
+        team1 = new Team("Team 1", team1Color);
+        team2 = new Team("Team 2", team2Color);
     }
 
     /**
@@ -48,8 +51,25 @@ public class Match {
      * @param team2Name The second team name
      */
     public static void setTeams(String team1Name, String team2Name) {
-        team1 = new Team(team1Name, TEAM_ONE_COLOR);
-        team2 = new Team(team2Name, TEAM_TWO_COLOR);
+        setTeamColors();
+        team1 = new Team(team1Name, team1Color);
+        team2 = new Team(team2Name, team2Color);
+    }
+
+    /**
+     * Set team colors based off of theme
+     */
+    private static void setTeamColors() {
+        switch (theme) {
+            case "original":
+                team1Color = "#0800ad";
+                team2Color = "#a05500";
+                break;
+            case "dark":
+                team1Color = "#FDFFBC";
+                team2Color = "#F9CCFF";
+                break;
+        }
     }
 
     /**
@@ -135,6 +155,22 @@ public class Match {
      * @param scoreboardType    The scoreboard type for this match
      */
     public static void setType(String scoreboardType) { type = scoreboardType; }
+
+    /**
+     * Retrieve the scoreboard theme. Sent via Bluetooth
+     * @return The scoreboard theme
+     */
+    public static String getTheme() { return theme; }
+
+    /**
+     * Set the scoreboard theme from Bluetooth message
+     * @param scoreboardTheme   The theme for this scoreboard
+     */
+    public static void setTheme(String scoreboardTheme) {
+        theme = scoreboardTheme;
+        Main.getScene().getStylesheets().remove(Main.getScene().getStylesheets().size() - 1);
+        Main.getScene().getStylesheets().add(Match.class.getResource("../css/theme/" + scoreboardTheme + ".css").toExternalForm());
+    }
 
     /**
      * Get the required score to win the current game in this match. Sent via Bluetooth.

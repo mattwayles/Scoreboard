@@ -109,6 +109,8 @@ public class ProcessConnectionThread implements Runnable{
                 //Start a new match with the settings sent in message
 				Platform.runLater(() ->
 				{
+					//TODO: Retrieve theme from App and set to match
+					Match.setTheme("dark");
 					Match.setType(matchType);
 					Match.setGamesToWin(gamesToWin);
 					Match.setMaxGames(numGames);

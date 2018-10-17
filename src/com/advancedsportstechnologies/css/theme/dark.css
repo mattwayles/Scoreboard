@@ -30,8 +30,16 @@
 }
 
 /* InfoBox */
+.infoBox {
+    -fx-border-color: #FFFFFF;
+}
+
 .smallerText, .middleText {
     -fx-text-fill: #00FFFF;
+}
+
+.scoreLabel {
+    -fx-text-fill: #FFFFFF;
 }
 
 /* Press Start + Countdown Labels */
