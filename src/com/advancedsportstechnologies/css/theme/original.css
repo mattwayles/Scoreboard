@@ -1,0 +1,38 @@
+@font-face {
+    src: url("../fonts/original/HarlowSolidItalic.ttf");
+}
+
+@font-face {
+    src: url("../fonts/original/CooperBlackRegular.ttf");
+}
+
+/* Background */
+#root {
+    -fx-background-image: url("/img/backgrounds/originalbg.jpg");
+}
+
+/* Primary Font */
+.winnerLabel, .winnerTeamLabel, .splashScoreLabel {
+    -fx-font-family: "Harlow Solid Italic";
+}
+
+/* Secondary Font */
+.smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
+    -fx-font-family: "Cooper Black";
+}
+
+/* Separator */
+.separator {
+    -fx-border-color: black;
+    -fx-background-color: black;
+}
+
+/* InfoBox */
+.smallerText, .middleText {
+    -fx-text-fill: #005975;
+}
+
+/* Press Start + Countdown Labels */
+.pressStartLabel, .countdownLabel, .gameStr {
+    -fx-text-fill: #006400;
+}

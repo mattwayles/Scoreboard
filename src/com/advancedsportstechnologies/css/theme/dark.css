@@ -1,0 +1,40 @@
+@font-face {
+    src: url("../fonts/dark/Poppins-Bold.ttf");
+}
+
+@font-face {
+    src: url("../fonts/dark/Fahkwang-SemiBold.ttf");
+}
+
+/* Background */
+#root {
+    -fx-background-image: url("/img/backgrounds/darkbg.jpg");
+}
+
+/* Primary Font */
+.winnerLabel, .winnerTeamLabel, .splashScoreLabel {
+    -fx-font-family: "Poppins";
+}
+
+/* Secondary Font */
+.smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
+    -fx-font-family: "Fahkwang SemiBold";
+}
+
+/* Separator */
+.separator {
+    -fx-max-width: 10px;
+    -fx-padding: 10px;
+    -fx-border-color: white;
+    -fx-background-color: white;
+}
+
+/* InfoBox */
+.smallerText, .middleText {
+    -fx-text-fill: #00FFFF;
+}
+
+/* Press Start + Countdown Labels */
+.pressStartLabel, .countdownLabel, .gameStr {
+    -fx-text-fill: #AFF29D;
+}

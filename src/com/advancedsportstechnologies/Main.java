@@ -61,6 +61,9 @@ public class Main extends Application {
         //Open a new window and display the scoreboard
         primaryStage.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
+        //TODO: Different theme, add different style
+        //scene.getStylesheets().add(getClass().getResource("css/theme/dark.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("css/theme/original.css").toExternalForm());
         primaryStage.show();
 
         //Initialize Pi buttons if applicable
