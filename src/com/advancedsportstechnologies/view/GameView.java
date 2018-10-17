@@ -237,7 +237,7 @@ public class GameView {
             }
         });
         PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh() && Match.getTeamOne().getScore() > 0) {
+            if (event.getState().isHigh()) {
                 Platform.runLater(() -> decreaseScore(Match.getTeamOne(), this.teamView1));
             }
         });
@@ -247,7 +247,7 @@ public class GameView {
             }
         });
         PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
-            if (event.getState().isHigh() && Match.getTeamTwo().getScore() > 0) {
+            if (event.getState().isHigh()) {
                 Platform.runLater(() -> decreaseScore(Match.getTeamTwo(), this.teamView2));
             }
         });
@@ -273,9 +273,9 @@ public class GameView {
                 increaseScore(Match.getTeamOne(), this.teamView1, this.teamView2);
             } else if (e.getCode() == KeyCode.S) {
                 increaseScore(Match.getTeamTwo(), this.teamView2, this.teamView1);
-            } else if (e.getCode() == KeyCode.Z && Match.getTeamOne().getScore() > 0) {
+            } else if (e.getCode() == KeyCode.Z) {
                 decreaseScore(Match.getTeamOne(), this.teamView1);
-            } else if (e.getCode() == KeyCode.X && Match.getTeamTwo().getScore() > 0) {
+            } else if (e.getCode() == KeyCode.X) {
                 decreaseScore(Match.getTeamTwo(), this.teamView2);
             } else if (e.getCode() == KeyCode.Q) {
                 Controller.restartScoreboard();

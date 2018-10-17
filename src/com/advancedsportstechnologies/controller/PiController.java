@@ -33,7 +33,7 @@ public class PiController {
         controller1Up.removeAllListeners();
         controller1Down.removeAllListeners();
         controller2Up.removeAllListeners();
-        controller1Down.removeAllListeners();
+        controller2Down.removeAllListeners();
         reset.removeAllListeners();
     }
 }
