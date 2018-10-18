@@ -95,6 +95,7 @@ public class ProcessConnectionThread implements Runnable{
 				int numGames = messageObj.getInt("numGames");
 				int gamesToWin = messageObj.getInt("gamesToWin");
 				String matchType = messageObj.getString("type");
+				String matchTheme = messageObj.getString("theme");
 				String team1Name = messageObj.getString("team1");
 				String team2Name = messageObj.getString("team2");
 
@@ -110,7 +111,7 @@ public class ProcessConnectionThread implements Runnable{
 				Platform.runLater(() ->
 				{
 					//TODO: Retrieve theme from App and set to match
-					//Match.setTheme("dark");
+					Match.setTheme(matchTheme);
 					Match.setType(matchType);
 					Match.setGamesToWin(gamesToWin);
 					Match.setMaxGames(numGames);
