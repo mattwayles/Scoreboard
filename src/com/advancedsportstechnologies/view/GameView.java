@@ -112,7 +112,7 @@ public class GameView {
      */
     private VBox createLogoBox() {
         //Logo
-        ImageView logo = new ImageView(new Image("img/astLogo.png"));
+        ImageView logo = new ImageView(new Image("img/logo/astLogo_" + Match.getTheme() + ".png"));
 
         //Version
         Label version = new Label(Main.VERSION);
@@ -173,7 +173,7 @@ public class GameView {
         }
         else {
             scoreToWin.getStyleClass().add("bottomPadding");
-            scoreToWinVal = new ImageView(new Image("/img/infinity.png"));
+            scoreToWinVal = new ImageView(new Image("/img/infinity/infinity_" + Match.getTheme() + ".png"));
         }
         scoreToWinVal.getStyleClass().add("gameStr");
 
@@ -200,7 +200,7 @@ public class GameView {
         }
         else {
             gamesToWin.getStyleClass().add("bottomPadding");
-            gamesToWinVal = new ImageView(new Image("/img/infinity.png"));
+            gamesToWinVal = new ImageView(new Image("/img/infinity/infinity_" + Match.getTheme() + ".png"));
         }
         gamesToWinVal.getStyleClass().add("gameStr");
 
@@ -217,12 +217,12 @@ public class GameView {
      */
     private void addToInfoBox(VBox infoBox) {
         if (Match.getType().equals("switch")) {
-            ImageView switchIcon = new ImageView(new Image("/img/switch.png"));
+            ImageView switchIcon = new ImageView(new Image("/img/switch/switch_" + Match.getTheme() + ".png"));
             infoBox.getChildren().add(switchIcon);
         }
 
         if (Match.isConnected()) {
-            ImageView connected = new ImageView(new Image("/img/bt.png"));
+            ImageView connected = new ImageView(new Image("/img/bluetooth/bt_" + Match.getTheme() + ".png"));
             infoBox.getChildren().add(connected);
         }
     }

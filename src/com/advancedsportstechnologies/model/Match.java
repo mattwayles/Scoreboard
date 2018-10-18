@@ -27,7 +27,9 @@ public class Match {
     private static int maxGames = 1;
     private static int currentGame = 0;
     private static String type = "standard";
-    private static String theme = "original";
+    //TODO: Change back to original
+    //private static String theme = "original";
+    private static String theme = "dark";
     private static boolean connected = false;
     private static String team1Color = "#0800ad";
     private static String team2Color = "#a05500";

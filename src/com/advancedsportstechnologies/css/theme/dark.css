@@ -21,6 +21,10 @@
     -fx-font-family: "Fahkwang SemiBold";
 }
 
+.smallerLabel {
+    -fx-font-size: 20px;
+}
+
 /* Separator */
 .separator {
     -fx-max-width: 10px;
