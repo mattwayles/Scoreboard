@@ -203,7 +203,7 @@ public class Match {
      * Determine if Match is currently active. If not, we are on the MatchWinner/MatchTie screen
      * @return  Boolean value indicating status of match
      */
-    public static boolean isActive() { return connected; }
+    public static boolean isActive() { return active; }
 
     /**
      * Set match active status

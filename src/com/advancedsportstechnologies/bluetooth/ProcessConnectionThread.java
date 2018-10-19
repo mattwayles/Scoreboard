@@ -36,7 +36,9 @@ public class ProcessConnectionThread implements Runnable{
 
 			//Inform UI of connection
 			Match.setConnected(true);
-			Platform.runLater(Match::startOrRefresh);
+			if (Match.isActive()) {
+				Platform.runLater(Match::startOrRefresh);
+			}
 
 			// prepare to receive data
 			InputStream inputStream = mConnection.openInputStream();
