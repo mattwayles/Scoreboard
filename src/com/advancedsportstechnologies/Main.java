@@ -30,7 +30,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    public static final String VERSION = "v1.0_rc2";
+    public static final String VERSION = "v1.0_rc3";
     public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
     public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
 

@@ -3,7 +3,7 @@
 }
 
 @font-face {
-    src: url("../fonts/dark/Fahkwang-SemiBold.ttf");
+    src: url("../fonts/dark/Fahkwang-Bold.ttf");
 }
 
 /* Background */
@@ -13,12 +13,12 @@
 
 /* Primary Font */
 .winnerLabel, .winnerTeamLabel, .splashScoreLabel {
-    -fx-font-family: "Poppins";
+    -fx-font-family: "Fahkwang Bold";
 }
 
 /* Secondary Font */
 .smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
-    -fx-font-family: "Fahkwang SemiBold";
+    -fx-font-family: "Poppins";
 }
 
 .smallerLabel {

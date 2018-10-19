@@ -25,6 +25,9 @@ public class MatchWinnerView {
      * @param winningTeam The team that won the Match
      */
     public MatchWinnerView(Team winningTeam) {
+        //Match is complete
+        Match.setActive(false);
+
         //Set keyboard listeners
         this.setKeyPressListeners();
 

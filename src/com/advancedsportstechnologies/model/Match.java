@@ -2,6 +2,7 @@ package com.advancedsportstechnologies.model;
 
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.view.GameView;
+import com.advancedsportstechnologies.view.MatchWinnerView;
 
 /**
  * Static Match class contains all of the information for a current match. Games are reset within a match, but a match does not reset until
@@ -28,6 +29,7 @@ public class Match {
     private static int currentGame = 0;
     private static String type = "standard";
     private static String theme = "original";
+    private static boolean active = true;
     private static boolean connected = false;
     private static String team1Color = "#0800ad";
     private static String team2Color = "#a05500";
@@ -78,6 +80,7 @@ public class Match {
     public static void startOrRefresh() {
         if (Main.getRoot().getChildren() != null) {
             Main.getRoot().getChildren().clear();
+            Match.setActive(true);
             Main.getRoot().getChildren().add(new GameView().getView());
         }
     }
@@ -195,4 +198,16 @@ public class Match {
      * @param conn  The Bluetooth connection status
      */
     public static void setConnected(boolean conn) { connected = conn; }
+
+    /**
+     * Determine if Match is currently active. If not, we are on the MatchWinner/MatchTie screen
+     * @return  Boolean value indicating status of match
+     */
+    public static boolean isActive() { return connected; }
+
+    /**
+     * Set match active status
+     * @param current  The match activity status
+     */
+    public static void setActive(boolean current) { active = current; }
 }

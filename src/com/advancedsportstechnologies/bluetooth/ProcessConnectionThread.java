@@ -58,7 +58,9 @@ public class ProcessConnectionThread implements Runnable{
 					Match.setConnected(false);
 					
 					//Refresh UI by removing Bluetooth icon
-					Platform.runLater(Match::startOrRefresh);
+					if (Match.isActive()) {
+						Platform.runLater(Match::startOrRefresh);
+					}
 					
 					//End loop because socket connection is dead
 					break;
