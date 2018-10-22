@@ -36,7 +36,6 @@
 }
 
 .scoreLabel {
-    -fx-pref-width: 350px;
     -fx-alignment: center;
     -fx-background-color: #000;
     -fx-font-family: "DS-Digital";

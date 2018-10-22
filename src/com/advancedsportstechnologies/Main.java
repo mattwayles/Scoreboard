@@ -40,7 +40,7 @@ public class Main extends Application {
     public static boolean debug;
 
     /**
-     * Start the applciation by initializing and displaying a default keyboard
+     * Start the application by initializing and displaying a default keyboard
      * @param primaryStage The window the displays the scoreboard
      */
     @Override

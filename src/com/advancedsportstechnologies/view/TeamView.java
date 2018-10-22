@@ -28,6 +28,7 @@ public class TeamView {
         //Create score label based off Team score
         this.scoreLabel = new Label(String.valueOf(team.getScore()));
         this.scoreLabel.setFont(Main.WIDTH > 1280 ? new Font(450) : new Font(325));
+        this.scoreLabel.setPrefWidth(Main.WIDTH > 1280 ? 520 : 400);
         this.scoreLabel.getStyleClass().add("scoreLabel");
 
         //Create name label based off of Team name
