@@ -28,7 +28,7 @@ public class Match {
     private static int maxGames = 1;
     private static int currentGame = 0;
     private static String type = "standard";
-    private static String theme = "original";
+    private static String theme = "traditional";
     private static boolean active = true;
     private static boolean connected = false;
     private static String team1Color = "#0800ad";
@@ -43,8 +43,8 @@ public class Match {
      */
     public static void setTeams() {
         setTeamColors();
-        team1 = new Team("Team 1", team1Color);
-        team2 = new Team("Team 2", team2Color);
+        team1 = new Team("Home", team1Color);
+        team2 = new Team("Away", team2Color);
     }
 
     /**
@@ -63,13 +63,13 @@ public class Match {
      */
     private static void setTeamColors() {
         switch (theme) {
-            case "original":
-                team1Color = "#0800ad";
-                team2Color = "#a05500";
-                break;
             case "dark":
                 team1Color = "#FDFFBC";
                 team2Color = "#F9CCFF";
+                break;
+            case "retro":
+                team1Color = "#0800ad";
+                team2Color = "#a05500";
                 break;
         }
     }
