@@ -56,6 +56,7 @@ public class ProcessConnectionThread implements Runnable{
 				//If buffer is -1, socket is closed
 				if (buffer == EXIT_CMD)
 				{
+					mConnection.close();
 					System.out.println("Socket closed, safe to disconnect");
 					Match.setConnected(false);
 					
@@ -63,8 +64,6 @@ public class ProcessConnectionThread implements Runnable{
 					if (Match.isActive()) {
 						Platform.runLater(Match::startOrRefresh);
 					}
-					
-					//End loop because socket connection is dead
 					break;
 				}
 				

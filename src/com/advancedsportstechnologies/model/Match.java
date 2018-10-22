@@ -3,6 +3,10 @@ package com.advancedsportstechnologies.model;
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.view.GameView;
 import com.advancedsportstechnologies.view.MatchWinnerView;
+import javafx.collections.ObservableList;
+import javafx.scene.Scene;
+
+import java.net.URL;
 
 /**
  * Static Match class contains all of the information for a current match. Games are reset within a match, but a match does not reset until
@@ -172,7 +176,7 @@ public class Match {
     public static void setTheme(String scoreboardTheme) {
         theme = scoreboardTheme;
         Main.getScene().getStylesheets().remove(Main.getScene().getStylesheets().size() - 1);
-        Main.getScene().getStylesheets().add(Match.class.getResource("../css/theme/" + scoreboardTheme + ".css").toExternalForm());
+        Main.getScene().getStylesheets().add("css/theme/" + scoreboardTheme + ".css");
     }
 
     /**

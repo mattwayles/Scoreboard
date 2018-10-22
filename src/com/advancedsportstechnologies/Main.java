@@ -30,7 +30,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    public static final String VERSION = "v1.0_rc4";
+    public static final String VERSION = "v1.0_rc6";
     public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
     public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
 
@@ -60,8 +60,8 @@ public class Main extends Application {
 
         //Open a new window and display the scoreboard
         primaryStage.setScene(scene);
-        scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
-        scene.getStylesheets().add(getClass().getResource("css/theme/original.css").toExternalForm());
+        scene.getStylesheets().add("css/style.css");
+        scene.getStylesheets().add("css/theme/original.css");
         primaryStage.show();
 
         //Initialize Pi buttons if applicable

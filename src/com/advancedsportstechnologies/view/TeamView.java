@@ -34,7 +34,7 @@ public class TeamView {
         Label teamNameLabel = new Label(team.getTeamName());
         teamNameLabel.getStyleClass().add("teamNameLabel");
         teamNameLabel.setTextFill(team.getColor());
-        teamNameLabel.setFont(Main.WIDTH > 1280 ? new Font(82) : new Font(48));
+        teamNameLabel.setFont(Main.WIDTH > 1280 ? new Font(82) : new Font(56));
 
         //Import ribbon displaying how many games this team has won
         ImageView gamesWon = new ImageView(new Image(team.getGamesWon() == 0 ? "/img/placeholder.png" : "/img/gamesWon/gameWon" + this.team.getGamesWon() + ".png"));
