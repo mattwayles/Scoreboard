@@ -43,4 +43,5 @@
 
 .scoreLabel {
     -fx-text-fill: #000000;
+    -fx-alignment: center;
 }

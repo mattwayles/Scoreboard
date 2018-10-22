@@ -44,6 +44,7 @@
 
 .scoreLabel {
     -fx-text-fill: #FFFFFF;
+    -fx-alignment: center;
 }
 
 /* Press Start + Countdown Labels */
