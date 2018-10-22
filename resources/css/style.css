@@ -60,7 +60,7 @@
 }
 
 /* Game Winner View */
-.winnerLabel, .winnerTeamLabel {
+.winnerLabel, .winnerTeamLabel, .gameOverLabel {
     -fx-font-size: 85px;
     -fx-text-wrap: true;
     -fx-alignment: center;

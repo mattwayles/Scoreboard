@@ -12,7 +12,7 @@
 }
 
 /* Primary Font */
-.winnerLabel, .winnerTeamLabel, .splashScoreLabel {
+.winnerLabel, .winnerTeamLabel, .gameOverLabel, .splashScoreLabel {
     -fx-font-family: "Fahkwang Bold";
 }
 

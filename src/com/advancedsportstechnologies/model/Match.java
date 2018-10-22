@@ -35,8 +35,8 @@ public class Match {
     private static String theme = "traditional";
     private static boolean active = true;
     private static boolean connected = false;
-    private static String team1Color = "#0800ad";
-    private static String team2Color = "#a05500";
+    private static String team1Color = "#FFF";
+    private static String team2Color = "#FFF";
     private static int[] gameScores = new int[1];
 
     //TODO: Make the colors customizable via bluetooth
@@ -47,8 +47,8 @@ public class Match {
      */
     public static void setTeams() {
         setTeamColors();
-        team1 = new Team("Home", team1Color);
-        team2 = new Team("Away", team2Color);
+        team1 = new Team("HOME", team1Color);
+        team2 = new Team("AWAY", team2Color);
     }
 
     /**
@@ -74,6 +74,10 @@ public class Match {
             case "retro":
                 team1Color = "#0800ad";
                 team2Color = "#a05500";
+                break;
+            case "traditional":
+                team1Color = "#FFF";
+                team2Color = "#FFF";
                 break;
         }
     }

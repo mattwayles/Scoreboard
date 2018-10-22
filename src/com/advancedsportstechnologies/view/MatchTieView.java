@@ -41,7 +41,7 @@ public class MatchTieView {
     private void updateView() {
         //'Game Over' label
         Label gameOverLabel = new Label("Game Over");
-        gameOverLabel.getStyleClass().add("winnerTeamLabel");
+        gameOverLabel.getStyleClass().add("gameOverLabel");
         gameOverLabel.setTextFill(Match.getTheme().equals("dark") ? Paint.valueOf("#FFF") : Paint.valueOf("#000"));
 
         //Box that contains 'Game Over' ' it's a tie!'

@@ -1,0 +1,69 @@
+@font-face {
+    src: url("../fonts/traditional/Bungee-Regular.ttf");
+}
+
+@font-face {
+    src: url("../fonts/traditional/scoreboard.ttf");
+}
+
+@font-face {
+    src: url("../fonts/traditional/DS-DIGIB.ttf");
+}
+
+/* Background */
+#root {
+    -fx-background-image: url("/img/backgrounds/traditionalbg.jpg");
+}
+
+/* Primary Font */
+
+.winnerLabel, .winnerTeamLabel, .gameOverLabel, .splashScoreLabel {
+    -fx-font-family: "Bungee";
+    -fx-text-fill: #FFF;
+}
+
+.gameOverLabel {
+    -fx-padding: 0 0 40 0;
+}
+
+/* Secondary Font */
+.smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
+    -fx-font-family: "Bungee";
+}
+
+.smallerLabel {
+    -fx-font-size: 20px;
+}
+
+.scoreLabel {
+    -fx-pref-width: 350px;
+    -fx-alignment: center;
+    -fx-background-color: #000;
+    -fx-font-family: "DS-Digital";
+    -fx-text-fill: #e7001d;
+}
+
+/* Separator */
+.separator {
+    -fx-max-width: 10px;
+    -fx-padding: 10px;
+    -fx-border-color: white;
+    -fx-background-color: white;
+}
+
+/* InfoBox */
+.infoBox {
+    -fx-border-color: #FFFFFF;
+}
+
+.smallerText, .middleText {
+    -fx-text-fill: #FFF;
+}
+
+/* Press Start + Countdown Labels */
+.pressStartLabel, .countdownLabel, .gameStr {
+    -fx-text-fill: #e7001d;
+    -fx-background-color: #000;
+    -fx-padding: 10px;
+    -fx-font-family: "DS-Digital";
+}
