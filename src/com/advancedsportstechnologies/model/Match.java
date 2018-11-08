@@ -2,11 +2,11 @@ package com.advancedsportstechnologies.model;
 
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.view.GameView;
-import com.advancedsportstechnologies.view.MatchWinnerView;
-import javafx.collections.ObservableList;
-import javafx.scene.Scene;
-
-import java.net.URL;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 
 /**
  * Static Match class contains all of the information for a current match. Games are reset within a match, but a match does not reset until
@@ -35,6 +35,7 @@ public class Match {
     private static String theme = "traditional";
     private static boolean active = true;
     private static boolean connected = false;
+    private static boolean winByTwo = false;
     private static String team1Color = "#FFF";
     private static String team2Color = "#FFF";
     private static int[] gameScores = new int[1];
@@ -76,9 +77,13 @@ public class Match {
                 team2Color = "#a05500";
                 break;
             case "traditional":
+
                 team1Color = "#FFF";
                 team2Color = "#FFF";
                 break;
+            case "glow":
+                team1Color = "#FFCC00";
+                team2Color = "#ff78bb";
         }
     }
 
@@ -196,6 +201,18 @@ public class Match {
     public static void setGameScores(int[] scores) { gameScores = scores; }
 
     /**
+     * Retrieve this match's Win By Two status
+     * @return This match's Win By Two status
+     */
+    public static boolean isWinByTwo() { return winByTwo; }
+
+    /**
+     * Set win by 2 configuration sent from Bluetooth message
+     * @param winByTwoStatus Boolean value indicating whether the winning team must win by 2
+     */
+    public static void setWinByTwo(boolean winByTwoStatus) { winByTwo = winByTwoStatus; }
+
+    /**
      * Determine if Bluetooth connection is currently active
      * @return  Boolean value indicating status of Bluetooth connection
      */
@@ -218,4 +235,17 @@ public class Match {
      * @param current  The match activity status
      */
     public static void setActive(boolean current) { active = current; }
+
+
+    public static DropShadow glow(Color color) {
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setBlurType(BlurType.THREE_PASS_BOX);
+        dropShadow.setRadius(20);
+        dropShadow.setSpread(0.6);
+        dropShadow.setOffsetX(2);
+        dropShadow.setOffsetY(2);
+        dropShadow.setColor(color);
+
+        return dropShadow;
+    }
 }

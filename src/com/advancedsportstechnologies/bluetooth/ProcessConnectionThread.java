@@ -97,6 +97,7 @@ public class ProcessConnectionThread implements Runnable{
 				messageObj = new JSONObject(message);
 				int numGames = messageObj.getInt("numGames");
 				int gamesToWin = messageObj.getInt("gamesToWin");
+				boolean winByTwo = messageObj.getBoolean("winByTwo");
 				String matchType = messageObj.getString("type");
 				String matchTheme = messageObj.getString("theme");
 				String team1Name = messageObj.getString("team1");
@@ -118,6 +119,7 @@ public class ProcessConnectionThread implements Runnable{
 					Match.setGamesToWin(gamesToWin);
 					Match.setMaxGames(numGames);
 					Match.setGameScores(scores);
+					Match.setWinByTwo(winByTwo);
 					Match.setTeams(team1Name, team2Name);
 
 					Controller.restartScoreboard();

@@ -1,0 +1,88 @@
+@font-face {
+    src: url("../fonts/glow/neon-hollow.ttf");
+}
+
+/* Background */
+#root {
+    -fx-background-color: #000;
+}
+
+/* Primary Font */
+.winnerLabel, .winnerTeamLabel, .gameOverLabel, .splashScoreLabel {
+    -fx-font-family: "NEON GLOW-Hollow";
+    -fx-font-size: 150px;
+    -fx-effect: dropShadow(three-pass-box, #fff, 10, .5, 0, 0);
+}
+
+.gameOverLabel {
+    -fx-padding: 0 0 40 0;
+}
+
+/* Secondary Font */
+.smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
+    -fx-font-family: "NEON GLOW-Hollow";
+}
+
+.middleText {
+    -fx-padding: 0 0 10px 0;
+    -fx-font-size: 62px;
+
+}
+
+.bt_icon {
+    -fx-effect: dropShadow(three-pass-box, #00f9ff, 10, .7, 0, 0);
+}
+
+.switch_icon {
+    -fx-effect: dropShadow(three-pass-box, #daa3fb, 10, .9, 0, 0);
+}
+
+.winByTwo {
+    -fx-effect: dropShadow(three-pass-box, #ffff00, 10, .9, 0, 0);
+}
+
+.smallerLabel {
+    -fx-padding: 0 0 10px 0;
+    -fx-font-size: 24px;
+}
+
+.scoreLabel {
+    -fx-alignment: center;
+    -fx-text-fill: #FFF;
+    -fx-font-family: "NEON GLOW-Hollow";
+}
+
+/* Separator */
+.separator {
+    -fx-max-width: 10px;
+    -fx-padding: 10px;
+    -fx-border-color: #39ff14;
+    -fx-background-color: #39ff14;
+    -fx-effect: dropShadow(three-pass-box, #fff, 10, .2, 0, 0);
+}
+
+/* InfoBox */
+.infoBox {
+    -fx-border-color: #39ff14;
+    -fx-effect: dropShadow(three-pass-box, #fff, 10, .2, 0, 0);
+}
+
+.gamesWon {
+    -fx-effect: dropShadow(three-pass-box, #39ff14, 25, .8, 0, 0);
+}
+
+.smallerText, .middleText {
+    -fx-text-fill: #FFF;
+}
+
+/* Press Start + Countdown Labels */
+ .gameStr {
+     -fx-text-fill: #e7001d;
+     -fx-background-color: #000;
+     -fx-padding: 10px;
+     -fx-font-family: "NEON GLOW-Hollow";
+ }
+.pressStartLabel, .countdownLabel {
+    -fx-text-fill: #e7001d;
+    -fx-effect: dropShadow(three-pass-box, #FF0000, 30, .5, 0, 0);
+}

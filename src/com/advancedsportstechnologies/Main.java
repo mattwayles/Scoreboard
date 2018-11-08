@@ -28,9 +28,11 @@ import javafx.stage.Stage;
  * win scores for each game in the match. This allows the scoreboard to track activities that can contain multiple games.
  *
  */
+
+//TODO: SKY ZONE THEME
 public class Main extends Application {
 
-    public static final String VERSION = "v1.0";
+    public static final String VERSION = "v1.1_rc1";
     public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
     public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
 

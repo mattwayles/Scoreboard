@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /**
  * Scoreboard visual representation of a game. Contains two TeamViews separated by a middle line containing an informational panel
@@ -216,14 +217,22 @@ public class GameView {
      * @param infoBox   The VBox View to add icons to
      */
     private void addToInfoBox(VBox infoBox) {
+        if (Match.isConnected()) {
+            ImageView connected = new ImageView(new Image("/img/bluetooth/bt_" + Match.getTheme() + ".png"));
+            connected.getStyleClass().add("bt_icon");
+            infoBox.getChildren().add(connected);
+        }
+
         if (Match.getType().equals("switch")) {
             ImageView switchIcon = new ImageView(new Image("/img/switch/switch_" + Match.getTheme() + ".png"));
             infoBox.getChildren().add(switchIcon);
+            switchIcon.getStyleClass().add("switch_icon");
         }
 
-        if (Match.isConnected()) {
-            ImageView connected = new ImageView(new Image("/img/bluetooth/bt_" + Match.getTheme() + ".png"));
-            infoBox.getChildren().add(connected);
+        if (Match.isWinByTwo()) {
+            ImageView winByTwo = new ImageView(new Image("/img/plus2/plus2_" + Match.getTheme() + ".png"));
+            winByTwo.getStyleClass().add("winByTwo");
+            infoBox.getChildren().add(winByTwo);
         }
     }
 
@@ -259,6 +268,9 @@ public class GameView {
      */
     private void reset() {
         Platform.runLater(() -> {
+            if (this.teamView1.getTeam().getScore() == 0 && this.teamView2.getTeam().getScore() == 0) {
+                Match.reverseTeams();
+            }
             Controller.restartScoreboard();
             Match.startOrRefresh();
         });
@@ -278,6 +290,9 @@ public class GameView {
             } else if (e.getCode() == KeyCode.X) {
                 decreaseScore(Match.getTeamTwo(), this.teamView2);
             } else if (e.getCode() == KeyCode.Q) {
+                if (this.teamView1.getTeam().getScore() == 0 && this.teamView2.getTeam().getScore() == 0) {
+                    Match.reverseTeams();
+                }
                 Controller.restartScoreboard();
                 Match.startOrRefresh();
             }
@@ -293,7 +308,7 @@ public class GameView {
     private void increaseScore(Team activeTeam, TeamView activeTeamView, TeamView passiveTeamView) {
         if (activeTeam.getScore() < MAX_SCORE) {
             activeTeam.increaseScore();
-            activeTeamView.getScoreLabel().textProperty().setValue(String.valueOf(activeTeam.getScore()));
+            updateScoreNode(activeTeam, activeTeamView);
             Controller.checkWinner(activeTeamView, passiveTeamView);
         }
     }
@@ -306,7 +321,17 @@ public class GameView {
     private void decreaseScore(Team activeTeam, TeamView activeTeamView) {
         if (activeTeam.getScore() > MIN_SCORE) {
             activeTeam.decreaseScore();
-            activeTeamView.getScoreLabel().textProperty().setValue(String.valueOf(activeTeam.getScore()));
+            updateScoreNode(activeTeam, activeTeamView);
+        }
+    }
+
+    private void updateScoreNode(Team activeTeam, TeamView activeTeamView) {
+        if (activeTeamView.getScoreLabel() instanceof Label) {
+            Label label = (Label) activeTeamView.getScoreLabel();
+            label.textProperty().setValue(String.valueOf(activeTeam.getScore()));
+        } else {
+            Text text = (Text) activeTeamView.getScoreLabel();
+            text.setText(String.valueOf(activeTeam.getScore()));
         }
     }
 }

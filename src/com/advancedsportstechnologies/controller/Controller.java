@@ -16,31 +16,43 @@ public class Controller {
      * @param losingTeam    The team not registering a score
      */
     public static void checkWinner(TeamView winningTeam, TeamView losingTeam) {
-        if (winningTeam.getTeam().getScore() == Match.getCurrentGameWinScore()) {
+        int winningTeamScore = winningTeam.getTeam().getScore();
+        int losingTeamScore = losingTeam.getTeam().getScore();
 
-            //The game has been won
-            winningTeam.getTeam().increaseGamesWon();
-
-            if (winningTeam.getTeam().getGamesWon() >= Match.getGamesToWin()) {
-
-                //The team registering a score has won the MATCH
-                MatchWinnerView winnerView = new MatchWinnerView(winningTeam.getTeam());
-                Main.getRoot().getChildren().set(0, winnerView.getView());
+        if (Match.isWinByTwo()) {
+            if (winningTeamScore >= Match.getCurrentGameWinScore() &&
+                    winningTeamScore >= losingTeamScore + 2) {
+                handleGameWon(winningTeam, losingTeam);
             }
-            else if (Match.getCurrentGame() + 1 == Match.getMaxGames()) {
-
-                //Match game # has been hit, and nobody has won. Tie game
-                MatchTieView tieView = new MatchTieView();
-                Main.getRoot().getChildren().set(0, tieView.getView());
+        }
+        else {
+            if (winningTeamScore == Match.getCurrentGameWinScore()) {
+                handleGameWon(winningTeam, losingTeam);
             }
-            else {
+        }
+    }
 
-                //The game is over, but the match is still going
-                GameWinnerView gameWinnerView = new GameWinnerView(winningTeam.getTeam(), losingTeam.getTeam());
-                Main.getRoot().getChildren().set(0, gameWinnerView.getView());
-                Thread thread = displayGameWinnerView(gameWinnerView);
-                thread.start();
-            }
+
+    /**
+     * Handle if a team has won a game or match
+     * @param winningTeam   The winning team of the game or match
+     * @param losingTeam    The losing team of the game or match
+     */
+    private static void handleGameWon(TeamView winningTeam, TeamView losingTeam) {
+        //The game has been won
+        winningTeam.getTeam().increaseGamesWon();
+
+        if (winningTeam.getTeam().getGamesWon() >= Match.getGamesToWin()) {
+
+            //The team registering a score has won the MATCH
+            MatchWinnerView winnerView = new MatchWinnerView(winningTeam.getTeam());
+            Main.getRoot().getChildren().set(0, winnerView.getView());
+        } else {
+            //The game is over, but the match is still going
+            GameWinnerView gameWinnerView = new GameWinnerView(winningTeam.getTeam(), losingTeam.getTeam());
+            Main.getRoot().getChildren().set(0, gameWinnerView.getView());
+            Thread thread = displayGameWinnerView(gameWinnerView);
+            thread.start();
         }
     }
 
