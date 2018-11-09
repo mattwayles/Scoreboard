@@ -36,7 +36,7 @@ public class TeamView {
             this.scoreLabel = new Label(String.valueOf(team.getScore()));
 
             Label scoreLabel = (Label) this.scoreLabel;
-            scoreLabel.setFont(Main.WIDTH > 1280 ? new Font(400) : new Font(300));
+            scoreLabel.setFont(Main.WIDTH > 1280 ? new Font(450) : new Font(300));
             scoreLabel.setPrefWidth(Main.WIDTH > 1280 ? 600 : 400);
         }
         this.scoreLabel.getStyleClass().add("scoreLabel");
@@ -47,7 +47,7 @@ public class TeamView {
         }
         teamNameLabel.getStyleClass().add("teamNameLabel");
         teamNameLabel.setTextFill(team.getColor());
-        teamNameLabel.setFont(Main.WIDTH > 1280 || team.getTeamName().length() <= 8 ? new Font(100) : new Font(56));
+        teamNameLabel.setFont(Main.WIDTH > 1280 || team.getTeamName().length() <= 8 ? new Font(92) : new Font(56));
 
         //Import ribbon displaying how many games this team has won
         ImageView gamesWon = new ImageView(new Image(team.getGamesWon() == 0 ? "/img/placeholder.png" : "/img/gamesWon/gameWon" + this.team.getGamesWon() + ".png"));
