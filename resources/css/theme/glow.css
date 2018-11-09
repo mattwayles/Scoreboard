@@ -50,6 +50,7 @@
     -fx-alignment: center;
     -fx-text-fill: #FFF;
     -fx-font-family: "NEON GLOW-Hollow";
+    -fx-font-size: 350;
 }
 
 /* Separator */
@@ -84,5 +85,5 @@
  }
 .pressStartLabel, .countdownLabel {
     -fx-text-fill: #e7001d;
-    -fx-effect: dropShadow(three-pass-box, #FF0000, 30, .5, 0, 0);
+    -fx-effect: dropShadow(three-pass-box, #FF0000, 30, .3, 0, 0);
 }

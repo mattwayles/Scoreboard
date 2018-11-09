@@ -32,8 +32,6 @@ public class TeamView {
         if (Match.getTheme().equals("glow")) {
             this.scoreLabel = new Text(String.valueOf(team.getScore()));
             this.scoreLabel.setEffect(Match.glow((Color) team.getColor()));
-            Text scoreLabel = (Text) this.scoreLabel;
-            scoreLabel.setFont(Main.WIDTH > 1280 ? new Font(400) : new Font(300));
         } else {
             this.scoreLabel = new Label(String.valueOf(team.getScore()));
 
