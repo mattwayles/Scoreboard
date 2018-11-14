@@ -36,7 +36,7 @@ public class TeamView {
             this.scoreLabel = new Label(String.valueOf(team.getScore()));
 
             Label scoreLabel = (Label) this.scoreLabel;
-            scoreLabel.setFont(Main.WIDTH > 1280 ? new Font(450) : new Font(300));
+            scoreLabel.setFont(Main.WIDTH > 1280 ? new Font(400) : new Font(300));
             scoreLabel.setPrefWidth(Main.WIDTH > 1280 ? 600 : 400);
         }
         this.scoreLabel.getStyleClass().add("scoreLabel");
