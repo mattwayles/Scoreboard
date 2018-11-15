@@ -29,7 +29,16 @@ import javafx.stage.Stage;
  *
  */
 
-//TODO: SKY ZONE THEME
+//TODO v1.11
+    //
+    //BUG (Java): 'Traditional' theme font not working correctly
+    //BUG (Pi): Bluetooth auto-connect
+    //CLEANUP (Java): Smaller middle emblems, they should all fit better
+    //FEATURE (Java): Sky Zone Theme
+    //FEATURE (Java): Make score blink on game/match point
+    //FEATURE (Java): Fireworks on win
+    //FEATURE (Java): Convert easter egg GIF to video: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/
+
 public class Main extends Application {
 
     public static final String VERSION = "v1.1";
