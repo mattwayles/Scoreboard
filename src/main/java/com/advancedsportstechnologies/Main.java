@@ -42,8 +42,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static final String VERSION = "v1.1";
-    public static final double HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
-    public static final double WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
+    public static double HEIGHT;
+    public static double WIDTH;
 
     private static Scene scene;
     private static StackPane root;
@@ -56,6 +56,9 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage){
+        HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
+        WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
+
         primaryStage.setTitle("Scoreboard " + VERSION);
 
         //Create root pane, which will hold all other UI Views
@@ -81,8 +84,8 @@ public class Main extends Application {
         }
 
         //Wait for Bluetooth connections in the background, in case a user wants to configure a custom scoreboard
-        Thread waitThread = new Thread(new WaitThread());
-        waitThread.start();
+        //Thread waitThread = new Thread(new WaitThread());
+        //waitThread.start();
 
     }
 
