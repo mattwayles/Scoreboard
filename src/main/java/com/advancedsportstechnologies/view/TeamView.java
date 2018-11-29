@@ -64,9 +64,7 @@ public class TeamView {
         }
 
         //Import ribbon displaying how many games this team has
-        //TODO: Restore
-        //ImageView gamesWon = new ImageView(new Image(team.getGamesWon() == 0 ? "/img/placeholder.png" : "/img/gamesWon/gameWon" + this.team.getGamesWon() + ".png"));
-        ImageView gamesWon = new ImageView(new Image("/img/gamesWon/gameWon1.png"));
+        ImageView gamesWon = new ImageView(new Image(team.getGamesWon() == 0 ? "/img/placeholder.png" : "/img/gamesWon/gameWon" + this.team.getGamesWon() + ".png"));
         gamesWon.getStyleClass().add("gamesWon");
 
         //Create a box containing team name label and games won image
