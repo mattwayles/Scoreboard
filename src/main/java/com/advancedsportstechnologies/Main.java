@@ -31,10 +31,8 @@ import javafx.stage.Stage;
  */
 
 //TODO v1.2
-    //
-    //TEST (Java): 'Traditional' theme font not working correctly. I think it was because of case-sensitivity.
-    //TEST (Java): ALL element resizing on different screens
     //BUG (Pi): Bluetooth auto-connect
+    //TEST (Java): ALL element resizing on different screens
     //CLEANUP (Java): Smaller ribbons, they take up too much screen real estate
     //CLEANUP (Java): Smaller middle emblems, they should all fit better
     //FEATURE (Java): Sky Zone Theme
@@ -44,7 +42,7 @@ import javafx.stage.Stage;
     //FEATURE (Java): Convert easter egg GIF to video: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/
 public class Main extends Application {
 
-    public static final String VERSION = "v1.1";
+    public static final String VERSION = "v1.2b";
     public static double HEIGHT;
     public static double WIDTH;
 
@@ -78,9 +76,7 @@ public class Main extends Application {
         //Open a new window and display the scoreboard
         primaryStage.setScene(scene);
         scene.getStylesheets().add("css/style.css");
-        //TODO: Restore
-        //scene.getStylesheets().add("css/theme/traditional.css");
-        scene.getStylesheets().add("css/theme/dark.css");
+        scene.getStylesheets().add("css/theme/traditional.css");
         primaryStage.show();
 
         //Initialize Pi buttons if applicable

@@ -27,9 +27,7 @@ public class Match {
     private static int maxGames = 1;
     private static int currentGame = 0;
     private static String type = "standard";
-    //TODO: Restore
-    //private static String theme = "traditional";
-    private static String theme = "dark";
+    private static String theme = "traditional";
     private static boolean active = true;
     private static boolean connected = false;
     private static boolean winByTwo = false;
