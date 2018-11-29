@@ -1,0 +1,46 @@
+@font-face {
+    src: url("../fonts/skyzone/Rubik-Bold.ttf");
+}
+
+@font-face {
+    src: url("../fonts/skyzone/Gorditas-Bold.ttf");
+}
+
+/* Background */
+#root {
+    -fx-background-image: url("/img/backgrounds/skyzonebg.jpg");
+}
+
+/* Primary Font */
+.winnerLabel, .winnerTeamLabel, .gameOverLabel, .splashScoreLabel {
+    -fx-font-family: "Rubik";
+}
+
+/* Secondary Font */
+.smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
+    -fx-font-family: "Rubik";
+}
+
+.scoreText {
+    -fx-font-family: "Gorditas";
+}
+
+/* Separator */
+.separator {
+    -fx-border-color: #002B6C;
+    -fx-background-color: #002B6C;
+}
+
+/* InfoBox */
+.infoBox {
+    -fx-border-color: black;
+}
+
+.smallerText, .middleText {
+    -fx-text-fill: black;
+}
+
+/* Press Start + Countdown Labels */
+.pressStartLabel, .countdownLabel, .gameStr {
+    -fx-text-fill: #002B6C;
+}

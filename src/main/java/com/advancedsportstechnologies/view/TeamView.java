@@ -4,10 +4,6 @@ import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
 import com.advancedsportstechnologies.view.texteffects.Glow;
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -17,7 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
-import javafx.util.Duration;
 
 /**
  * Visual representation for a Team object on the scoreboard
