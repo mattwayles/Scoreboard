@@ -6,6 +6,8 @@ import com.advancedsportstechnologies.model.Team;
 import com.advancedsportstechnologies.view.texteffects.Glow;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -50,8 +52,6 @@ public class TeamView {
 
             this.scoreLabel = scoreLabel;
         }
-
-
 
         //Create team label representing team name
         Label teamNameLabel = new Label(team.getTeamName());

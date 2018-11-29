@@ -5,6 +5,7 @@ import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
+import com.advancedsportstechnologies.view.texteffects.Blink;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -322,6 +323,7 @@ public class GameView {
         if (activeTeam.getScore() > MIN_SCORE) {
             activeTeam.decreaseScore();
             updateScoreNode(activeTeam, activeTeamView);
+            Blink.stop(activeTeamView.getScoreLabel());
         }
     }
 

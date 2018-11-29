@@ -3,9 +3,12 @@ package com.advancedsportstechnologies.controller;
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.view.*;
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
+import com.advancedsportstechnologies.view.texteffects.Blink;
+import javafx.animation.*;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 
 /**
@@ -22,24 +25,27 @@ public class Controller {
         int winningTeamScore = winningTeam.getTeam().getScore();
         int losingTeamScore = losingTeam.getTeam().getScore();
 
-        if (winningTeamScore == Match.getCurrentGameWinScore() - 1) {
-            //TODO: MOVE - Testing FadeTransition
-            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.8), winningTeam.getScoreLabel());
-            fadeTransition.setFromValue(1.0);
-            fadeTransition.setToValue(0.0);
-            fadeTransition.setCycleCount(Animation.INDEFINITE);
-            fadeTransition.play();
-        }
-
+        //Handle scoring differentl if the match is configured to "Win By Two"
         if (Match.isWinByTwo()) {
             if (winningTeamScore >= Match.getCurrentGameWinScore() &&
                     winningTeamScore >= losingTeamScore + 2) {
                 handleGameWon(winningTeam, losingTeam);
             }
+            else if (winningTeamScore >= Match.getCurrentGameWinScore() - 1) { //Blink score on game point
+                if (winningTeamScore >= losingTeamScore + 1) {
+                    Blink.play(winningTeam.getScoreLabel());
+                }
+                else { //Stop blinking scores if game point lost
+                    Blink.stop(losingTeam.getScoreLabel());
+                }
+            }
         }
-        else {
+        else { //If "Win By Two" is not configured
             if (winningTeamScore == Match.getCurrentGameWinScore()) {
                 handleGameWon(winningTeam, losingTeam);
+            }
+            else if (winningTeamScore == Match.getCurrentGameWinScore() - 1) { //Blink score on game point
+                Blink.play(winningTeam.getScoreLabel());
             }
         }
     }
@@ -112,6 +118,7 @@ public class Controller {
         Match.getTeamOne().setScore(0);
         Match.getTeamTwo().setScore(0);
         Match.nextGame();
+        Blink.reset();
     }
 
     /**
@@ -123,6 +130,7 @@ public class Controller {
         Match.getTeamTwo().setScore(0);
         Match.getTeamTwo().setGamesWon(0);
         Match.setCurrentGame(0);
+        Blink.reset();
     }
 
 }

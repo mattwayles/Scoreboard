@@ -4,3 +4,4 @@
 - Added support for dynamic screen sizing
 - Fixed bugs relating to score and team name sizing
 - Ported to Maven dependency management
+- Flashing scores on game point / match point

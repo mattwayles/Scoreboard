@@ -32,12 +32,8 @@ import javafx.stage.Stage;
 
 //TODO v1.2
     //BUG (Pi): Bluetooth auto-connect
-    //TEST (Java): ALL element resizing on different screens
-    //CLEANUP (Java): Smaller ribbons, they take up too much screen real estate
-    //CLEANUP (Java): Smaller middle emblems, they should all fit better
     //FEATURE (Java): Sky Zone Theme
     //FEATURE (Java): Timer
-    //FEATURE (Java): Make score blink (or turn like red or something) on game/match point
     //FEATURE (Java): Fireworks on win
     //FEATURE (Java): Convert easter egg GIF to video: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/
 public class Main extends Application {
