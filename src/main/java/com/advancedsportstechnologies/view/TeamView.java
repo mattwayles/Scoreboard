@@ -4,6 +4,8 @@ import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
 import com.advancedsportstechnologies.view.texteffects.Glow;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
+import javafx.util.Duration;
 
 /**
  * Visual representation for a Team object on the scoreboard
@@ -33,8 +36,6 @@ public class TeamView {
         if (Match.getTheme().equals("traditional")) { //Scores requiring background boxes
             Label scoreLabel = new Label(String.valueOf(team.getScore()));
             scoreLabel.getStyleClass().add("scoreLabel");
-
-            //TODO: Test these values on different screen sizes
             scoreLabel.setPrefWidth(Main.WIDTH / 3);
             scoreLabel.setFont(new Font(scoreLabel.getFont().getName(), Main.WIDTH / 4));
 
@@ -44,13 +45,13 @@ public class TeamView {
             Text scoreLabel = new Text(String.valueOf(team.getScore()));
             scoreLabel.setFill(team.getColor());
             scoreLabel.getStyleClass().add("scoreText");
-
-            //TODO: Test this value on different screen sizes
             scoreLabel.setFont(new Font(scoreLabel.getFont().getName(), Main.WIDTH / 3.5));
             scoreLabel.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
 
             this.scoreLabel = scoreLabel;
         }
+
+
 
         //Create team label representing team name
         Label teamNameLabel = new Label(team.getTeamName());
@@ -87,7 +88,7 @@ public class TeamView {
      * Retrieve the score label
      * @return  This TeamView's score label
      */
-    Node getScoreLabel() { return this.scoreLabel; }
+    public Node getScoreLabel() { return this.scoreLabel; }
 
     /**
      * Retreive the team represented by this TeamView

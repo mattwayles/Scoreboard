@@ -3,7 +3,10 @@ package com.advancedsportstechnologies.controller;
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.view.*;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
+import javafx.util.Duration;
 
 /**
  * Base controller for performing scoreboard actions. Accessed directly from the keyboard, or from the PiController
@@ -18,6 +21,15 @@ public class Controller {
     public static void checkWinner(TeamView winningTeam, TeamView losingTeam) {
         int winningTeamScore = winningTeam.getTeam().getScore();
         int losingTeamScore = losingTeam.getTeam().getScore();
+
+        if (winningTeamScore == Match.getCurrentGameWinScore() - 1) {
+            //TODO: MOVE - Testing FadeTransition
+            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.8), winningTeam.getScoreLabel());
+            fadeTransition.setFromValue(1.0);
+            fadeTransition.setToValue(0.0);
+            fadeTransition.setCycleCount(Animation.INDEFINITE);
+            fadeTransition.play();
+        }
 
         if (Match.isWinByTwo()) {
             if (winningTeamScore >= Match.getCurrentGameWinScore() &&
