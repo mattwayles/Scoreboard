@@ -17,7 +17,7 @@
 }
 
 /* Secondary Font */
-.smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
+.smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel, .scoreText  {
     -fx-font-family: "Poppins";
 }
 
@@ -42,9 +42,9 @@
     -fx-text-fill: #00FFFF;
 }
 
-.scoreLabel {
+.scoreText {
     -fx-text-fill: #FFFFFF;
-    -fx-alignment: center;
+    -fx-font-weight: bold;
 }
 
 /* Press Start + Countdown Labels */

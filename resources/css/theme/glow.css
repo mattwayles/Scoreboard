@@ -46,11 +46,9 @@
     -fx-font-size: 24px;
 }
 
-.scoreLabel {
-    -fx-alignment: center;
+.scoreText {
     -fx-text-fill: #FFF;
     -fx-font-family: "NEON GLOW-Hollow";
-    -fx-font-size: 500;
 }
 
 /* Separator */

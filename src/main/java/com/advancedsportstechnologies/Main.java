@@ -27,19 +27,21 @@ import javafx.stage.Stage;
  * A configured scoreboard can contain custom team names, a max number of games in a match, # of games required to win a match,
  * win scores for each game in the match. This allows the scoreboard to track activities that can contain multiple games.
  *
+ * Code developed independently by Matthew Wayles (mattwayles@gmail.com). All Rights Reserved.
  */
 
-//TODO v1.11
+//TODO v1.2
     //
-    //TEST (Java): 'Traditional' theme font not working correctly
-    //BUG (Java): Bigger scores in non-traditional themes
+    //TEST (Java): 'Traditional' theme font not working correctly. I think it was because of case-sensitivity.
+    //TEST (Java): ALL element resizing on different screens
     //BUG (Pi): Bluetooth auto-connect
+    //CLEANUP (Java): Smaller ribbons, they take up too much screen real estate
     //CLEANUP (Java): Smaller middle emblems, they should all fit better
     //FEATURE (Java): Sky Zone Theme
-    //FEATURE (Java): Make score blink on game/match point
+    //FEATURE (Java): Timer
+    //FEATURE (Java): Make score blink (or turn like red or something) on game/match point
     //FEATURE (Java): Fireworks on win
     //FEATURE (Java): Convert easter egg GIF to video: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/
-
 public class Main extends Application {
 
     public static final String VERSION = "v1.1";
@@ -76,7 +78,9 @@ public class Main extends Application {
         //Open a new window and display the scoreboard
         primaryStage.setScene(scene);
         scene.getStylesheets().add("css/style.css");
-        scene.getStylesheets().add("css/theme/traditional.css");
+        //TODO: Restore
+        //scene.getStylesheets().add("css/theme/traditional.css");
+        scene.getStylesheets().add("css/theme/dark.css");
         primaryStage.show();
 
         //Initialize Pi buttons if applicable

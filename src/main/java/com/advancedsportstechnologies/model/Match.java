@@ -2,11 +2,6 @@ package com.advancedsportstechnologies.model;
 
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.view.GameView;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
 
 /**
  * Static Match class contains all of the information for a current match. Games are reset within a match, but a match does not reset until
@@ -32,7 +27,9 @@ public class Match {
     private static int maxGames = 1;
     private static int currentGame = 0;
     private static String type = "standard";
-    private static String theme = "traditional";
+    //TODO: Restore
+    //private static String theme = "traditional";
+    private static String theme = "dark";
     private static boolean active = true;
     private static boolean connected = false;
     private static boolean winByTwo = false;
@@ -77,7 +74,6 @@ public class Match {
                 team2Color = "#a05500";
                 break;
             case "traditional":
-
                 team1Color = "#FFF";
                 team2Color = "#FFF";
                 break;
@@ -235,17 +231,4 @@ public class Match {
      * @param current  The match activity status
      */
     public static void setActive(boolean current) { active = current; }
-
-
-    public static DropShadow glow(Color color) {
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setBlurType(BlurType.THREE_PASS_BOX);
-        dropShadow.setRadius(20);
-        dropShadow.setSpread(0.6);
-        dropShadow.setOffsetX(2);
-        dropShadow.setOffsetY(2);
-        dropShadow.setColor(color);
-
-        return dropShadow;
-    }
 }

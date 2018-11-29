@@ -51,11 +51,21 @@
 
 /* Team View */
 .teamNameLabel {
+    -fx-font-size: 92;
     -fx-padding: 0 15px;
 }
 
-.scoreLabel {
-    -fx-font-weight: bold;
+.scoreText, .scoreLabel {
+    -fx-alignment: center;
+}
+
+.titleBox {
+    -fx-spacing: 10;
+    -fx-alignment: center;
+}
+
+.teamViewBox {
+    -fx-alignment: center;
 }
 
 /* Game Winner View */

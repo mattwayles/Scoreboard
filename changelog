@@ -1,0 +1,6 @@
+1.2:
+
+- Increased score size
+- Added support for dynamic screen sizing
+- Fixed bugs relating to score and team name sizing
+- Ported to Maven dependency management

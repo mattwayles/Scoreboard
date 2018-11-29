@@ -3,7 +3,7 @@ package com.advancedsportstechnologies.view;
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
-import javafx.geometry.Pos;
+import com.advancedsportstechnologies.view.texteffects.Glow;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 
 /**
  * Visual representation for a Team object on the scoreboard
@@ -28,39 +29,54 @@ public class TeamView {
     TeamView(Team team) {
         this.team = team;
 
-        //Create score label based off Team score
-        if (Match.getTheme().equals("glow")) {
-            this.scoreLabel = new Text(String.valueOf(team.getScore()));
-            this.scoreLabel.setEffect(Match.glow((Color) team.getColor()));
-        } else {
-            this.scoreLabel = new Label(String.valueOf(team.getScore()));
+        //Create score label representing Team score
+        if (Match.getTheme().equals("traditional")) { //Scores requiring background boxes
+            Label scoreLabel = new Label(String.valueOf(team.getScore()));
+            scoreLabel.getStyleClass().add("scoreLabel");
 
-            Label scoreLabel = (Label) this.scoreLabel;
-            scoreLabel.setFont(Main.WIDTH > 1280 ? new Font(400) : new Font(300));
-            scoreLabel.setPrefWidth(Main.WIDTH > 1280 ? 600 : 400);
+            //TODO: Test these values on different screen sizes
+            scoreLabel.setPrefWidth(Main.WIDTH / 3);
+            scoreLabel.setFont(new Font(scoreLabel.getFont().getName(), Main.WIDTH / 4));
+
+            this.scoreLabel = scoreLabel;
+
+        } else { //Scores without background boxes
+            Text scoreLabel = new Text(String.valueOf(team.getScore()));
+            scoreLabel.setFill(team.getColor());
+            scoreLabel.getStyleClass().add("scoreText");
+
+            //TODO: Test this value on different screen sizes
+            scoreLabel.setFont(new Font(scoreLabel.getFont().getName(), Main.WIDTH / 3.5));
+            scoreLabel.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
+
+            this.scoreLabel = scoreLabel;
         }
-        this.scoreLabel.getStyleClass().add("scoreLabel");
 
+        //Create team label representing team name
         Label teamNameLabel = new Label(team.getTeamName());
-        if (Match.getTheme().equals("glow")) {
-            teamNameLabel.setEffect(Match.glow((Color) team.getColor()));
-        }
         teamNameLabel.getStyleClass().add("teamNameLabel");
         teamNameLabel.setTextFill(team.getColor());
-        teamNameLabel.setFont(Main.WIDTH > 1280 || team.getTeamName().length() <= 8 ? new Font(92) : new Font(56));
 
-        //Import ribbon displaying how many games this team has won
-        ImageView gamesWon = new ImageView(new Image(team.getGamesWon() == 0 ? "/img/placeholder.png" : "/img/gamesWon/gameWon" + this.team.getGamesWon() + ".png"));
+        //Add glow effect if Glow theme is active
+        if (Match.getTheme().equals("glow")) {
+            this.scoreLabel.setEffect(Glow.setGlow((Color) team.getColor()));
+            teamNameLabel.setEffect(Glow.setGlow((Color) team.getColor()));
+        }
+
+        //Import ribbon displaying how many games this team has
+        //TODO: Restore
+        //ImageView gamesWon = new ImageView(new Image(team.getGamesWon() == 0 ? "/img/placeholder.png" : "/img/gamesWon/gameWon" + this.team.getGamesWon() + ".png"));
+        ImageView gamesWon = new ImageView(new Image("/img/gamesWon/gameWon1.png"));
         gamesWon.getStyleClass().add("gamesWon");
 
         //Create a box containing team name label and games won image
-        VBox titleBox = new VBox(10, teamNameLabel, gamesWon);
-        titleBox.setAlignment(Pos.CENTER);
+        VBox titleBox = new VBox(teamNameLabel, gamesWon);
+        titleBox.getStyleClass().add("titleBox");
 
         //Set View with box containing all components
-        this.view = new VBox(Main.WIDTH > 1280 ? 20 : 80, titleBox, scoreLabel);
-        this.view.setAlignment(Pos.CENTER);
+        this.view = new VBox(scoreLabel instanceof Text ? -40 : 20, titleBox, scoreLabel);
         this.view.setPrefWidth(Main.WIDTH);
+        this.view.getStyleClass().add("teamViewBox");
     }
 
     /**

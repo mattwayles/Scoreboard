@@ -1,9 +1,13 @@
 @font-face {
-    src: url("../fonts/original/HarlowSolidItalic.ttf");
+    src: url("../fonts/retro/HarlowSolidItalic.ttf");
 }
 
 @font-face {
-    src: url("../fonts/original/CooperBlackRegular.ttf");
+    src: url("../fonts/retro/CooperBlackRegular.ttf");
+}
+
+@font-face {
+    src: url("../fonts/retro/antsypants.ttf");
 }
 
 /* Background */
@@ -19,6 +23,10 @@
 /* Secondary Font */
 .smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
     -fx-font-family: "Cooper Black";
+}
+
+.scoreText {
+    -fx-font-family: "AntsyPants";
 }
 
 /* Separator */
@@ -39,9 +47,4 @@
 /* Press Start + Countdown Labels */
 .pressStartLabel, .countdownLabel, .gameStr {
     -fx-text-fill: #006400;
-}
-
-.scoreLabel {
-    -fx-text-fill: #000000;
-    -fx-alignment: center;
 }
