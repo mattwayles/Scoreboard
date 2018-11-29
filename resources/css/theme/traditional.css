@@ -3,11 +3,7 @@
 }
 
 @font-face {
-    src: url("../fonts/traditional/scoreboard.ttf");
-}
-
-@font-face {
-    src: url("../fonts/traditional/DS-DIGIB.ttf");
+    src: url("../fonts/traditional/DS-DIGIB.TTF");
 }
 
 /* Background */

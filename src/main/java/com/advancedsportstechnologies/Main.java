@@ -31,7 +31,8 @@ import javafx.stage.Stage;
 
 //TODO v1.11
     //
-    //BUG (Java): 'Traditional' theme font not working correctly
+    //TEST (Java): 'Traditional' theme font not working correctly
+    //BUG (Java): Bigger scores in non-traditional themes
     //BUG (Pi): Bluetooth auto-connect
     //CLEANUP (Java): Smaller middle emblems, they should all fit better
     //FEATURE (Java): Sky Zone Theme
@@ -84,8 +85,8 @@ public class Main extends Application {
         }
 
         //Wait for Bluetooth connections in the background, in case a user wants to configure a custom scoreboard
-        //Thread waitThread = new Thread(new WaitThread());
-        //waitThread.start();
+        Thread waitThread = new Thread(new WaitThread());
+        waitThread.start();
 
     }
 
