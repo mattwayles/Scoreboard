@@ -1,13 +1,9 @@
 @font-face {
-    src: url("../fonts/retro/HarlowSolidItalic.ttf");
+    src: url("../fonts/skyzone/Rubik-Bold.ttf");
 }
 
 @font-face {
-    src: url("../fonts/retro/CooperBlackRegular.ttf");
-}
-
-@font-face {
-    src: url("../fonts/retro/antsypants.ttf");
+    src: url("../fonts/skyzone/Gorditas-Bold.ttf");
 }
 
 /* Background */
@@ -17,34 +13,34 @@
 
 /* Primary Font */
 .winnerLabel, .winnerTeamLabel, .gameOverLabel, .splashScoreLabel {
-    -fx-font-family: "Harlow Solid Italic";
+    -fx-font-family: "Rubik";
 }
 
 /* Secondary Font */
 .smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
-    -fx-font-family: "Cooper Black";
+    -fx-font-family: "Rubik";
 }
 
 .scoreText {
-    -fx-font-family: "AntsyPants";
+    -fx-font-family: "Gorditas";
 }
 
 /* Separator */
 .separator {
-    -fx-border-color: black;
-    -fx-background-color: black;
+    -fx-border-color: #002B6C;
+    -fx-background-color: #002B6C;
 }
 
 /* InfoBox */
 .infoBox {
-    -fx-border-color: #000000;
+    -fx-border-color: black;
 }
 
 .smallerText, .middleText {
-    -fx-text-fill: #005975;
+    -fx-text-fill: black;
 }
 
 /* Press Start + Countdown Labels */
 .pressStartLabel, .countdownLabel, .gameStr {
-    -fx-text-fill: #006400;
+    -fx-text-fill: #002B6C;
 }

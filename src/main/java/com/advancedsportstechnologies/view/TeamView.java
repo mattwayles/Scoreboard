@@ -4,7 +4,6 @@ import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
 import com.advancedsportstechnologies.view.texteffects.Glow;
-
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

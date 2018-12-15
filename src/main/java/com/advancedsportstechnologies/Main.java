@@ -72,7 +72,7 @@ public class Main extends Application {
         //Open a new window and display the scoreboard
         primaryStage.setScene(scene);
         scene.getStylesheets().add("css/style.css");
-        scene.getStylesheets().add("css/theme/traditional.css");
+        scene.getStylesheets().add("css/theme/skyzone.css");
         primaryStage.show();
 
         //Initialize Pi buttons if applicable

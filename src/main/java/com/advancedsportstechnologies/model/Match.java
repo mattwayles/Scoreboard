@@ -27,7 +27,7 @@ public class Match {
     private static int maxGames = 1;
     private static int currentGame = 0;
     private static String type = "standard";
-    private static String theme = "traditional";
+    private static String theme = "skyzone";
     private static boolean active = true;
     private static boolean connected = false;
     private static boolean winByTwo = false;
@@ -80,7 +80,7 @@ public class Match {
                 team2Color = "#ff78bb";
                 break;
             case "skyzone":
-                team1Color = "#003e9b";
+                team1Color = "#002B6C";
                 team2Color = "#000";
         }
     }
