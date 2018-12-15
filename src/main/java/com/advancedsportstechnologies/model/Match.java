@@ -78,6 +78,10 @@ public class Match {
             case "glow":
                 team1Color = "#FFCC00";
                 team2Color = "#ff78bb";
+                break;
+            case "skyzone":
+                team1Color = "#003e9b";
+                team2Color = "#000";
         }
     }
 

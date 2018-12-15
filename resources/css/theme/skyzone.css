@@ -1,0 +1,50 @@
+@font-face {
+    src: url("../fonts/retro/HarlowSolidItalic.ttf");
+}
+
+@font-face {
+    src: url("../fonts/retro/CooperBlackRegular.ttf");
+}
+
+@font-face {
+    src: url("../fonts/retro/antsypants.ttf");
+}
+
+/* Background */
+#root {
+    -fx-background-image: url("/img/backgrounds/skyzonebg.jpg");
+}
+
+/* Primary Font */
+.winnerLabel, .winnerTeamLabel, .gameOverLabel, .splashScoreLabel {
+    -fx-font-family: "Harlow Solid Italic";
+}
+
+/* Secondary Font */
+.smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
+    -fx-font-family: "Cooper Black";
+}
+
+.scoreText {
+    -fx-font-family: "AntsyPants";
+}
+
+/* Separator */
+.separator {
+    -fx-border-color: black;
+    -fx-background-color: black;
+}
+
+/* InfoBox */
+.infoBox {
+    -fx-border-color: #000000;
+}
+
+.smallerText, .middleText {
+    -fx-text-fill: #005975;
+}
+
+/* Press Start + Countdown Labels */
+.pressStartLabel, .countdownLabel, .gameStr {
+    -fx-text-fill: #006400;
+}

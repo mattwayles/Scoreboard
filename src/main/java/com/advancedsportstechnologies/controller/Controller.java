@@ -4,12 +4,8 @@ import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.view.*;
 import com.advancedsportstechnologies.view.texteffects.Blink;
-import javafx.animation.*;
+
 import javafx.application.Platform;
-import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.util.Duration;
 
 /**
  * Base controller for performing scoreboard actions. Accessed directly from the keyboard, or from the PiController
