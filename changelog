@@ -1,7 +1,13 @@
-1.2:
+1.1:
 
 - Increased score size
 - Added support for dynamic screen sizing
 - Fixed bugs relating to score and team name sizing
 - Ported to Maven dependency management
 - Flashing scores on game point / match point
+- Added Sky Zone Theme
+
+
+1.2:
+
+-NOT DONE: Add timer
