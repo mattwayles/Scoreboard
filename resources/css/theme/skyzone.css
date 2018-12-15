@@ -13,7 +13,7 @@
 
 /* Primary Font */
 .winnerLabel, .winnerTeamLabel, .gameOverLabel, .splashScoreLabel {
-    -fx-font-family: "Rubik";
+    -fx-font-family: "Gorditas";
 }
 
 /* Secondary Font */
@@ -33,7 +33,7 @@
 
 /* InfoBox */
 .infoBox {
-    -fx-border-color: black;
+    -fx-border-color: #000000;
 }
 
 .smallerText, .middleText {
@@ -41,6 +41,10 @@
 }
 
 /* Press Start + Countdown Labels */
-.pressStartLabel, .countdownLabel, .gameStr {
+.gameStr {
     -fx-text-fill: #002B6C;
+}
+
+.pressStartLabel, .countdownLabel {
+    -fx-text-fill: #333;
 }

@@ -38,7 +38,7 @@ import javafx.stage.Stage;
     //FEATURE (Java): Convert easter egg GIF to video: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/
 public class Main extends Application {
 
-    public static final String VERSION = "v1.2b";
+    public static final String VERSION = "v1.11";
     public static double HEIGHT;
     public static double WIDTH;
 
@@ -72,7 +72,7 @@ public class Main extends Application {
         //Open a new window and display the scoreboard
         primaryStage.setScene(scene);
         scene.getStylesheets().add("css/style.css");
-        scene.getStylesheets().add("css/theme/skyzone.css");
+        scene.getStylesheets().add("css/theme/traditional.css");
         primaryStage.show();
 
         //Initialize Pi buttons if applicable
