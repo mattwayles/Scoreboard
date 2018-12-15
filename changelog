@@ -8,5 +8,6 @@
 
 1.2:
 
-- TODO: Animations to make the scoreboard look alive
-- Timed scoreboard option
+-UNDONE: Fix middle pane sizing on different resolutions. I.E on big TV it's way too large
+- UNDONE: Animations to make the scoreboard look alive
+- UNDONE: Timed scoreboard option
