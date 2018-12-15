@@ -1,7 +1,12 @@
-1.2:
+1.11:
 
 - Increased score size
 - Added support for dynamic screen sizing
 - Fixed bugs relating to score and team name sizing
 - Ported to Maven dependency management
 - Flashing scores on game point / match point
+
+1.2:
+
+- TODO: Animations to make the scoreboard look alive
+- Timed scoreboard option

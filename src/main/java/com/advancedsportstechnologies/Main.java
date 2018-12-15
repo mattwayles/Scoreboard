@@ -73,6 +73,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         scene.getStylesheets().add("css/style.css");
         scene.getStylesheets().add("css/theme/traditional.css");
+        primaryStage.setFullScreen(true);
         primaryStage.show();
 
         //Initialize Pi buttons if applicable
