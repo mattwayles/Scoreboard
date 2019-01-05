@@ -4,6 +4,7 @@ import com.advancedsportstechnologies.bluetooth.WaitThread;
 import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
 import javafx.application.Application;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
@@ -64,6 +65,7 @@ public class Main extends Application {
 
         //Create a scene, which displays the components in the root pane
         scene = new Scene(root, WIDTH, HEIGHT);
+        scene.setCursor(Cursor.NONE);
 
         //Set default teams and begin a new match
         Match.setTeams();

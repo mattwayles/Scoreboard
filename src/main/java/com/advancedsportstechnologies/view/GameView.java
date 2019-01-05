@@ -86,7 +86,7 @@ public class GameView {
         VBox gamesToWinBox = createGamesToWin();
 
         //Conditional icons
-        VBox infoBox = new VBox(35, logoBox, gameBox, scoreToWinBox, gamesToWinBox);
+        VBox infoBox = new VBox(15, logoBox, gameBox, scoreToWinBox, gamesToWinBox);
         infoBox.getStyleClass().add("infoBox");
         addToInfoBox(infoBox);
 
