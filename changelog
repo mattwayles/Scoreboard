@@ -1,4 +1,4 @@
-1.1:
+1.11:
 
 - Increased score size
 - Added support for dynamic screen sizing
@@ -7,7 +7,7 @@
 - Flashing scores on game point / match point
 - Added Sky Zone Theme
 
-
 1.2:
 
--NOT DONE: Add timer
+- TODO: Animations to make the scoreboard look alive
+- Timed scoreboard option

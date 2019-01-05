@@ -51,6 +51,7 @@ public class UntimedTeamView {
         //Create team label representing team name
         Label teamNameLabel = new Label(team.getTeamName());
         teamNameLabel.getStyleClass().add("teamNameLabel");
+        teamNameLabel.setFont(new Font(teamNameLabel.getFont().getName(), Main.WIDTH / 20));
         teamNameLabel.setTextFill(team.getColor());
 
         //Add glow effect if Glow theme is active

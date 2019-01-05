@@ -1,4 +1,4 @@
-package com.advancedsportstechnologies.view.timed;
+package com.advancedsportstechnologies.view;
 
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.Match;
@@ -6,8 +6,6 @@ import com.advancedsportstechnologies.model.Team;
 import com.advancedsportstechnologies.view.texteffects.Glow;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -17,7 +15,7 @@ import javafx.scene.text.TextBoundsType;
 /**
  * Visual representation for a Team object on the scoreboard
  */
-class TimedTeamView {
+class TeamView extends TeamView {
     private VBox view;
     private Team team;
     private Node scoreLabel;
@@ -26,7 +24,7 @@ class TimedTeamView {
      * Create the team view
      * @param team  The Team that this View represents
      */
-    TimedTeamView(Team team) {
+    TeamView(Team team) {
         this.team = team;
 
         //Create score label representing Team score
@@ -51,6 +49,7 @@ class TimedTeamView {
         //Create team label representing team name
         Label teamNameLabel = new Label(team.getTeamName());
         teamNameLabel.getStyleClass().add("teamNameLabel");
+        teamNameLabel.setFont(new Font(teamNameLabel.getFont().getName(), Main.WIDTH / 20));
         teamNameLabel.setTextFill(team.getColor());
 
         //Add glow effect if Glow theme is active
