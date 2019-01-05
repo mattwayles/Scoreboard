@@ -26,7 +26,7 @@ public class TeamView {
      * Create the team view
      * @param team  The Team that this View represents
      */
-    TeamView(Team team) {
+    public TeamView(Team team) {
         this.team = team;
 
         //Create score label representing Team score
@@ -77,7 +77,7 @@ public class TeamView {
      * Retrieve this TeamView
      * @return  This TeamView
      */
-    VBox getView() { return this.view; }
+    public VBox getView() { return this.view; }
 
     /**
      * Retrieve the score label

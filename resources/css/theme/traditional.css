@@ -13,7 +13,7 @@
 
 /* Primary Font */
 
-.winnerLabel, .winnerTeamLabel, .gameOverLabel, .splashScoreLabel {
+.winnerLabel, .winnerTeamLabel, .gameOverLabel, .splashScoreLabel, .timerLabel {
     -fx-font-family: "Bungee";
     -fx-text-fill: #FFF;
 }
@@ -61,4 +61,12 @@
     -fx-background-color: #000;
     -fx-padding: 10px;
     -fx-font-family: "DS-Digital";
+}
+
+/* Timer */
+.timerBox {
+    -fx-pref-height: 200px;
+    -fx-pref-width: 100%;
+    -fx-alignment: center;
+    -fx-padding: 50px 0 0 0;
 }

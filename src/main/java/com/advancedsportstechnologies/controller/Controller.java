@@ -5,6 +5,7 @@ import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.view.*;
 import com.advancedsportstechnologies.view.texteffects.Blink;
 
+import com.advancedsportstechnologies.view.untimed.UntimedGameView;
 import javafx.application.Platform;
 
 /**
@@ -92,17 +93,17 @@ public class Controller {
                 i--;
             }
             Platform.runLater(() -> {
-                //After 3 seconds, diplay a new GameView with preserved Match settings
+                //After 3 seconds, diplay a new UntimedGameView with preserved Match settings
                 resetGame();
 
-                GameView newGameView = new GameView();
+                UntimedGameView newUntimedGameView = new UntimedGameView();
 
                 //Scoreboards of type 'switch' switch sides after each game
                 if(Match.getType().equals("switch")) {
-                    newGameView.reverseTeams();
+                    newUntimedGameView.reverseTeams();
                 }
 
-                Main.getRoot().getChildren().set(0, newGameView.getView());
+                Main.getRoot().getChildren().set(0, newUntimedGameView.getView());
             });
         });
     }

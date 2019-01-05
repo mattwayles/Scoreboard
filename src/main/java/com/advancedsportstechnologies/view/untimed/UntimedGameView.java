@@ -1,10 +1,11 @@
-package com.advancedsportstechnologies.view;
+package com.advancedsportstechnologies.view.untimed;
 
 import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
+import com.advancedsportstechnologies.view.TeamView;
 import com.advancedsportstechnologies.view.texteffects.Blink;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
@@ -20,7 +21,7 @@ import javafx.scene.text.Text;
 /**
  * Scoreboard visual representation of a game. Contains two TeamViews separated by a middle line containing an informational panel
  */
-public class GameView {
+public class UntimedGameView {
     private HBox view;
     private TeamView teamView1;
     private TeamView teamView2;
@@ -31,7 +32,7 @@ public class GameView {
     /**
      * Create a new visual representation of a Game
      */
-    public GameView() {
+    public UntimedGameView() {
         //Create visual components from team objects
         this.teamView1 = new TeamView(Match.getTeamOne());
         this.teamView2 = new TeamView(Match.getTeamTwo());
@@ -49,7 +50,7 @@ public class GameView {
 
     /**
      * Retrieve the View for this object
-     * @return  The GameView's fully-configured View
+     * @return  The UntimedGameView's fully-configured View
      */
     public HBox getView() { return this.view; }
 

@@ -1,7 +1,8 @@
 package com.advancedsportstechnologies.model;
 
 import com.advancedsportstechnologies.Main;
-import com.advancedsportstechnologies.view.GameView;
+import com.advancedsportstechnologies.view.timed.TimedGameView;
+import com.advancedsportstechnologies.view.untimed.UntimedGameView;
 
 /**
  * Static Match class contains all of the information for a current match. Games are reset within a match, but a match does not reset until
@@ -26,7 +27,8 @@ public class Match {
     private static int gamesToWin;
     private static int maxGames = 1;
     private static int currentGame = 0;
-    private static String type = "standard";
+    //TODO: Restore
+    private static String type = "timed";
     private static String theme = "traditional";
     private static boolean active = true;
     private static boolean connected = false;
@@ -92,7 +94,12 @@ public class Match {
         if (Main.getRoot().getChildren() != null) {
             Main.getRoot().getChildren().clear();
             Match.setActive(true);
-            Main.getRoot().getChildren().add(new GameView().getView());
+            if (Match.getType().equals("standard") || Match.getType().equals("switch")) {
+                Main.getRoot().getChildren().add(new UntimedGameView().getView());
+            }
+            else {
+                Main.getRoot().getChildren().add(new TimedGameView().getView());
+            }
         }
     }
 
