@@ -5,7 +5,6 @@ import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
-import com.advancedsportstechnologies.view.TeamView;
 import com.advancedsportstechnologies.view.texteffects.Blink;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
@@ -23,8 +22,8 @@ import javafx.scene.text.Text;
  */
 public class UntimedGameView {
     private HBox view;
-    private TeamView teamView1;
-    private TeamView teamView2;
+    private UntimedTeamView teamView1;
+    private UntimedTeamView teamView2;
 
     private final int MAX_SCORE = 99;
     private final int MIN_SCORE = 0;
@@ -34,8 +33,8 @@ public class UntimedGameView {
      */
     public UntimedGameView() {
         //Create visual components from team objects
-        this.teamView1 = new TeamView(Match.getTeamOne());
-        this.teamView2 = new TeamView(Match.getTeamTwo());
+        this.teamView1 = new UntimedTeamView(Match.getTeamOne());
+        this.teamView2 = new UntimedTeamView(Match.getTeamTwo());
         this.view = new HBox(teamView1.getView(), createSeparator(), teamView2.getView());
         this.view.setMaxHeight(Main.HEIGHT);
 
@@ -59,8 +58,8 @@ public class UntimedGameView {
      */
     public void reverseTeams() {
         Match.reverseTeams();
-        this.teamView1 = new TeamView(Match.getTeamOne());
-        this.teamView2 = new TeamView(Match.getTeamTwo());
+        this.teamView1 = new UntimedTeamView(Match.getTeamOne());
+        this.teamView2 = new UntimedTeamView(Match.getTeamTwo());
 
         this.view = new HBox(teamView1.getView(), createSeparator(), teamView2.getView());
     }
@@ -307,7 +306,7 @@ public class UntimedGameView {
      * @param activeTeamView    The View representing the team receiving the score
      * @param passiveTeamView   The View representing the team that did not receive the score
      */
-    private void increaseScore(Team activeTeam, TeamView activeTeamView, TeamView passiveTeamView) {
+    private void increaseScore(Team activeTeam, UntimedTeamView activeTeamView, UntimedTeamView passiveTeamView) {
         if (activeTeam.getScore() < MAX_SCORE) {
             activeTeam.increaseScore();
             updateScoreNode(activeTeam, activeTeamView);
@@ -320,7 +319,7 @@ public class UntimedGameView {
      * @param activeTeam    The team receiving the score
      * @param activeTeamView    The View representing the team receiving the score
      */
-    private void decreaseScore(Team activeTeam, TeamView activeTeamView) {
+    private void decreaseScore(Team activeTeam, UntimedTeamView activeTeamView) {
         if (activeTeam.getScore() > MIN_SCORE) {
             activeTeam.decreaseScore();
             updateScoreNode(activeTeam, activeTeamView);
@@ -328,7 +327,7 @@ public class UntimedGameView {
         }
     }
 
-    private void updateScoreNode(Team activeTeam, TeamView activeTeamView) {
+    private void updateScoreNode(Team activeTeam, UntimedTeamView activeTeamView) {
         if (activeTeamView.getScoreLabel() instanceof Label) {
             Label label = (Label) activeTeamView.getScoreLabel();
             label.textProperty().setValue(String.valueOf(activeTeam.getScore()));

@@ -5,6 +5,7 @@ import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.view.*;
 import com.advancedsportstechnologies.view.texteffects.Blink;
 
+import com.advancedsportstechnologies.view.untimed.UntimedTeamView;
 import com.advancedsportstechnologies.view.untimed.UntimedGameView;
 import javafx.application.Platform;
 
@@ -18,7 +19,7 @@ public class Controller {
      * @param winningTeam   The team registering a score
      * @param losingTeam    The team not registering a score
      */
-    public static void checkWinner(TeamView winningTeam, TeamView losingTeam) {
+    public static void checkWinner(UntimedTeamView winningTeam, UntimedTeamView losingTeam) {
         int winningTeamScore = winningTeam.getTeam().getScore();
         int losingTeamScore = losingTeam.getTeam().getScore();
 
@@ -53,7 +54,7 @@ public class Controller {
      * @param winningTeam   The winning team of the game or match
      * @param losingTeam    The losing team of the game or match
      */
-    private static void handleGameWon(TeamView winningTeam, TeamView losingTeam) {
+    private static void handleGameWon(UntimedTeamView winningTeam, UntimedTeamView losingTeam) {
         //The game has been won
         winningTeam.getTeam().increaseGamesWon();
 

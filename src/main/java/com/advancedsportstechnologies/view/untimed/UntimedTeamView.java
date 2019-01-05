@@ -1,4 +1,4 @@
-package com.advancedsportstechnologies.view;
+package com.advancedsportstechnologies.view.untimed;
 
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.Match;
@@ -17,7 +17,7 @@ import javafx.scene.text.TextBoundsType;
 /**
  * Visual representation for a Team object on the scoreboard
  */
-public class TeamView {
+public class UntimedTeamView {
     private VBox view;
     private Team team;
     private Node scoreLabel;
@@ -26,7 +26,7 @@ public class TeamView {
      * Create the team view
      * @param team  The Team that this View represents
      */
-    public TeamView(Team team) {
+    UntimedTeamView(Team team) {
         this.team = team;
 
         //Create score label representing Team score
@@ -74,20 +74,20 @@ public class TeamView {
     }
 
     /**
-     * Retrieve this TeamView
-     * @return  This TeamView
+     * Retrieve this UntimedTeamView
+     * @return  This UntimedTeamView
      */
     public VBox getView() { return this.view; }
 
     /**
      * Retrieve the score label
-     * @return  This TeamView's score label
+     * @return  This UntimedTeamView's score label
      */
     public Node getScoreLabel() { return this.scoreLabel; }
 
     /**
-     * Retreive the team represented by this TeamView
-     * @return The team represented by this TeamView
+     * Retreive the team represented by this UntimedTeamView
+     * @return The team represented by this UntimedTeamView
      */
     public Team getTeam() { return this.team; }
 }

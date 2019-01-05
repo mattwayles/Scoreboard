@@ -3,13 +3,16 @@ package com.advancedsportstechnologies.view.timed;
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.controller.PiController;
+import com.advancedsportstechnologies.controller.Timer;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
-import com.advancedsportstechnologies.view.TeamView;
 import com.advancedsportstechnologies.view.texteffects.Blink;
+import com.advancedsportstechnologies.view.untimed.UntimedTeamView;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -19,10 +22,21 @@ import javafx.scene.text.Text;
 /**
  * Scoreboard visual representation of a game. Contains two TeamViews separated by a middle line containing an informational panel
  */
+
+
+
+//TODO:
+    //Create TimedTeamView, removing the "games won" ribbons
+    //Add separator with logo
+    //Create space between timer and top of scoreboard
+    //Buzzer on zero
+    //App input
+
+
 public class TimedGameView {
     private VBox view;
-    private TeamView teamView1;
-    private TeamView teamView2;
+    private TimedTeamView teamView1;
+    private TimedTeamView teamView2;
 
     private final int MAX_SCORE = 99;
     private final int MIN_SCORE = 0;
@@ -32,8 +46,8 @@ public class TimedGameView {
      */
     public TimedGameView() {
         //Create visual components from team objects
-        this.teamView1 = new TeamView(Match.getTeamOne());
-        this.teamView2 = new TeamView(Match.getTeamTwo());
+        this.teamView1 = new TimedTeamView(Match.getTeamOne());
+        this.teamView2 = new TimedTeamView(Match.getTeamTwo());
         HBox teamBox = new HBox(teamView1.getView(), teamView2.getView());
         this.view = new VBox(createTimer(), teamBox);
         this.view.setMaxHeight(Main.HEIGHT);
@@ -58,25 +72,52 @@ public class TimedGameView {
      */
     public void reverseTeams() {
         Match.reverseTeams();
-        this.teamView1 = new TeamView(Match.getTeamOne());
-        this.teamView2 = new TeamView(Match.getTeamTwo());
+        this.teamView1 = new TimedTeamView(Match.getTeamOne());
+        this.teamView2 = new TimedTeamView(Match.getTeamTwo());
 
         this.view = new VBox(createTimer(), teamView1.getView(), teamView2.getView());
     }
 
     private HBox createTimer() {
+
+        //Period
+        Label periodLabel = new Label("Q1");
+        periodLabel.setPrefWidth(Main.WIDTH / 3.5);
+        periodLabel.setFont(new Font(periodLabel.getFont().getName(), Main.WIDTH / 12));
+        periodLabel.getStyleClass().add("periodLabel");
+
         //Timer
-        Label timerLabel = new Label("00:00");
-        timerLabel.setFont(new Font(timerLabel.getFont().getName(), Main.WIDTH / 6));
+        Label timerLabel = new Label();
+        timerLabel.setPrefWidth(Main.WIDTH / 1.5);
+        timerLabel.setFont(new Font(timerLabel.getFont().getName(), Main.WIDTH / 6.5));
         timerLabel.getStyleClass().add("timerLabel");
+
+        //Icons
+        HBox iconBox = new HBox(30);
+        iconBox.setPrefWidth(Main.WIDTH / 3.5);
+        iconBox.getStyleClass().add("iconBox");
+
+        //TODO: Remove
+        //if (Match.isConnected()) {
+            ImageView connected = new ImageView(new Image("/img/bluetooth/bt_" + Match.getTheme() + ".png"));
+            connected.getStyleClass().add("bt_icon");
+            iconBox.getChildren().add(connected);
+        //}
+
+        //if (Match.getType().equals("switch")) {
+            ImageView switchIcon = new ImageView(new Image("/img/switch/switch_" + Match.getTheme() + ".png"));
+            iconBox.getChildren().add(switchIcon);
+            switchIcon.getStyleClass().add("switch_icon");
+       // }
+
+        Timer.startCountdown(3600, timerLabel);
 
 
 
 
         //TimerBox
-        HBox timerBox = new HBox(timerLabel);
+        HBox timerBox = new HBox(80, periodLabel, timerLabel, iconBox);
         timerBox.getStyleClass().add("timerBox");
-        timerBox.getStyleClass().add("debugBorder");
 
         return timerBox;
     }
@@ -150,11 +191,13 @@ public class TimedGameView {
      * @param activeTeamView    The View representing the team receiving the score
      * @param passiveTeamView   The View representing the team that did not receive the score
      */
-    private void increaseScore(Team activeTeam, TeamView activeTeamView, TeamView passiveTeamView) {
+    private void increaseScore(Team activeTeam, TimedTeamView activeTeamView, TimedTeamView passiveTeamView) {
         if (activeTeam.getScore() < MAX_SCORE) {
             activeTeam.increaseScore();
             updateScoreNode(activeTeam, activeTeamView);
-            Controller.checkWinner(activeTeamView, passiveTeamView);
+
+            //TODO: FIX
+            //Controller.checkWinner(activeTeamView, passiveTeamView);
         }
     }
 
@@ -163,7 +206,7 @@ public class TimedGameView {
      * @param activeTeam    The team receiving the score
      * @param activeTeamView    The View representing the team receiving the score
      */
-    private void decreaseScore(Team activeTeam, TeamView activeTeamView) {
+    private void decreaseScore(Team activeTeam, TimedTeamView activeTeamView) {
         if (activeTeam.getScore() > MIN_SCORE) {
             activeTeam.decreaseScore();
             updateScoreNode(activeTeam, activeTeamView);
@@ -171,7 +214,7 @@ public class TimedGameView {
         }
     }
 
-    private void updateScoreNode(Team activeTeam, TeamView activeTeamView) {
+    private void updateScoreNode(Team activeTeam, TimedTeamView activeTeamView) {
         if (activeTeamView.getScoreLabel() instanceof Label) {
             Label label = (Label) activeTeamView.getScoreLabel();
             label.textProperty().setValue(String.valueOf(activeTeam.getScore()));

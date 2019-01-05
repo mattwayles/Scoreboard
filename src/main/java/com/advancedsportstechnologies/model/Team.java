@@ -5,7 +5,7 @@ import javafx.scene.paint.Paint;
 /**
  * A Scoreboard Team. Currently, there are two Teams per match, and they contain a name, color, score, an # of games won
  *
- * The information in a Team is represented on the Scoreboard through a TeamView
+ * The information in a Team is represented on the Scoreboard through a UntimedTeamView
  */
 public class Team {
     private Paint color;
