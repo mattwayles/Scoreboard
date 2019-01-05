@@ -15,7 +15,7 @@ import javafx.scene.text.TextBoundsType;
 /**
  * Visual representation for a Team object on the scoreboard
  */
-class TeamView extends TeamView {
+public class TeamView {
     private VBox view;
     private Team team;
     private Node scoreLabel;
@@ -24,7 +24,7 @@ class TeamView extends TeamView {
      * Create the team view
      * @param team  The Team that this View represents
      */
-    TeamView(Team team) {
+    public TeamView(Team team) {
         this.team = team;
 
         //Create score label representing Team score
@@ -74,7 +74,7 @@ class TeamView extends TeamView {
      * Retrieve the score label
      * @return  This UntimedTeamView's score label
      */
-    Node getScoreLabel() { return this.scoreLabel; }
+    public Node getScoreLabel() { return this.scoreLabel; }
 
     /**
      * Retreive the team represented by this UntimedTeamView

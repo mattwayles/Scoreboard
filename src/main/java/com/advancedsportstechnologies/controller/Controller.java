@@ -2,10 +2,10 @@ package com.advancedsportstechnologies.controller;
 
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.Match;
+import com.advancedsportstechnologies.model.UntimedMatch;
 import com.advancedsportstechnologies.view.*;
 import com.advancedsportstechnologies.view.texteffects.Blink;
 
-import com.advancedsportstechnologies.view.untimed.UntimedTeamView;
 import com.advancedsportstechnologies.view.untimed.UntimedGameView;
 import javafx.application.Platform;
 
@@ -19,17 +19,17 @@ public class Controller {
      * @param winningTeam   The team registering a score
      * @param losingTeam    The team not registering a score
      */
-    public static void checkWinner(UntimedTeamView winningTeam, UntimedTeamView losingTeam) {
+    public static void checkWinner(TeamView winningTeam, TeamView losingTeam) {
         int winningTeamScore = winningTeam.getTeam().getScore();
         int losingTeamScore = losingTeam.getTeam().getScore();
 
         //Handle scoring differentl if the match is configured to "Win By Two"
-        if (Match.isWinByTwo()) {
-            if (winningTeamScore >= Match.getCurrentGameWinScore() &&
+        if (UntimedMatch.isWinByTwo()) {
+            if (winningTeamScore >= UntimedMatch.getCurrentGameWinScore() &&
                     winningTeamScore >= losingTeamScore + 2) {
                 handleGameWon(winningTeam, losingTeam);
             }
-            else if (winningTeamScore >= Match.getCurrentGameWinScore() - 1) { //Blink score on game point
+            else if (winningTeamScore >= UntimedMatch.getCurrentGameWinScore() - 1) { //Blink score on game point
                 if (winningTeamScore >= losingTeamScore + 1) {
                     Blink.play(winningTeam.getScoreLabel());
                 }
@@ -39,10 +39,10 @@ public class Controller {
             }
         }
         else { //If "Win By Two" is not configured
-            if (winningTeamScore == Match.getCurrentGameWinScore()) {
+            if (winningTeamScore == UntimedMatch.getCurrentGameWinScore()) {
                 handleGameWon(winningTeam, losingTeam);
             }
-            else if (winningTeamScore == Match.getCurrentGameWinScore() - 1) { //Blink score on game point
+            else if (winningTeamScore == UntimedMatch.getCurrentGameWinScore() - 1) { //Blink score on game point
                 Blink.play(winningTeam.getScoreLabel());
             }
         }
@@ -54,11 +54,11 @@ public class Controller {
      * @param winningTeam   The winning team of the game or match
      * @param losingTeam    The losing team of the game or match
      */
-    private static void handleGameWon(UntimedTeamView winningTeam, UntimedTeamView losingTeam) {
+    private static void handleGameWon(TeamView winningTeam, TeamView losingTeam) {
         //The game has been won
         winningTeam.getTeam().increaseGamesWon();
 
-        if (winningTeam.getTeam().getGamesWon() >= Match.getGamesToWin()) {
+        if (winningTeam.getTeam().getGamesWon() >= UntimedMatch.getGamesToWin()) {
 
             //The team registering a score has won the MATCH
             MatchWinnerView winnerView = new MatchWinnerView(winningTeam.getTeam());
@@ -115,7 +115,7 @@ public class Controller {
     private static void resetGame() {
         Match.getTeamOne().setScore(0);
         Match.getTeamTwo().setScore(0);
-        Match.nextGame();
+        UntimedMatch.nextGame();
         Blink.reset();
     }
 
@@ -127,7 +127,7 @@ public class Controller {
         Match.getTeamOne().setGamesWon(0);
         Match.getTeamTwo().setScore(0);
         Match.getTeamTwo().setGamesWon(0);
-        Match.setCurrentGame(0);
+        UntimedMatch.setCurrentGame(0);
         Blink.reset();
     }
 

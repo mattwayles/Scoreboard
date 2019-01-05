@@ -4,6 +4,7 @@ import com.advancedsportstechnologies.bluetooth.WaitThread;
 import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
 import javafx.application.Application;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
@@ -31,14 +32,20 @@ import javafx.stage.Stage;
  */
 
 //TODO v1.2
-    //BUG (Pi): Bluetooth auto-connect
-    //FEATURE (Java): Sky Zone Theme
-    //FEATURE (Java): Timer
+
+    //TIMER:
+        //TimedMatch to accept proper variables from App
+        //Controller method to check winner and increased period for tied games
+        //MatchWinnerView for Timed games
+        //Ability to pause the timer
+        //Buzzer on zero
+        //App input
+
     //FEATURE (Java): Fireworks on win
     //FEATURE (Java): Convert easter egg GIF to video: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/
 public class Main extends Application {
 
-    public static final String VERSION = "v1.11";
+    public static final String VERSION = "v1.2";
     public static double HEIGHT;
     public static double WIDTH;
 
@@ -73,6 +80,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         scene.getStylesheets().add("css/style.css");
         scene.getStylesheets().add("css/theme/traditional.css");
+        scene.setCursor(Cursor.NONE);
         primaryStage.setFullScreen(true);
         primaryStage.show();
 

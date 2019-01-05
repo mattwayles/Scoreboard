@@ -4,6 +4,7 @@ import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
+import com.advancedsportstechnologies.model.UntimedMatch;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -37,8 +38,8 @@ public class GameWinnerView {
      */
     private void updateView() {
         //Proper grammar, of course ;)
-        String winnerStr = winningTeam.getTeamName().toLowerCase().endsWith("s") ? " win game " + (Match.getCurrentGame() + 1) + "!"
-                : " wins game " + (Match.getCurrentGame() + 1) + "!";
+        String winnerStr = winningTeam.getTeamName().toLowerCase().endsWith("s") ? " win game " + (UntimedMatch.getCurrentGame() + 1) + "!"
+                : " wins game " + (UntimedMatch.getCurrentGame() + 1) + "!";
 
         //Create label for winning team name
         Label teamNameLabel = new Label(winningTeam.getTeamName());

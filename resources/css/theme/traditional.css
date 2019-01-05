@@ -76,5 +76,5 @@
 .timerBox {
     -fx-pref-width: 100%;
     -fx-alignment: center;
-    -fx-padding: 20px;
+    -fx-padding: 20px 0 0 0;
 }

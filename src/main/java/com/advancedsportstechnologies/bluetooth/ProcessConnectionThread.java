@@ -2,6 +2,7 @@ package com.advancedsportstechnologies.bluetooth;
 
 import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.model.Match;
+import com.advancedsportstechnologies.model.UntimedMatch;
 import javafx.application.Platform;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +12,7 @@ import java.io.InputStream;
 /**
  * Bluetooth class to wait for and process messages sent from clients
  */
-public class ProcessConnectionThread implements Runnable{
+class ProcessConnectionThread implements Runnable{
 
 	private StreamConnection mConnection;
 	
@@ -114,13 +115,14 @@ public class ProcessConnectionThread implements Runnable{
                 //Start a new match with the settings sent in message
 				Platform.runLater(() ->
 				{
-					Match.setTheme(matchTheme);
-					Match.setType(matchType);
-					Match.setGamesToWin(gamesToWin);
-					Match.setMaxGames(numGames);
-					Match.setGameScores(scores);
-					Match.setWinByTwo(winByTwo);
-					Match.setTeams(team1Name, team2Name);
+					//TODO: Distinguish between timed and untimed
+					UntimedMatch.setTheme(matchTheme);
+					UntimedMatch.setType(matchType);
+					UntimedMatch.setGamesToWin(gamesToWin);
+					UntimedMatch.setMaxGames(numGames);
+					UntimedMatch.setGameScores(scores);
+					UntimedMatch.setWinByTwo(winByTwo);
+					UntimedMatch.setTeams(team1Name, team2Name);
 
 					Controller.restartScoreboard();
 					Match.startOrRefresh();
