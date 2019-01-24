@@ -31,18 +31,6 @@ import javafx.stage.Stage;
  * Code developed independently by Matthew Wayles (mattwayles@gmail.com). All Rights Reserved.
  */
 
-//TODO v1.2
-
-    //TIMER:
-        //TimedMatch to accept proper variables from App
-        //Controller method to check winner and increased period for tied games
-        //MatchWinnerView for Timed games
-        //Ability to pause the timer
-        //Buzzer on zero
-        //App input
-
-    //FEATURE (Java): Fireworks on win
-    //FEATURE (Java): Convert easter egg GIF to video: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/
 public class Main extends Application {
 
     public static final String VERSION = "v1.2";

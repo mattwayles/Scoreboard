@@ -7,7 +7,18 @@
 - Flashing scores on game point / match point
 - Added Sky Zone Theme
 
-1.2:
+1.2 REQUIREMENTS:
+- Receive score change from app
+- Flash when connecting to app so user knows which scoreboard they're accessing
 
-- TODO: Animations to make the scoreboard look alive
-- Timed scoreboard option
+1.2 NICE_TO_HAVES:
+- Complete timer:
+   -TimedMatch to accept proper variables from App
+   -Controller method to check winner and increased period for tied games
+   -MatchWinnerView for Timed games
+   -Ability to pause the timer
+   -Buzzer on zero
+   -Change App input
+   -Animations to make the scoreboard look alive
+   -Fireworks on win
+   - Convert easter egg GIF to video: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/
