@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public static final String VERSION = "v1.2";
+    public static final String VERSION = "v1.2_DEV";
     public static double HEIGHT;
     public static double WIDTH;
 

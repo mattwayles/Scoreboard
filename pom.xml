@@ -6,7 +6,7 @@
 
     <groupId>com.advancedsportstechnologies</groupId>
     <artifactId>Scoreboard</artifactId>
-    <version>1.2</version>
+    <version>1.2_DEV</version>
     <build>
         <plugins>
             <plugin>
