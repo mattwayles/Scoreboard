@@ -10,6 +10,8 @@
 1.2 REQUIREMENTS:
 - Receive score change from app
 - Flash when connecting to app so user knows which scoreboard they're accessing
+- Finally lock down sizing problems with the middle panel; on 1440x900 resolution, the words are just too small. Do bigger words
+    and smaller icons!
 
 1.2 NICE_TO_HAVES:
 - Complete timer:
