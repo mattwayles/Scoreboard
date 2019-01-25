@@ -94,7 +94,9 @@ public class MatchTieView {
     private void reset() {
         Platform.runLater(() -> {
             Controller.restartScoreboard();
-            Match.startOrRefresh();
+
+            //TODO: Fix
+            //Match.startOrRefresh();
         });
     }
 
@@ -105,7 +107,9 @@ public class MatchTieView {
         Main.getScene().setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.Q) {
                 Controller.restartScoreboard();
-                Match.startOrRefresh();
+
+                //TODO: Fix
+                //Match.startOrRefresh();
             }
         });
     }

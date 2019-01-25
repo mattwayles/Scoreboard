@@ -62,7 +62,7 @@ public class Main extends Application {
 
         //Set default teams and begin a new match
         Match.setTeams();
-        Match.startOrRefresh();
+        Match.start();
 
         //Open a new window and display the scoreboard
         primaryStage.setScene(scene);

@@ -1,18 +1,10 @@
 package com.advancedsportstechnologies.model;
 
 import com.advancedsportstechnologies.Main;
-import com.advancedsportstechnologies.view.texteffects.Rotate;
 import com.advancedsportstechnologies.view.texteffects.Scale;
 import com.advancedsportstechnologies.view.timed.TimedGameView;
 import com.advancedsportstechnologies.view.untimed.UntimedGameView;
-import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Paint;
-
-import java.awt.*;
+import javafx.scene.Node;
 
 /**
  * Static Match class contains all of the information for a current match. Games are reset within a match, but a match does not reset until
@@ -91,12 +83,30 @@ public abstract class Match {
     /**
      * Either start the match if it has not been started yet, or refresh the scoreboard with updated properties
      */
-    public static void startOrRefresh() {
+    public static void start() {
         if (Main.getRoot().getChildren() != null) {
             Main.getRoot().getChildren().clear();
+            System.gc();
             Match.setActive(true);
             if (Match.getType().equals("standard") || Match.getType().equals("switch")) {
                 Main.getRoot().getChildren().add(new UntimedGameView().getView());
+            }
+            else {
+                Main.getRoot().getChildren().add(new TimedGameView().getView());
+            }
+        }
+    }
+
+    public static void refresh() {
+        UntimedGameView gameView = new UntimedGameView();
+        Node box = gameView.getView();
+
+        if (Main.getRoot().getChildren() != null) {
+            Main.getRoot().getChildren().clear();
+            System.gc();
+            Match.setActive(true);
+            if (Match.getType().equals("standard") || Match.getType().equals("switch")) {
+                Main.getRoot().getChildren().add(box);
             }
             else {
                 Main.getRoot().getChildren().add(new TimedGameView().getView());

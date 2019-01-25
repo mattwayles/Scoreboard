@@ -142,7 +142,8 @@ public abstract class GameView {
                 Match.reverseTeams();
             }
             Controller.restartScoreboard();
-            Match.startOrRefresh();
+            //TODO: Fix
+            //Match.startOrRefresh();
         });
     }
 
@@ -164,7 +165,8 @@ public abstract class GameView {
                     Match.reverseTeams();
                 }
                 Controller.restartScoreboard();
-                Match.startOrRefresh();
+                //TODO: Fix
+                //Match.startOrRefresh();
             }
         });
     }
@@ -180,6 +182,7 @@ public abstract class GameView {
             activeTeam.increaseScore();
             updateScoreNode(activeTeam, activeTeamView);
             Controller.checkWinner(activeTeamView, passiveTeamView);
+            Match.refresh();
         }
     }
 
