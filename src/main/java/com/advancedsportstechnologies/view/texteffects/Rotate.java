@@ -43,4 +43,22 @@ public class Rotate {
         });
         thread.start();
     }
+
+    public static void instaPlay(Node node) {
+        RotateTransition rotateTransition = new RotateTransition();
+        ScaleTransition scaleTransition = new ScaleTransition();
+        rotateTransition.setDuration(Duration.millis(2000));
+        scaleTransition.setDuration(Duration.millis(1000));
+        rotateTransition.setNode(node);
+        scaleTransition.setNode(node);
+        rotateTransition.setByAngle(360);
+        scaleTransition.setByX(-.3);
+        scaleTransition.setByY(-.3);
+        rotateTransition.setCycleCount(2);
+        scaleTransition.setCycleCount(4);
+        rotateTransition.setAutoReverse(true);
+        scaleTransition.setAutoReverse(true);
+        scaleTransition.play();
+        rotateTransition.play();
+    }
 }

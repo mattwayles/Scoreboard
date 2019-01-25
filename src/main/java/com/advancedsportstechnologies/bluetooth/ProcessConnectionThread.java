@@ -38,6 +38,12 @@ class ProcessConnectionThread implements Runnable{
 			//Inform UI of connection
 			Match.setConnected(true);
 			if (Match.isActive()) {
+				Platform.runLater(Match::flash);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				Platform.runLater(Match::startOrRefresh);
 			}
 

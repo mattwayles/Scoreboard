@@ -9,7 +9,6 @@
 
 1.2 REQUIREMENTS:
 - Receive score change from app
-- Flash when connecting to app so user knows which scoreboard they're accessing
 - Test sizing of middle pane on TV; looks great on computer!
 
 1.2 NICE_TO_HAVES:
@@ -22,4 +21,4 @@
    -Change App input
    -Animations to make the scoreboard look alive
    -Fireworks on win
-   - Convert easter egg GIF to video: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/
+   -Convert easter egg GIF to video: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/

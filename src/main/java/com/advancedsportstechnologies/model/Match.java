@@ -1,8 +1,18 @@
 package com.advancedsportstechnologies.model;
 
 import com.advancedsportstechnologies.Main;
+import com.advancedsportstechnologies.view.texteffects.Rotate;
+import com.advancedsportstechnologies.view.texteffects.Scale;
 import com.advancedsportstechnologies.view.timed.TimedGameView;
 import com.advancedsportstechnologies.view.untimed.UntimedGameView;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Paint;
+
+import java.awt.*;
 
 /**
  * Static Match class contains all of the information for a current match. Games are reset within a match, but a match does not reset until
@@ -24,7 +34,6 @@ import com.advancedsportstechnologies.view.untimed.UntimedGameView;
 public abstract class Match {
     private static Team team1;
     private static Team team2;
-    //TODO: Restore
     private static String type = "standard";
     private static String theme = "traditional";
     private static boolean active = true;
@@ -93,6 +102,10 @@ public abstract class Match {
                 Main.getRoot().getChildren().add(new TimedGameView().getView());
             }
         }
+    }
+
+    public static void flash() {
+        Scale.play(Main.getRoot().getChildren().get(0), 500, -1, 0);
     }
 
     /**

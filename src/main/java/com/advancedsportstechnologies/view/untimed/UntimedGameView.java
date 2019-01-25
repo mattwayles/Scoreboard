@@ -24,7 +24,6 @@ public class UntimedGameView extends GameView {
         gameViewBox.getChildren().add(1, createSeparator());
     }
 
-
     /**
      * Create a middle Team separator and include informational panel
      * @return  Separator Node element
@@ -129,20 +128,20 @@ public class UntimedGameView extends GameView {
         VBox toWinBox;
 
         //Games to win value
-        //if (UntimedMatch.getGamesToWin() > 0) {
+        if (UntimedMatch.getGamesToWin() > 0) {
             Label gamesToWinVal = new Label(String.valueOf(UntimedMatch.getGamesToWin()));
             gamesToWinVal.setFont(new Font(gamesToWinVal.getFont().getName(), GAMEBOX_LABEL_SIZE));
             gamesToWinVal.getStyleClass().add("gameStr");
             toWinBox = new VBox(label, gamesToWinVal);
             toWinBox.getStyleClass().add("center");
-//        }
-//        else {
-//            label.getStyleClass().add("bottomPadding");
-//            ImageView gamesToWinVal = new ImageView(new Image("/img/infinity/infinity_" + UntimedMatch.getTheme() + ".png"));
-//            gamesToWinVal.getStyleClass().add("gameStr");
-//            toWinBox = new VBox(label, gamesToWinVal);
-//            toWinBox.getStyleClass().add( "center");
-//        }
+        }
+        else {
+            label.getStyleClass().add("bottomPadding");
+            ImageView gamesToWinVal = new ImageView(new Image("/img/infinity/infinity_" + UntimedMatch.getTheme() + ".png"));
+            gamesToWinVal.getStyleClass().add("gameStr");
+            toWinBox = new VBox(label, gamesToWinVal);
+            toWinBox.getStyleClass().add( "center");
+        }
 
         return toWinBox;
     }
