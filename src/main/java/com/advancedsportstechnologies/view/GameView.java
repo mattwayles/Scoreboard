@@ -6,6 +6,8 @@ import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
 import com.advancedsportstechnologies.view.texteffects.Blink;
+import com.advancedsportstechnologies.view.texteffects.Rotate;
+import com.advancedsportstechnologies.view.texteffects.Scale;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -15,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -27,6 +30,7 @@ public abstract class GameView {
 
     private final int MAX_SCORE = 99;
     private final int MIN_SCORE = 0;
+    private final double VERSION_LABEL_SIZE = Main.WIDTH / 130;
 
     /**
      * Create a new visual representation of a Game
@@ -74,7 +78,7 @@ public abstract class GameView {
      */
     protected VBox createMiddleLine() {
         VBox separator = new VBox();
-        separator.setMinHeight(Main.HEIGHT / 4.75);
+        separator.setMinHeight(Main.HEIGHT / 2);
         separator.getStyleClass().add("separator");
         return separator;
     }
@@ -87,10 +91,12 @@ public abstract class GameView {
     protected VBox createLogoBox() {
         //Logo
         ImageView logo = new ImageView(new Image("img/logo/astLogo_" + Match.getTheme() + ".png"));
+        Rotate.play(logo);
 
         //Version
         Label version = new Label(Main.VERSION);
-        version.getStyleClass().add("smallerText");
+        version.getStyleClass().add("middleText");
+        version.setFont(new Font(version.getFont().getName(), VERSION_LABEL_SIZE));
 
         //Box containing logo & version
         VBox logoBox = new VBox(10, logo, version);
@@ -198,6 +204,7 @@ public abstract class GameView {
             Text text = (Text) activeTeamView.getScoreLabel();
             text.setText(String.valueOf(activeTeam.getScore()));
         }
+        Scale.play(activeTeamView.getScoreLabel(), 200, .1, .1);
     }
 
 }

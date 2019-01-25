@@ -21,7 +21,7 @@
 }
 
 /* Secondary Font */
-.smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
+.middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
     -fx-font-family: "Cooper Black";
 }
 
@@ -40,7 +40,7 @@
     -fx-border-color: #000000;
 }
 
-.smallerText, .middleText {
+.middleText {
     -fx-text-fill: #005975;
 }
 

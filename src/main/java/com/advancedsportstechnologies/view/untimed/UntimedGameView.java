@@ -1,18 +1,23 @@
 package com.advancedsportstechnologies.view.untimed;
 
+import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.model.UntimedMatch;
 import com.advancedsportstechnologies.view.GameView;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 /**
  * Scoreboard visual representation of a game. Contains two TeamViews separated by a middle line containing an informational panel
  */
 public class UntimedGameView extends GameView {
+
+    private final double GAMEBOX_LABEL_SIZE = Main.WIDTH / 40;
+    private final double TO_WIN_LABEL_SIZE = Main.WIDTH / 85;
+    private final double OF_SIZE = Main.WIDTH / 100;
 
     public UntimedGameView() {
         HBox gameViewBox = (HBox) super.getView();
@@ -61,18 +66,22 @@ public class UntimedGameView extends GameView {
         //'Game' label
         Label game = new Label("Game");
         game.getStyleClass().add("middleText");
+        game.setFont(new Font(game.getFont().getName(), GAMEBOX_LABEL_SIZE));
 
         //Current game number
         Label currentGameNum = new Label(String.valueOf(UntimedMatch.getCurrentGame() + 1));
         currentGameNum.getStyleClass().add("gameStr");
+        currentGameNum.setFont(new Font(currentGameNum.getFont().getName(), GAMEBOX_LABEL_SIZE));
 
         //'of' label
         Label of = new Label(" of ");
-        of.getStyleClass().addAll("smallerText", "topPadding");
+        of.getStyleClass().addAll("middleText", "topPadding");
+        of.setFont(new Font(of.getFont().getName(), OF_SIZE));
 
         //Max game number
         Label maxGameNum = new Label(String.valueOf(UntimedMatch.getMaxGames()));
         maxGameNum.getStyleClass().add("gameStr");
+        maxGameNum.setFont(new Font(maxGameNum.getFont().getName(), GAMEBOX_LABEL_SIZE));
 
         //Box containing current game number, 'of', max game number
         HBox gameNumBox = new HBox(5, currentGameNum, of, maxGameNum);
@@ -92,24 +101,10 @@ public class UntimedGameView extends GameView {
     private VBox createScoreToWinBox() {
         //'Score to Win' label
         Label scoreToWin = new Label("Score to Win");
-        scoreToWin.getStyleClass().addAll("middleText", "smallerLabel");
+        scoreToWin.getStyleClass().addAll("middleText");
+        scoreToWin.setFont(new Font(scoreToWin.getFont().getName(), TO_WIN_LABEL_SIZE));
 
-        //Score to win value
-        Node scoreToWinVal;
-        if (UntimedMatch.getCurrentGameWinScore() > 0) {
-            scoreToWinVal = new Label(String.valueOf(UntimedMatch.getCurrentGameWinScore()));
-        }
-        else {
-            scoreToWin.getStyleClass().add("bottomPadding");
-            scoreToWinVal = new ImageView(new Image("/img/infinity/infinity_" + UntimedMatch.getTheme() + ".png"));
-        }
-        scoreToWinVal.getStyleClass().add("gameStr");
-
-        //Box containing 'Score to Win' + score to win value
-        VBox scoreToWinBox = new VBox(scoreToWin, scoreToWinVal);
-        scoreToWinBox.getStyleClass().add("center");
-
-        return scoreToWinBox;
+        return dynamicToWinBox(scoreToWin);
     }
 
     /**
@@ -119,24 +114,37 @@ public class UntimedGameView extends GameView {
     private VBox createGamesToWin() {
         //'Games to win' label
         Label gamesToWin = new Label("Games to Win");
-        gamesToWin.getStyleClass().addAll("middleText", "smallerLabel");
+        gamesToWin.getStyleClass().addAll("middleText");
+        gamesToWin.setFont(new Font(gamesToWin.getFont().getName(), TO_WIN_LABEL_SIZE));
+
+        return dynamicToWinBox(gamesToWin);
+    }
+
+    /**
+     * Consolidation of ScoreToWin and GamesToWin box creation code
+     * @param label The labe lto place in the box
+     * @return  The X To Win box
+     */
+    private VBox dynamicToWinBox(Label label) {
+        VBox toWinBox;
 
         //Games to win value
-        Node gamesToWinVal;
-        if (UntimedMatch.getGamesToWin() > 0) {
-            gamesToWinVal = new Label(String.valueOf(UntimedMatch.getGamesToWin()));
-        }
-        else {
-            gamesToWin.getStyleClass().add("bottomPadding");
-            gamesToWinVal = new ImageView(new Image("/img/infinity/infinity_" + UntimedMatch.getTheme() + ".png"));
-        }
-        gamesToWinVal.getStyleClass().add("gameStr");
+        //if (UntimedMatch.getGamesToWin() > 0) {
+            Label gamesToWinVal = new Label(String.valueOf(UntimedMatch.getGamesToWin()));
+            gamesToWinVal.setFont(new Font(gamesToWinVal.getFont().getName(), GAMEBOX_LABEL_SIZE));
+            gamesToWinVal.getStyleClass().add("gameStr");
+            toWinBox = new VBox(label, gamesToWinVal);
+            toWinBox.getStyleClass().add("center");
+//        }
+//        else {
+//            label.getStyleClass().add("bottomPadding");
+//            ImageView gamesToWinVal = new ImageView(new Image("/img/infinity/infinity_" + UntimedMatch.getTheme() + ".png"));
+//            gamesToWinVal.getStyleClass().add("gameStr");
+//            toWinBox = new VBox(label, gamesToWinVal);
+//            toWinBox.getStyleClass().add( "center");
+//        }
 
-        //Box containing 'Games to Win' + games to win value
-        VBox gamesToWinBox = new VBox(gamesToWin, gamesToWinVal);
-        gamesToWinBox.getStyleClass().add( "center");
-
-        return gamesToWinBox;
+        return toWinBox;
     }
 
     /**

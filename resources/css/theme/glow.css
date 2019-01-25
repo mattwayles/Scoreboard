@@ -19,17 +19,16 @@
 }
 
 /* Secondary Font */
-.smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
+.middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
     -fx-font-family: "NEON GLOW-Hollow";
 }
 
 .middleText {
     -fx-padding: 0 0 10px 0;
-    -fx-font-size: 48px;
-
 }
 
 .bt_icon {
+    -fx-padding: 5px 0 0 0;
     -fx-effect: dropShadow(three-pass-box, #00f9ff, 10, .7, 0, 0);
 }
 
@@ -70,7 +69,7 @@
     -fx-effect: dropShadow(three-pass-box, #39ff14, 25, .8, 0, 0);
 }
 
-.smallerText, .middleText {
+.middleText {
     -fx-text-fill: #FFF;
 }
 

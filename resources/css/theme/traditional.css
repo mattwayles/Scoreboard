@@ -23,12 +23,8 @@
 }
 
 /* Secondary Font */
-.smallerText, .middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
+.middleText, .gameStr, .teamNameLabel, .pressStartLabel, .countdownLabel  {
     -fx-font-family: "Bungee";
-}
-
-.smallerLabel {
-    -fx-font-size: 20px;
 }
 
 .scoreLabel, .timerLabel {
@@ -51,7 +47,8 @@
     -fx-border-color: #FFFFFF;
 }
 
-.smallerText, .middleText {
+.middleText {
+    -fx-padding: 0 0 5px 0;
     -fx-text-fill: #FFF;
 }
 

@@ -19,6 +19,7 @@ public class TeamView {
     private VBox view;
     private Team team;
     private Node scoreLabel;
+    private Label teamNameLabel;
 
     /**
      * Create the team view
@@ -47,15 +48,15 @@ public class TeamView {
         }
 
         //Create team label representing team name
-        Label teamNameLabel = new Label(team.getTeamName());
-        teamNameLabel.getStyleClass().add("teamNameLabel");
-        teamNameLabel.setFont(new Font(teamNameLabel.getFont().getName(), Main.WIDTH / 20));
-        teamNameLabel.setTextFill(team.getColor());
+        this.teamNameLabel = new Label(team.getTeamName());
+        this.teamNameLabel.getStyleClass().add("teamNameLabel");
+        this.teamNameLabel.setFont(new Font(teamNameLabel.getFont().getName(), Main.WIDTH / 20));
+        this.teamNameLabel.setTextFill(team.getColor());
 
         //Add glow effect if Glow theme is active
         if (Match.getTheme().equals("glow")) {
             this.scoreLabel.setEffect(Glow.setGlow((Color) team.getColor()));
-            teamNameLabel.setEffect(Glow.setGlow((Color) team.getColor()));
+            this.teamNameLabel.setEffect(Glow.setGlow((Color) team.getColor()));
         }
 
         //Set View with box containing all components
@@ -65,20 +66,26 @@ public class TeamView {
     }
 
     /**
-     * Retrieve this UntimedTeamView
-     * @return  This UntimedTeamView
+     * Retrieve this TeamView
+     * @return  This TeamView
      */
     public VBox getView() { return this.view; }
 
     /**
      * Retrieve the score label
-     * @return  This UntimedTeamView's score label
+     * @return  This TeamView's score label
      */
     public Node getScoreLabel() { return this.scoreLabel; }
 
     /**
-     * Retreive the team represented by this UntimedTeamView
-     * @return The team represented by this UntimedTeamView
+     * Retrieve the team name label
+     * @return  This TeamView's score label
+     */
+    public Node getTeamNameLabel() { return this.teamNameLabel; }
+
+    /**
+     * Retreive the team represented by this TeamView
+     * @return The team represented by this TeamView
      */
     public Team getTeam() { return this.team; }
 }

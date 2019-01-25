@@ -23,20 +23,6 @@
     -fx-padding: 10px;
 }
 
-.smallerText {
-    -fx-alignment: center;
-    -fx-font-size: 12px;
-}
-
-.middleText, .gameStr {
-    -fx-alignment: center;
-    -fx-font-size: 22px;
-}
-
-.smallerLabel {
-    -fx-font-size: 16px;
-}
-
 .infoBox {
     -fx-alignment: center;
     -fx-border-width: 10px;
@@ -51,7 +37,6 @@
 
 /* Team View */
 .teamNameLabel {
-    -fx-font-size: 72;
     -fx-padding: 0 15px;
 }
 
