@@ -5,6 +5,7 @@ import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.UntimedMatch;
 import com.advancedsportstechnologies.view.*;
 import com.advancedsportstechnologies.view.texteffects.Blink;
+import com.advancedsportstechnologies.view.untimed.UntimedTeamView;
 import javafx.application.Platform;
 /**
  * Base controller for performing scoreboard actions. Accessed directly from the keyboard, or from the PiController
@@ -54,6 +55,10 @@ public class Controller {
     private static void handleGameWon(TeamView winningTeam, TeamView losingTeam) {
         //The game has been won
         winningTeam.getTeam().increaseGamesWon();
+
+        if (winningTeam instanceof UntimedTeamView) {
+            ((UntimedTeamView) winningTeam).addRibbon();
+        }
 
         if (winningTeam.getTeam().getGamesWon() >= UntimedMatch.getGamesToWin()) {
 

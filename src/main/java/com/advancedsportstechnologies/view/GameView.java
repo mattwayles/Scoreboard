@@ -37,8 +37,8 @@ public abstract class GameView {
      */
     protected GameView() {
         //Create visual components from team objects
-        this.teamView1 = new TeamView(Match.getTeamOne());
-        this.teamView2 = new TeamView(Match.getTeamTwo());
+        this.teamView1 = Match.getType().contains("timed") ? new TeamView(Match.getTeamOne()) : new UntimedTeamView(Match.getTeamOne());
+        this.teamView2 = Match.getType().contains("timed") ? new TeamView(Match.getTeamTwo()) : new UntimedTeamView(Match.getTeamTwo());
         this.view = new HBox(teamView1.getView(), teamView2.getView());
 
         //Set listeners for keyboard/Pi
@@ -52,17 +52,24 @@ public abstract class GameView {
     public void update() {
         VBox team1View = teamView1.getView();
         Label team1Name = (Label) team1View.getChildren().get(0);
-        Label team1Score = (Label) team1View.getChildren().get(1);
+        Label team1Score = (Label) team1View.getChildren().get(2);
         team1Name.setText(Match.getTeamOne().getTeamName());
         Match.getTeamOne().setScore(0);
+        Match.getTeamOne().setGamesWon(0);
         team1Score.textProperty().setValue(String.valueOf(Match.getTeamOne().getScore()));
 
         VBox team2View = teamView2.getView();
         Label team2Name = (Label) team2View.getChildren().get(0);
-        Label team2Score = (Label) team2View.getChildren().get(1);
+        Label team2Score = (Label) team2View.getChildren().get(2);
         team2Name.setText(Match.getTeamTwo().getTeamName());
         Match.getTeamTwo().setScore(0);
         team2Score.textProperty().setValue(String.valueOf(Match.getTeamTwo().getScore()));
+
+        //TODO: Have this stored in an AssetManager somewhere
+//        ImageView team1Ribbon = (ImageView) team1View.getChildren().get(1);
+//        team1Ribbon.setImage(new Image("/img/placeholder.png"));
+//        ImageView team2Ribbon = (ImageView) team1View.getChildren().get(1);
+//        team2Ribbon.setImage(new Image("/img/placeholder.png"));
     }
 
     /**

@@ -87,7 +87,7 @@ public abstract class Match {
      */
     public static void start() {
         if (Main.getRoot().getChildren() != null) {
-            if (Match.getType().equals("standard") || Match.getType().equals("switch")) {
+            if (!Match.getType().contains("timed")) {
                 gameView = new UntimedGameView();
                 Main.getRoot().getChildren().add(gameView.getView());
             }

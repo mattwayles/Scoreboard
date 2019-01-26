@@ -14,10 +14,14 @@ public class UntimedTeamView extends TeamView {
         super(team);
 
         //Import ribbon displaying how many games this team has
-        ImageView gamesWon = new ImageView(new Image(team.getGamesWon() == 0 ? "/img/placeholder.png" : "/img/gamesWon/gameWon" + team.getGamesWon() + ".png"));
+        ImageView gamesWon = new ImageView("/img/placeholder.png");
         gamesWon.getStyleClass().add("gamesWon");
 
-
         super.getView().getChildren().add(1, gamesWon);
+    }
+
+    public void addRibbon() {
+        ImageView gamesWon = (ImageView) super.getView().getChildren().get(1);
+        gamesWon.setImage(new Image("/img/gamesWon/gameWon" + super.getTeam().getGamesWon() + ".png"));
     }
 }
