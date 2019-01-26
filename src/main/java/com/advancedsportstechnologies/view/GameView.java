@@ -7,7 +7,7 @@ import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
 import com.advancedsportstechnologies.view.texteffects.Blink;
 import com.advancedsportstechnologies.view.texteffects.Rotate;
-import com.advancedsportstechnologies.view.texteffects.Scale;
+import com.advancedsportstechnologies.view.untimed.UntimedTeamView;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -49,6 +49,22 @@ public abstract class GameView {
         }
     }
 
+    public void update() {
+        VBox team1View = teamView1.getView();
+        Label team1Name = (Label) team1View.getChildren().get(0);
+        Label team1Score = (Label) team1View.getChildren().get(1);
+        team1Name.setText(Match.getTeamOne().getTeamName());
+        Match.getTeamOne().setScore(0);
+        team1Score.textProperty().setValue(String.valueOf(Match.getTeamOne().getScore()));
+
+        VBox team2View = teamView2.getView();
+        Label team2Name = (Label) team2View.getChildren().get(0);
+        Label team2Score = (Label) team2View.getChildren().get(1);
+        team2Name.setText(Match.getTeamTwo().getTeamName());
+        Match.getTeamTwo().setScore(0);
+        team2Score.textProperty().setValue(String.valueOf(Match.getTeamTwo().getScore()));
+    }
+
     /**
      * Retrieve the View for this object
      * @return  The GameView's fully-configured View
@@ -66,8 +82,8 @@ public abstract class GameView {
      */
     public void reverseTeams() {
         Match.reverseTeams();
-        this.teamView1 = new TeamView(Match.getTeamOne());
-        this.teamView2 = new TeamView(Match.getTeamTwo());
+        this.teamView1 = new UntimedTeamView(Match.getTeamOne());
+        this.teamView2 = new UntimedTeamView(Match.getTeamTwo());
 
         this.view = new HBox(teamView1.getView(), teamView2.getView());
     }
@@ -142,8 +158,7 @@ public abstract class GameView {
                 Match.reverseTeams();
             }
             Controller.restartScoreboard();
-            //TODO: Fix
-            //Match.startOrRefresh();
+            Match.update();
         });
     }
 
@@ -165,8 +180,7 @@ public abstract class GameView {
                     Match.reverseTeams();
                 }
                 Controller.restartScoreboard();
-                //TODO: Fix
-                //Match.startOrRefresh();
+                Match.update();
             }
         });
     }
@@ -182,7 +196,6 @@ public abstract class GameView {
             activeTeam.increaseScore();
             updateScoreNode(activeTeam, activeTeamView);
             Controller.checkWinner(activeTeamView, passiveTeamView);
-            Match.refresh();
         }
     }
 
@@ -207,7 +220,8 @@ public abstract class GameView {
             Text text = (Text) activeTeamView.getScoreLabel();
             text.setText(String.valueOf(activeTeam.getScore()));
         }
-        Scale.play(activeTeamView.getScoreLabel(), 200, .1, .1);
+        //TODO: Restore scale
+        // Scale.play(activeTeamView.getScoreLabel(), 200, .1, .1);
     }
 
 }

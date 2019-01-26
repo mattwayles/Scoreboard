@@ -30,6 +30,11 @@ public class Team {
     public String getTeamName() { return this.teamName; }
 
     /**
+     * Set a new team name
+     * @param name The new team name
+     */
+    void setTeamName(String name) { this.teamName = name; }
+    /**
      * Retrieve the team's score in the current game
      * @return  The team's score in the current game
      */

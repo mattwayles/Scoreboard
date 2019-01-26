@@ -1,7 +1,7 @@
 package com.advancedsportstechnologies.model;
 
 import com.advancedsportstechnologies.Main;
-import com.advancedsportstechnologies.view.texteffects.Scale;
+import com.advancedsportstechnologies.view.GameView;
 import com.advancedsportstechnologies.view.timed.TimedGameView;
 import com.advancedsportstechnologies.view.untimed.UntimedGameView;
 import javafx.scene.Node;
@@ -24,6 +24,7 @@ import javafx.scene.Node;
  * GameScores - An array of win scores for each game in the match. Sent via Bluetooth.
  */
 public abstract class Match {
+    private static GameView gameView;
     private static Team team1;
     private static Team team2;
     private static String type = "standard";
@@ -49,8 +50,9 @@ public abstract class Match {
      */
     public static void setTeams(String team1Name, String team2Name) {
         setTeamColors();
-        team1 = new Team(team1Name, team1Color);
-        team2 = new Team(team2Name, team2Color);
+        team1.setTeamName(team1Name);
+        team2.setTeamName(team2Name);
+        //TODO: Set colors?
     }
 
     /**
@@ -85,37 +87,27 @@ public abstract class Match {
      */
     public static void start() {
         if (Main.getRoot().getChildren() != null) {
-            Main.getRoot().getChildren().clear();
-            System.gc();
-            Match.setActive(true);
             if (Match.getType().equals("standard") || Match.getType().equals("switch")) {
-                Main.getRoot().getChildren().add(new UntimedGameView().getView());
+                gameView = new UntimedGameView();
+                Main.getRoot().getChildren().add(gameView.getView());
             }
             else {
-                Main.getRoot().getChildren().add(new TimedGameView().getView());
+                gameView = new TimedGameView();
+                Main.getRoot().getChildren().add(gameView.getView());
             }
         }
     }
 
-    public static void refresh() {
-        UntimedGameView gameView = new UntimedGameView();
-        Node box = gameView.getView();
+    public static GameView getGameView() {
+        return gameView;
+    }
 
-        if (Main.getRoot().getChildren() != null) {
-            Main.getRoot().getChildren().clear();
-            System.gc();
-            Match.setActive(true);
-            if (Match.getType().equals("standard") || Match.getType().equals("switch")) {
-                Main.getRoot().getChildren().add(box);
-            }
-            else {
-                Main.getRoot().getChildren().add(new TimedGameView().getView());
-            }
-        }
+    public static void update() {
+        gameView.update();
     }
 
     public static void flash() {
-        Scale.play(Main.getRoot().getChildren().get(0), 500, -1, 0);
+        //TODO: Restore Scale Scale.play(Main.getRoot().getChildren().get(0), 500, -1, 0);
     }
 
     /**

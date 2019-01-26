@@ -65,6 +65,11 @@ public class TeamView {
         this.view.getStyleClass().add("teamViewBox");
     }
 
+    void update(Team team) {
+        this.team = team;
+        this.view.getChildren().set(0, this.getTeamNameLabel());
+    }
+
     /**
      * Retrieve this TeamView
      * @return  This TeamView

@@ -103,8 +103,7 @@ public class MatchWinnerView {
     private void reset() {
         Platform.runLater(() -> {
             Controller.restartScoreboard();
-            //TODO: Fix
-            //Match.startOrRefresh();
+            Match.update();
         });
     }
 
@@ -115,8 +114,8 @@ public class MatchWinnerView {
         Main.getScene().setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.Q) {
                 Controller.restartScoreboard();
-                //TODO: Fix
-                //Match.startOrRefresh();
+                Match.update();
+                Main.getRoot().getChildren().set(0, Match.getGameView().getView());
             }
         });
     }

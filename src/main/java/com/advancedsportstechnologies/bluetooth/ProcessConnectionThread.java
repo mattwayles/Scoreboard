@@ -44,8 +44,7 @@ class ProcessConnectionThread implements Runnable{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				//TODO: Fix - I just want the bluetooth module to pop up
-				Platform.runLater(Match::refresh);
+				Platform.runLater(Match::update);
 			}
 
 			// prepare to receive data
@@ -70,8 +69,7 @@ class ProcessConnectionThread implements Runnable{
 					
 					//Refresh UI by removing Bluetooth icon
 					if (Match.isActive()) {
-						//TODO: Fix
-						//Platform.runLater(Match::startOrRefresh);
+						Platform.runLater(Match::update);
 					}
 					break;
 				}
@@ -134,8 +132,7 @@ class ProcessConnectionThread implements Runnable{
 
 					Controller.restartScoreboard();
 
-					//TODO: Fix
-					//Match.startOrRefresh();
+					Match.update();
 				});
 
 			} catch (JSONException e) {

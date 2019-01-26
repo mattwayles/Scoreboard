@@ -8,10 +8,12 @@
 - Added Sky Zone Theme
 
 1.2 REQUIREMENTS:
-- HUGE MEMORY LEAK causes application to quickly jump to 100% CPU usage after connecting from app
-- Priority: Quit creating new GameViews; instead, I need to reset start and have the same GameView represent it. Memory leaks!
-- Receive score change from app
-- Test sizing of middle pane on TV; looks great on computer!
+- TODO: No ribbon showing on game win
+- TODO: Switch sides isn't working well
+- TODO: Restore scale from work computer
+- TODO: Make icons just a little smaller. home computer resolution still runs off top/bottom of screen
+- TODO: Receive score change from app
+- TODO: Test sizing of middle pane on TV; looks great on computer!
 
 1.2 NICE_TO_HAVES:
 - Complete timer:

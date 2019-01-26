@@ -5,10 +5,7 @@ import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.UntimedMatch;
 import com.advancedsportstechnologies.view.*;
 import com.advancedsportstechnologies.view.texteffects.Blink;
-
-import com.advancedsportstechnologies.view.untimed.UntimedGameView;
 import javafx.application.Platform;
-
 /**
  * Base controller for performing scoreboard actions. Accessed directly from the keyboard, or from the PiController
  */
@@ -23,7 +20,7 @@ public class Controller {
         int winningTeamScore = winningTeam.getTeam().getScore();
         int losingTeamScore = losingTeam.getTeam().getScore();
 
-        //Handle scoring differentl if the match is configured to "Win By Two"
+        //Handle scoring differently if the match is configured to "Win By Two"
         if (UntimedMatch.isWinByTwo()) {
             if (winningTeamScore >= UntimedMatch.getCurrentGameWinScore() &&
                     winningTeamScore >= losingTeamScore + 2) {
@@ -97,14 +94,14 @@ public class Controller {
                 //After 3 seconds, diplay a new UntimedGameView with preserved Match settings
                 resetGame();
 
-                UntimedGameView newUntimedGameView = new UntimedGameView();
+                GameView updatedGameView = Match.getGameView();
 
                 //Scoreboards of type 'switch' switch sides after each game
                 if(Match.getType().equals("switch")) {
-                    newUntimedGameView.reverseTeams();
+                    updatedGameView.reverseTeams();
                 }
 
-                Main.getRoot().getChildren().set(0, newUntimedGameView.getView());
+                Main.getRoot().getChildren().set(0, updatedGameView.getView());
             });
         });
     }
@@ -113,9 +110,8 @@ public class Controller {
      * Set match information to prepare for a new game
      */
     private static void resetGame() {
-        Match.getTeamOne().setScore(0);
-        Match.getTeamTwo().setScore(0);
         UntimedMatch.nextGame();
+        Match.getGameView().update();
         Blink.reset();
     }
 

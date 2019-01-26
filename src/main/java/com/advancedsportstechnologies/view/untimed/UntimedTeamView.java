@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
  */
 public class UntimedTeamView extends TeamView {
 
-    UntimedTeamView(Team team) {
+    public UntimedTeamView(Team team) {
         super(team);
 
         //Import ribbon displaying how many games this team has
