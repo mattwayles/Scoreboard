@@ -7,7 +7,7 @@ import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.Team;
 import com.advancedsportstechnologies.view.texteffects.Blink;
 import com.advancedsportstechnologies.view.texteffects.Rotate;
-import com.advancedsportstechnologies.view.untimed.UntimedTeamView;
+import com.advancedsportstechnologies.view.texteffects.Scale;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -37,8 +37,8 @@ public abstract class GameView {
      */
     protected GameView() {
         //Create visual components from team objects
-        this.teamView1 = Match.getType().contains("timed") ? new TeamView(Match.getTeamOne()) : new UntimedTeamView(Match.getTeamOne());
-        this.teamView2 = Match.getType().contains("timed") ? new TeamView(Match.getTeamTwo()) : new UntimedTeamView(Match.getTeamTwo());
+        this.teamView1 = new TeamView(Match.getTeamOne());
+        this.teamView2 = new TeamView(Match.getTeamTwo());
         this.view = new HBox(teamView1.getView(), teamView2.getView());
 
         //Set listeners for keyboard/Pi
@@ -52,24 +52,24 @@ public abstract class GameView {
     public void update() {
         VBox team1View = teamView1.getView();
         Label team1Name = (Label) team1View.getChildren().get(0);
+        ImageView team1Ribbons = (ImageView) team1View.getChildren().get(1);
         Label team1Score = (Label) team1View.getChildren().get(2);
         team1Name.setText(Match.getTeamOne().getTeamName());
-        Match.getTeamOne().setScore(0);
-        Match.getTeamOne().setGamesWon(0);
+        team1Ribbons.setImage(teamView1.getTeam().getGamesWon() > 0 ?
+                new Image("/img/gamesWon/gameWon" + teamView1.getTeam().getGamesWon() + ".png")
+                : new Image("/img/placeholder.png"));
         team1Score.textProperty().setValue(String.valueOf(Match.getTeamOne().getScore()));
+
 
         VBox team2View = teamView2.getView();
         Label team2Name = (Label) team2View.getChildren().get(0);
+        ImageView team2Ribbons = (ImageView) team2View.getChildren().get(1);
         Label team2Score = (Label) team2View.getChildren().get(2);
         team2Name.setText(Match.getTeamTwo().getTeamName());
-        Match.getTeamTwo().setScore(0);
+        team2Ribbons.setImage(teamView2.getTeam().getGamesWon() > 0 ?
+                new Image("/img/gamesWon/gameWon" + teamView2.getTeam().getGamesWon() + ".png")
+                : new Image("/img/placeholder.png"));
         team2Score.textProperty().setValue(String.valueOf(Match.getTeamTwo().getScore()));
-
-        //TODO: Have this stored in an AssetManager somewhere
-//        ImageView team1Ribbon = (ImageView) team1View.getChildren().get(1);
-//        team1Ribbon.setImage(new Image("/img/placeholder.png"));
-//        ImageView team2Ribbon = (ImageView) team1View.getChildren().get(1);
-//        team2Ribbon.setImage(new Image("/img/placeholder.png"));
     }
 
     /**
@@ -89,10 +89,16 @@ public abstract class GameView {
      */
     public void reverseTeams() {
         Match.reverseTeams();
-        this.teamView1 = new UntimedTeamView(Match.getTeamOne());
-        this.teamView2 = new UntimedTeamView(Match.getTeamTwo());
 
-        this.view = new HBox(teamView1.getView(), teamView2.getView());
+        teamView1.update(Match.getTeamOne());
+        teamView2.update(Match.getTeamTwo());
+
+        HBox v = (HBox) this.view;
+        v.getChildren().set(2, new VBox());
+        v.getChildren().set(0, teamView1.getView());
+        v.getChildren().set(2, teamView2.getView());
+
+        this.view = v;
     }
 
     /**
@@ -135,22 +141,22 @@ public abstract class GameView {
     private void setEventListeners() {
         PiController.controller1Up.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
-                Platform.runLater(() -> increaseScore(Match.getTeamOne(), this.teamView1, this.teamView2));
+                Platform.runLater(() -> increaseScore(this.teamView1, this.teamView2));
             }
         });
         PiController.controller1Down.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
-                Platform.runLater(() -> decreaseScore(Match.getTeamOne(), this.teamView1));
+                Platform.runLater(() -> decreaseScore(this.teamView1));
             }
         });
         PiController.controller2Up.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
-                Platform.runLater(() -> increaseScore(Match.getTeamTwo(), this.teamView2, this.teamView1));
+                Platform.runLater(() -> increaseScore(this.teamView2, this.teamView1));
             }
         });
         PiController.controller2Down.addListener((GpioPinListenerDigital) event -> {
             if (event.getState().isHigh()) {
-                Platform.runLater(() -> decreaseScore(Match.getTeamTwo(), this.teamView2));
+                Platform.runLater(() -> decreaseScore(this.teamView2));
             }
         });
         PiController.reset.addListener((GpioPinListenerDigital) event -> reset());
@@ -175,13 +181,13 @@ public abstract class GameView {
     private void setKeyPressListeners() {
         Main.getScene().setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.A) {
-                increaseScore(Match.getTeamOne(), this.teamView1, this.teamView2);
+                increaseScore(this.teamView1, this.teamView2);
             } else if (e.getCode() == KeyCode.S) {
-                increaseScore(Match.getTeamTwo(), this.teamView2, this.teamView1);
+                increaseScore(this.teamView2, this.teamView1);
             } else if (e.getCode() == KeyCode.Z) {
-                decreaseScore(Match.getTeamOne(), this.teamView1);
+                decreaseScore(this.teamView1);
             } else if (e.getCode() == KeyCode.X) {
-                decreaseScore(Match.getTeamTwo(), this.teamView2);
+                decreaseScore(this.teamView2);
             } else if (e.getCode() == KeyCode.Q) {
                 if (this.teamView1.getTeam().getScore() == 0 && this.teamView2.getTeam().getScore() == 0) {
                     Match.reverseTeams();
@@ -194,41 +200,38 @@ public abstract class GameView {
 
     /**
      * Increase the score of the specified team when the increase score event is raised
-     * @param activeTeam    The team receiving the score
      * @param activeTeamView    The View representing the team receiving the score
      * @param passiveTeamView   The View representing the team that did not receive the score
      */
-    private void increaseScore(Team activeTeam, TeamView activeTeamView, TeamView passiveTeamView) {
-        if (activeTeam.getScore() < MAX_SCORE) {
-            activeTeam.increaseScore();
-            updateScoreNode(activeTeam, activeTeamView);
+    private void increaseScore(TeamView activeTeamView, TeamView passiveTeamView) {
+        if (activeTeamView.getTeam().getScore() < MAX_SCORE) {
+            activeTeamView.getTeam().increaseScore();
+            updateScoreNode(activeTeamView);
             Controller.checkWinner(activeTeamView, passiveTeamView);
         }
     }
 
     /**
      * Decrease the score of the specified team when the decrease score event is raised
-     * @param activeTeam    The team receiving the score
      * @param activeTeamView    The View representing the team receiving the score
      */
-    private void decreaseScore(Team activeTeam, TeamView activeTeamView) {
-        if (activeTeam.getScore() > MIN_SCORE) {
-            activeTeam.decreaseScore();
-            updateScoreNode(activeTeam, activeTeamView);
+    private void decreaseScore(TeamView activeTeamView) {
+        if (activeTeamView.getTeam().getScore() > MIN_SCORE) {
+            activeTeamView.getTeam().decreaseScore();
+            updateScoreNode(activeTeamView);
             Blink.stop(activeTeamView.getScoreLabel());
         }
     }
 
-    private void updateScoreNode(Team activeTeam, TeamView activeTeamView) {
+    private void updateScoreNode(TeamView activeTeamView) {
         if (activeTeamView.getScoreLabel() instanceof Label) {
             Label label = (Label) activeTeamView.getScoreLabel();
-            label.textProperty().setValue(String.valueOf(activeTeam.getScore()));
+            label.textProperty().setValue(String.valueOf(activeTeamView.getTeam().getScore()));
         } else {
             Text text = (Text) activeTeamView.getScoreLabel();
-            text.setText(String.valueOf(activeTeam.getScore()));
+            text.setText(String.valueOf(activeTeamView.getTeam().getScore()));
         }
-        //TODO: Restore scale
-        // Scale.play(activeTeamView.getScoreLabel(), 200, .1, .1);
+        Scale.play(activeTeamView.getScoreLabel(), 200, .1, .1);
     }
 
 }

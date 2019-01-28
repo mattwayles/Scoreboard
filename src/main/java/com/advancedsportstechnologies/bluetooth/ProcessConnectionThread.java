@@ -93,7 +93,7 @@ class ProcessConnectionThread implements Runnable{
 	 * Process the message from client
 	 * @param message the message string
 	 */
-	private void processResult(String message) {
+	public void processResult(String message) {
 
 	    //Ensure client message is JSON format
 		if (message.startsWith("{") || message.startsWith("[")) {

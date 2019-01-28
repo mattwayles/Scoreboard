@@ -6,6 +6,8 @@ import com.advancedsportstechnologies.model.Team;
 import com.advancedsportstechnologies.view.texteffects.Glow;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -59,8 +61,11 @@ public class TeamView {
             this.teamNameLabel.setEffect(Glow.setGlow((Color) team.getColor()));
         }
 
+        //Placeholder for ribbons
+        ImageView imageView = new ImageView(new Image("/img/placeholder.png"));
+
         //Set View with box containing all components
-        this.view = new VBox(scoreLabel instanceof Text ? -40 : 20, teamNameLabel, scoreLabel);
+        this.view = new VBox(scoreLabel instanceof Text ? -40 : 20, teamNameLabel, imageView, scoreLabel);
         this.view.setPrefWidth(Main.WIDTH);
         this.view.getStyleClass().add("teamViewBox");
     }

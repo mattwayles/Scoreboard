@@ -2,6 +2,7 @@ package com.advancedsportstechnologies.model;
 
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.view.GameView;
+import com.advancedsportstechnologies.view.texteffects.Scale;
 import com.advancedsportstechnologies.view.timed.TimedGameView;
 import com.advancedsportstechnologies.view.untimed.UntimedGameView;
 import javafx.scene.Node;
@@ -107,7 +108,7 @@ public abstract class Match {
     }
 
     public static void flash() {
-        //TODO: Restore Scale Scale.play(Main.getRoot().getChildren().get(0), 500, -1, 0);
+        Scale.play(Main.getRoot().getChildren().get(0), 500, -1, 0);
     }
 
     /**
@@ -123,7 +124,8 @@ public abstract class Match {
      * Retrieve the Team 1 object
      * @return  The Team 1 object
      */
-    public static Team getTeamOne() { return team1; }
+    public static Team getTeamOne() {
+        return team1; }
 
     /**
      * Retrieve the Team 2 object

@@ -8,7 +8,7 @@
 - Added Sky Zone Theme
 
 1.2 REQUIREMENTS:
-- TODO: GamesWon ribbon does not reset after update
+- TODO: Can't change score after match win
 - TODO: Switch sides isn't working well
 - TODO: Restore scale from work computer
 - TODO: Make icons just a little smaller. home computer resolution still runs off top/bottom of screen
