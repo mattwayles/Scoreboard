@@ -30,24 +30,30 @@ public class UntimedGameView extends GameView {
 
     public void update() {
         super.update();
-        updateGameBox();
+        updateSeparator();
     }
 
-    private void updateGameBox() {
-        //TODO: Extract all of this to separator methods, and make it prettier
-
-        //Update Game Box
+    private void updateSeparator() {
         VBox separator = (VBox) gameViewBox.getChildren().get(1);
         VBox infoBox = (VBox) separator.getChildren().get(1);
+        updateGameBox(infoBox);
+        updateScoreToWinBox(infoBox);
+        updateGamesToWinBox(infoBox);
+        updateIcons(infoBox);
+        HBox gameViewBox = (HBox) super.getView();
+        gameViewBox.getChildren().set(1, separator);
+    }
+    
+    private void updateGameBox(VBox infoBox) {
         VBox gameBox = (VBox) infoBox.getChildren().get(1);
         HBox gameNumBox = (HBox) gameBox.getChildren().get(1);
         Label currentGamesLabel = (Label) gameNumBox.getChildren().get(0);
         Label maxGamesLabel = (Label) gameNumBox.getChildren().get(2);
         currentGamesLabel.setText(String.valueOf(UntimedMatch.getCurrentGame() + 1));
         maxGamesLabel.setText(String.valueOf(UntimedMatch.getMaxGames()));
+    }
 
-        //Update ScoreToWinBox
-        //TODO: Consolidate ScoreToWin and GamesToWin into single method, the code is the exact same
+    private void updateScoreToWinBox(VBox infoBox) {
         VBox scoreToWinBox = (VBox) infoBox.getChildren().get(2);
         Label scoreToWinLabel;
         if (UntimedMatch.getCurrentGameWinScore() > 0 && scoreToWinBox.getChildren().get(1) instanceof ImageView) {
@@ -56,13 +62,13 @@ public class UntimedGameView extends GameView {
             scoreToWinLabel.setFont(new Font(scoreToWinLabel.getFont().getName(), GAMEBOX_LABEL_SIZE));
             scoreToWinLabel.getStyleClass().addAll("gameStr", "center");
             scoreToWinBox.getChildren().add(scoreToWinLabel);
-        }
-        else if (UntimedMatch.getCurrentGameWinScore() > 0) {
+        } else if (UntimedMatch.getCurrentGameWinScore() > 0) {
             scoreToWinLabel = (Label) scoreToWinBox.getChildren().get(1);
             scoreToWinLabel.setText(String.valueOf(UntimedMatch.getCurrentGameWinScore()));
         }
+    }
 
-        //Update GamesToWinBox
+    private void updateGamesToWinBox(VBox infoBox) {
         VBox gamesToWinBox = (VBox) infoBox.getChildren().get(3);
         Label gamesToWinLabel;
         if (UntimedMatch.getGamesToWin() > 0 && gamesToWinBox.getChildren().get(1) instanceof ImageView) {
@@ -71,34 +77,37 @@ public class UntimedGameView extends GameView {
             gamesToWinLabel.setFont(new Font(gamesToWinLabel.getFont().getName(), GAMEBOX_LABEL_SIZE));
             gamesToWinLabel.getStyleClass().addAll("gameStr", "center");
             gamesToWinBox.getChildren().add(gamesToWinLabel);
-        }
-        else if (UntimedMatch.getGamesToWin() > 0) {
+        } else if (UntimedMatch.getGamesToWin() > 0) {
             gamesToWinLabel = (Label) gamesToWinBox.getChildren().get(1);
             gamesToWinLabel.setText(String.valueOf(UntimedMatch.getGamesToWin()));
         }
+    }
 
-        //Update info box add-ons
-        if (UntimedMatch.isConnected() && infoBox.getChildren().indexOf(bluetoothIcon) == -1) {
-            infoBox.getChildren().add(bluetoothIcon);
-            bluetoothIcon.getStyleClass().add("bt_icon");
-        } else if (!UntimedMatch.isConnected() && infoBox.getChildren().indexOf(bluetoothIcon) != -1) {
-            infoBox.getChildren().remove(bluetoothIcon);
-        }
-        if (UntimedMatch.getType().equals("switch") && infoBox.getChildren().indexOf(switchIcon) == -1) {
-            infoBox.getChildren().add(switchIcon);
-            switchIcon.getStyleClass().add("switch_icon");
-        } else if (!UntimedMatch.getType().equals("switch") && infoBox.getChildren().indexOf(switchIcon) != -1) {
-            infoBox.getChildren().remove(switchIcon);
-        }
-        if (UntimedMatch.isWinByTwo() && infoBox.getChildren().indexOf(winByTwoIcon) == -1) {
-            winByTwoIcon.getStyleClass().add("winByTwo");
-            infoBox.getChildren().add(winByTwoIcon);
-        } else if (!UntimedMatch.isWinByTwo() && infoBox.getChildren().indexOf(winByTwoIcon) != -1) {
-            infoBox.getChildren().remove(winByTwoIcon);
-        }
+    private void updateIcons(VBox infoBox) {
+        int btIndex = infoBox.getChildren().indexOf(bluetoothIcon);
+        includeIcon(infoBox, UntimedMatch.isConnected(), btIndex, "bt_icon",
+                "/img/bluetooth/bt_" + Match.getTheme() + ".png", bluetoothIcon);
 
-        HBox gameViewBox = (HBox) super.getView();
-        gameViewBox.getChildren().set(1, separator);
+        int switchIndex = infoBox.getChildren().indexOf(switchIcon);
+        includeIcon(infoBox, UntimedMatch.getType().equals("switch"), switchIndex, "switch_icon",
+                "/img/switch/switch_" + Match.getTheme() + ".png", switchIcon);
+
+        int winBy2Index = infoBox.getChildren().indexOf(winByTwoIcon);
+        includeIcon(infoBox, UntimedMatch.isWinByTwo(), winBy2Index, "winByTwo",
+                "/img/plus2/plus2_" + Match.getTheme() + ".png", winByTwoIcon);
+    }
+
+    private void includeIcon(VBox infoBox, boolean condition, int index, String style, String url, ImageView icon) {
+        if (condition && index == -1) {
+            icon.getStyleClass().add(style);
+            infoBox.getChildren().add(icon);
+        } else if(condition && index > -1) {
+            ImageView winImgView = (ImageView) infoBox.getChildren().get(index);
+            winImgView.setImage(new Image(url));
+        }
+        else if (!condition && index != -1) {
+            infoBox.getChildren().remove(icon);
+        }
     }
 
     /**

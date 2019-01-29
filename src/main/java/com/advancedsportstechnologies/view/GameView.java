@@ -4,10 +4,8 @@ import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
-import com.advancedsportstechnologies.model.Team;
 import com.advancedsportstechnologies.view.texteffects.Blink;
 import com.advancedsportstechnologies.view.texteffects.Rotate;
-import com.advancedsportstechnologies.view.texteffects.Scale;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -49,27 +47,23 @@ public abstract class GameView {
         }
     }
 
+    /**
+     * Update the gameview by updating each teamview individually
+     */
     public void update() {
-        VBox team1View = teamView1.getView();
-        Label team1Name = (Label) team1View.getChildren().get(0);
-        ImageView team1Ribbons = (ImageView) team1View.getChildren().get(1);
-        Label team1Score = (Label) team1View.getChildren().get(2);
-        team1Name.setText(Match.getTeamOne().getTeamName());
-        team1Ribbons.setImage(teamView1.getTeam().getGamesWon() > 0 ?
-                new Image("/img/gamesWon/gameWon" + teamView1.getTeam().getGamesWon() + ".png")
-                : new Image("/img/placeholder.png"));
-        team1Score.textProperty().setValue(String.valueOf(Match.getTeamOne().getScore()));
+        teamView1.update();
+        teamView2.update();
+        this.setKeyPressListeners();
+    }
 
+    /**
+     * When scoreboard type is 'switch', the visual representation of the teams must switch sides after each game
+     */
+    public void reverseTeams() {
+        Match.reverseTeams();
 
-        VBox team2View = teamView2.getView();
-        Label team2Name = (Label) team2View.getChildren().get(0);
-        ImageView team2Ribbons = (ImageView) team2View.getChildren().get(1);
-        Label team2Score = (Label) team2View.getChildren().get(2);
-        team2Name.setText(Match.getTeamTwo().getTeamName());
-        team2Ribbons.setImage(teamView2.getTeam().getGamesWon() > 0 ?
-                new Image("/img/gamesWon/gameWon" + teamView2.getTeam().getGamesWon() + ".png")
-                : new Image("/img/placeholder.png"));
-        team2Score.textProperty().setValue(String.valueOf(Match.getTeamTwo().getScore()));
+        teamView1.update(Match.getTeamOne());
+        teamView2.update(Match.getTeamTwo());
     }
 
     /**
@@ -83,23 +77,6 @@ public abstract class GameView {
      * @param view The GameView's new View
      */
     public void setView(Node view) { this.view = view; }
-
-    /**
-     * When scoreboard type is 'switch', the visual representation of the teams must switch sides after each game
-     */
-    public void reverseTeams() {
-        Match.reverseTeams();
-
-        teamView1.update(Match.getTeamOne());
-        teamView2.update(Match.getTeamTwo());
-
-        HBox v = (HBox) this.view;
-        v.getChildren().set(2, new VBox());
-        v.getChildren().set(0, teamView1.getView());
-        v.getChildren().set(2, teamView2.getView());
-
-        this.view = v;
-    }
 
     /**
      * Create small middle lines that sit on top/bottom of the informational panel
@@ -231,7 +208,7 @@ public abstract class GameView {
             Text text = (Text) activeTeamView.getScoreLabel();
             text.setText(String.valueOf(activeTeamView.getTeam().getScore()));
         }
-        Scale.play(activeTeamView.getScoreLabel(), 200, .1, .1);
+        //Scale.play(activeTeamView.getScoreLabel(), 200, .1, .1);
     }
 
 }

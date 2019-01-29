@@ -2,10 +2,9 @@ package com.advancedsportstechnologies.model;
 
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.view.GameView;
-import com.advancedsportstechnologies.view.texteffects.Scale;
 import com.advancedsportstechnologies.view.timed.TimedGameView;
 import com.advancedsportstechnologies.view.untimed.UntimedGameView;
-import javafx.scene.Node;
+import javafx.scene.paint.Paint;
 
 /**
  * Static Match class contains all of the information for a current match. Games are reset within a match, but a match does not reset until
@@ -53,7 +52,6 @@ public abstract class Match {
         setTeamColors();
         team1.setTeamName(team1Name);
         team2.setTeamName(team2Name);
-        //TODO: Set colors?
     }
 
     /**
@@ -104,11 +102,13 @@ public abstract class Match {
     }
 
     public static void update() {
+        team1.setColor(Paint.valueOf(team1Color));
+        team2.setColor(Paint.valueOf(team2Color));
         gameView.update();
     }
 
     public static void flash() {
-        Scale.play(Main.getRoot().getChildren().get(0), 500, -1, 0);
+        //Scale.play(Main.getRoot().getChildren().get(0), 500, -1, 0);
     }
 
     /**

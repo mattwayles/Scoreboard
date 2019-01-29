@@ -93,7 +93,7 @@ class ProcessConnectionThread implements Runnable{
 	 * Process the message from client
 	 * @param message the message string
 	 */
-	public void processResult(String message) {
+	private void processResult(String message) {
 
 	    //Ensure client message is JSON format
 		if (message.startsWith("{") || message.startsWith("[")) {
@@ -121,7 +121,7 @@ class ProcessConnectionThread implements Runnable{
                 //Start a new match with the settings sent in message
 				Platform.runLater(() ->
 				{
-					//TODO: Distinguish between timed and untimed
+					//TODO: Expand to support TimedMatch
 					UntimedMatch.setTheme(matchTheme);
 					UntimedMatch.setType(matchType);
 					UntimedMatch.setGamesToWin(gamesToWin);

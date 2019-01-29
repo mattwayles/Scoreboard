@@ -54,11 +54,6 @@ public class Controller {
     private static void handleGameWon(TeamView winningTeam, TeamView losingTeam) {
         //The game has been won
         winningTeam.getTeam().increaseGamesWon();
-
-//        if (winningTeam instanceof UntimedTeamView) {
-//            ((UntimedTeamView) winningTeam).addRibbon();
-//        }
-
         if (winningTeam.getTeam().getGamesWon() >= UntimedMatch.getGamesToWin()) {
 
             //The team registering a score has won the MATCH
@@ -95,7 +90,7 @@ public class Controller {
                 i--;
             }
             Platform.runLater(() -> {
-                //After 3 seconds, diplay a new UntimedGameView with preserved Match settings
+                //After 3 seconds, display a new GameView with preserved Match settings
                 resetGame();
 
                 GameView updatedGameView = Match.getGameView();
@@ -117,8 +112,8 @@ public class Controller {
         Match.getTeamOne().setScore(0);
         Match.getTeamTwo().setScore(0);
         UntimedMatch.nextGame();
-        Match.getGameView().update();
         Blink.reset();
+        Match.getGameView().update();
     }
 
     /**

@@ -8,9 +8,7 @@
 - Added Sky Zone Theme
 
 1.2 REQUIREMENTS:
-- TODO: Can't change score after match win
-- TODO: Switch sides isn't working well
-- TODO: Restore scale from work computer
+- TODO: Restore scale from work computer - it looks like it's pushing but it isn't
 - TODO: Make icons just a little smaller. home computer resolution still runs off top/bottom of screen
 - TODO: Receive score change from app
 - TODO: Test sizing of middle pane on TV; looks great on computer!
