@@ -99,42 +99,60 @@ class ProcessConnectionThread implements Runnable{
 		if (message.startsWith("{") || message.startsWith("[")) {
 			JSONObject messageObj;
 			try {
-
 			    //Parse the JSON string into an object
 				messageObj = new JSONObject(message);
-				int numGames = messageObj.getInt("numGames");
-				int gamesToWin = messageObj.getInt("gamesToWin");
-				boolean winByTwo = messageObj.getBoolean("winByTwo");
-				String matchType = messageObj.getString("type");
-				String matchTheme = messageObj.getString("theme");
-				String team1Name = messageObj.getString("team1");
-				String team2Name = messageObj.getString("team2");
 
-				//Format the gameScores string xx-xx-xx... into an array
-				String gameScoreStr = messageObj.getString("gameScores");
-				String[] gameScores = gameScoreStr.split("-");
-                int[] scores = new int[gameScores.length];
-                for (int i = 0; i < gameScores.length; i++) {
-                    scores[i] = Integer.parseInt(gameScores[i].trim());
-                }
+				String messageType = messageObj.getString("type");
 
-                //Start a new match with the settings sent in message
-				Platform.runLater(() ->
-				{
-					//TODO: Expand to support TimedMatch
-					UntimedMatch.setTheme(matchTheme);
-					UntimedMatch.setType(matchType);
-					UntimedMatch.setGamesToWin(gamesToWin);
-					UntimedMatch.setMaxGames(numGames);
-					UntimedMatch.setGameScores(scores);
-					UntimedMatch.setWinByTwo(winByTwo);
-					UntimedMatch.setTeams(team1Name, team2Name);
+				switch (messageType) {
+					case "increase": {
+						String teamName = messageObj.getString("teamName");
+						if (teamName.equals(Match.getTeamOne().getTeamName())) {
+							Match.getTeamOne().increaseScore();
+						} else {
+							Match.getTeamTwo().increaseScore();
+						}
+						break;
+					}
+					case "decrease": {
+						String teamName = messageObj.getString("teamName");
+						break;
+					}
+					default:
+						int numGames = messageObj.getInt("numGames");
+						int gamesToWin = messageObj.getInt("gamesToWin");
+						boolean winByTwo = messageObj.getBoolean("winByTwo");
+						String matchType = messageObj.getString("type");
+						String matchTheme = messageObj.getString("theme");
+						String team1Name = messageObj.getString("team1");
+						String team2Name = messageObj.getString("team2");
 
-					Controller.restartScoreboard();
+						//Format the gameScores string xx-xx-xx... into an array
+						String gameScoreStr = messageObj.getString("gameScores");
+						String[] gameScores = gameScoreStr.split("-");
+						int[] scores = new int[gameScores.length];
+						for (int i = 0; i < gameScores.length; i++) {
+							scores[i] = Integer.parseInt(gameScores[i].trim());
+						}
 
-					Match.update();
-				});
+						//Start a new match with the settings sent in message
+						Platform.runLater(() ->
+						{
+							//TODO: Expand to support TimedMatch
+							UntimedMatch.setTheme(matchTheme);
+							UntimedMatch.setType(matchType);
+							UntimedMatch.setGamesToWin(gamesToWin);
+							UntimedMatch.setMaxGames(numGames);
+							UntimedMatch.setGameScores(scores);
+							UntimedMatch.setWinByTwo(winByTwo);
+							UntimedMatch.setTeams(team1Name, team2Name);
 
+							Controller.restartScoreboard();
+
+							Match.update();
+						});
+						break;
+				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
