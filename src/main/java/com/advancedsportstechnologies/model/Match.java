@@ -32,16 +32,14 @@ public abstract class Match {
     private static String theme = "traditional";
     private static boolean active = true;
     private static boolean connected = false;
-    private static String team1Color = "#FFF";
-    private static String team2Color = "#FFF";
 
     /**
      * Set defaults team names with default team colors
      */
     public static void setTeams() {
-        setTeamColors();
-        team1 = new Team("HOME", team1Color);
-        team2 = new Team("AWAY", team2Color);
+        //setTeamColors();
+        team1 = new Team("HOME");
+        team2 = new Team("AWAY");
     }
 
     /**
@@ -49,37 +47,12 @@ public abstract class Match {
      * @param team1Name The first team name
      * @param team2Name The second team name
      */
-    public static void setTeams(String team1Name, String team2Name) {
-        setTeamColors();
+    public static void setTeams(String team1Name, Paint team1Color, String team2Name, Paint team2Color) {
+        //setTeamColors();
         team1.setTeamName(team1Name);
+        team1.setColor(team1Color);
         team2.setTeamName(team2Name);
-    }
-
-    /**
-     * Set team colors based off of theme
-     */
-    private static void setTeamColors() {
-        switch (theme) {
-            case "dark":
-                team1Color = "#FDFFBC";
-                team2Color = "#F9CCFF";
-                break;
-            case "retro":
-                team1Color = "#0800ad";
-                team2Color = "#a05500";
-                break;
-            case "traditional":
-                team1Color = "#FFF";
-                team2Color = "#FFF";
-                break;
-            case "glow":
-                team1Color = "#FFCC00";
-                team2Color = "#ff78bb";
-                break;
-            case "skyzone":
-                team1Color = "#002B6C";
-                team2Color = "#000";
-        }
+        team2.setColor(team2Color);
     }
 
     /**
@@ -103,8 +76,6 @@ public abstract class Match {
     }
 
     public static void update() {
-        team1.setColor(Paint.valueOf(team1Color));
-        team2.setColor(Paint.valueOf(team2Color));
         gameView.update();
     }
 

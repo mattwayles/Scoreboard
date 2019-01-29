@@ -7,20 +7,21 @@
 - Flashing scores on game point / match point
 - Added Sky Zone Theme
 
-1.2 REQUIREMENTS:
-- TODO: Restore scale from work computer - it looks like it's pushing but it isn't
-- TODO: Make icons just a little smaller. home computer resolution still runs off top/bottom of screen
-- TODO: Receive score change from app
-- TODO: Test sizing of middle pane on TV; looks great on computer!
+1.2:
+- Added support for android app controller; scores can now be changed directly from app
+- Added animations and various forms of user feedback
+- Increased bluetooth robustness and enforced connection protocol
+- Refactored asset allocation to preserve CPU usage on reload
 
-1.2 NICE_TO_HAVES:
+
+1.3 TODO:
 - Complete timer:
    -TimedMatch to accept proper variables from App
    -Controller method to check winner and increased period for tied games
    -MatchWinnerView for Timed games
    -Ability to pause the timer
    -Buzzer on zero
-   -Change App input
-   -Animations to make the scoreboard look alive
-   -Fireworks on win
-   -Convert easter egg GIF to video: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/
+- More Animations
+- Fireworks on win
+- Easter Egg trials:
+    - Convert easter egg GIF to video: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/replace-animated-gifs-with-video/

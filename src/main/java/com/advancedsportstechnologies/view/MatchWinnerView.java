@@ -65,7 +65,7 @@ public class MatchWinnerView {
         winnerBox.getStyleClass().add("center");
 
         //Press Start label
-        Label pressStart = new Label("Press Start for New Game");
+        Label pressStart = new Label("Press RESET for New Game");
         pressStart.getStyleClass().add("pressStartLabel");
 
         //Set the view with all components included

@@ -1,9 +1,11 @@
 package com.advancedsportstechnologies.bluetooth;
 
+import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.controller.Controller;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.model.UntimedMatch;
 import javafx.application.Platform;
+import javafx.scene.paint.Paint;
 import org.json.JSONException;
 import org.json.JSONObject;
 import javax.microedition.io.StreamConnection;
@@ -107,15 +109,39 @@ class ProcessConnectionThread implements Runnable{
 				switch (messageType) {
 					case "increase": {
 						String teamName = messageObj.getString("teamName");
-						if (teamName.equals(Match.getTeamOne().getTeamName())) {
-							Match.getTeamOne().increaseScore();
-						} else {
-							Match.getTeamTwo().increaseScore();
-						}
+						Platform.runLater(() ->
+						{
+							if (Match.isActive()) {
+								if (teamName.equals(Match.getGameView().getTeamView1().getTeam().getTeamName())) {
+									Match.getGameView().increaseScore(Match.getGameView().getTeamView1(), Match.getGameView().getTeamView2());
+								} else {
+									Match.getGameView().increaseScore(Match.getGameView().getTeamView2(), Match.getGameView().getTeamView1());
+								}
+							}
+						});
 						break;
 					}
 					case "decrease": {
 						String teamName = messageObj.getString("teamName");
+						Platform.runLater(() ->
+						{
+							if (Match.isActive()) {
+								if (teamName.equals(Match.getGameView().getTeamView1().getTeam().getTeamName())) {
+									Match.getGameView().decreaseScore(Match.getGameView().getTeamView1());
+								} else {
+									Match.getGameView().decreaseScore(Match.getGameView().getTeamView2());
+								}
+							}
+						});
+						break;
+					}
+					case "reset": {
+						Platform.runLater(() ->
+						{
+							Controller.restartScoreboard();
+							Match.update();
+							Main.getRoot().getChildren().set(0, Match.getGameView().getView());
+						});
 						break;
 					}
 					default:
@@ -124,8 +150,13 @@ class ProcessConnectionThread implements Runnable{
 						boolean winByTwo = messageObj.getBoolean("winByTwo");
 						String matchType = messageObj.getString("type");
 						String matchTheme = messageObj.getString("theme");
-						String team1Name = messageObj.getString("team1");
-						String team2Name = messageObj.getString("team2");
+
+						JSONObject team1 = messageObj.getJSONObject("team1");
+						JSONObject team2 = messageObj.getJSONObject("team2");
+						String team1Name = team1.getString("name");
+						String team1Color = team1.getString("color");
+						String team2Name = team2.getString("name");
+						String team2Color = team2.getString("color");
 
 						//Format the gameScores string xx-xx-xx... into an array
 						String gameScoreStr = messageObj.getString("gameScores");
@@ -145,11 +176,11 @@ class ProcessConnectionThread implements Runnable{
 							UntimedMatch.setMaxGames(numGames);
 							UntimedMatch.setGameScores(scores);
 							UntimedMatch.setWinByTwo(winByTwo);
-							UntimedMatch.setTeams(team1Name, team2Name);
+							UntimedMatch.setTeams(team1Name, Paint.valueOf(team1Color), team2Name, Paint.valueOf(team2Color));
 
 							Controller.restartScoreboard();
-
 							Match.update();
+							Main.getRoot().getChildren().set(0, Match.getGameView().getView());
 						});
 						break;
 				}

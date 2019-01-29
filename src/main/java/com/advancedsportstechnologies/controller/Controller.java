@@ -61,6 +61,7 @@ public class Controller {
             Main.getRoot().getChildren().set(0, winnerView.getView());
         } else {
             //The game is over, but the match is still going
+            Match.setActive(false);
             GameWinnerView gameWinnerView = new GameWinnerView(winningTeam.getTeam(), losingTeam.getTeam());
             Main.getRoot().getChildren().set(0, gameWinnerView.getView());
             Thread thread = displayGameWinnerView(gameWinnerView);
@@ -113,6 +114,7 @@ public class Controller {
         Match.getTeamTwo().setScore(0);
         UntimedMatch.nextGame();
         Blink.reset();
+        Match.setActive(true);
         Match.getGameView().update();
     }
 
@@ -125,8 +127,9 @@ public class Controller {
         Match.getTeamTwo().setScore(0);
         Match.getTeamTwo().setGamesWon(0);
         UntimedMatch.setCurrentGame(0);
-        Match.getGameView().update();
         Blink.reset();
+        Match.setActive(true);
+        Match.getGameView().update();
     }
 
 }

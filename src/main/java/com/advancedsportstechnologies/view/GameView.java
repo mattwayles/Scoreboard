@@ -73,6 +73,9 @@ public abstract class GameView {
      */
     public Node getView() { return this.view; }
 
+    public TeamView getTeamView1() { return this.teamView1; }
+    public TeamView getTeamView2() { return this.teamView2; }
+
     /**
      * Set the View for this object
      * @param view The GameView's new View
@@ -158,20 +161,23 @@ public abstract class GameView {
      */
     private void setKeyPressListeners() {
         Main.getScene().setOnKeyReleased(e -> {
-            if (e.getCode() == KeyCode.A) {
-                increaseScore(this.teamView1, this.teamView2);
-            } else if (e.getCode() == KeyCode.S) {
-                increaseScore(this.teamView2, this.teamView1);
-            } else if (e.getCode() == KeyCode.Z) {
-                decreaseScore(this.teamView1);
-            } else if (e.getCode() == KeyCode.X) {
-                decreaseScore(this.teamView2);
-            } else if (e.getCode() == KeyCode.Q) {
-                if (this.teamView1.getTeam().getScore() == 0 && this.teamView2.getTeam().getScore() == 0) {
-                    Match.reverseTeams();
+            if (Match.isActive()) {
+                if (e.getCode() == KeyCode.A) {
+                    increaseScore(this.teamView1, this.teamView2);
+                } else if (e.getCode() == KeyCode.S) {
+                    increaseScore(this.teamView2, this.teamView1);
+                } else if (e.getCode() == KeyCode.Z) {
+                    decreaseScore(this.teamView1);
+                } else if (e.getCode() == KeyCode.X) {
+                    decreaseScore(this.teamView2);
                 }
-                Controller.restartScoreboard();
-                Match.update();
+                else if (e.getCode() == KeyCode.Q) {
+                    if (this.teamView1.getTeam().getScore() == 0 && this.teamView2.getTeam().getScore() == 0) {
+                        Match.reverseTeams();
+                    }
+                    Controller.restartScoreboard();
+                    Match.update();
+                }
             }
         });
     }
@@ -181,7 +187,7 @@ public abstract class GameView {
      * @param activeTeamView    The View representing the team receiving the score
      * @param passiveTeamView   The View representing the team that did not receive the score
      */
-    private void increaseScore(TeamView activeTeamView, TeamView passiveTeamView) {
+    public void increaseScore(TeamView activeTeamView, TeamView passiveTeamView) {
         if (activeTeamView.getTeam().getScore() < MAX_SCORE) {
             activeTeamView.getTeam().increaseScore();
             updateScoreNode(activeTeamView);
@@ -193,7 +199,7 @@ public abstract class GameView {
      * Decrease the score of the specified team when the decrease score event is raised
      * @param activeTeamView    The View representing the team receiving the score
      */
-    private void decreaseScore(TeamView activeTeamView) {
+    public void decreaseScore(TeamView activeTeamView) {
         if (activeTeamView.getTeam().getScore() > MIN_SCORE) {
             activeTeamView.getTeam().decreaseScore();
             updateScoreNode(activeTeamView);

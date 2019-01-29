@@ -16,11 +16,10 @@ public class Team {
     /**
      * Create a new Team with a name and a color
      * @param name  The name of the team
-     * @param color The team color
      */
-    Team(String name, String color) {
+    Team(String name) {
         this.teamName = name;
-        this.color = Paint.valueOf(color);
+        this.color = Paint.valueOf("#FFF");
     }
 
     /**
