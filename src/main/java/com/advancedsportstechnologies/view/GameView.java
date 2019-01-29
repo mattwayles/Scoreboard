@@ -6,6 +6,7 @@ import com.advancedsportstechnologies.controller.PiController;
 import com.advancedsportstechnologies.model.Match;
 import com.advancedsportstechnologies.view.texteffects.Blink;
 import com.advancedsportstechnologies.view.texteffects.Rotate;
+import com.advancedsportstechnologies.view.texteffects.Scale;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -208,7 +209,7 @@ public abstract class GameView {
             Text text = (Text) activeTeamView.getScoreLabel();
             text.setText(String.valueOf(activeTeamView.getTeam().getScore()));
         }
-        //Scale.play(activeTeamView.getScoreLabel(), 200, .1, .1);
+        Scale.play(activeTeamView.getScoreLabel(), 200, .1, .1);
     }
 
 }

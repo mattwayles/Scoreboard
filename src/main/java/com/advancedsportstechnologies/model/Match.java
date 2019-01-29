@@ -2,6 +2,7 @@ package com.advancedsportstechnologies.model;
 
 import com.advancedsportstechnologies.Main;
 import com.advancedsportstechnologies.view.GameView;
+import com.advancedsportstechnologies.view.texteffects.Scale;
 import com.advancedsportstechnologies.view.timed.TimedGameView;
 import com.advancedsportstechnologies.view.untimed.UntimedGameView;
 import javafx.scene.paint.Paint;
@@ -108,7 +109,7 @@ public abstract class Match {
     }
 
     public static void flash() {
-        //Scale.play(Main.getRoot().getChildren().get(0), 500, -1, 0);
+        Scale.play(Main.getRoot().getChildren().get(0), 500, -1, 0);
     }
 
     /**
