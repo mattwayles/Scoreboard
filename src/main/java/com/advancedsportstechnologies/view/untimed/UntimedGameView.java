@@ -36,12 +36,19 @@ public class UntimedGameView extends GameView {
     private void updateSeparator() {
         VBox separator = (VBox) gameViewBox.getChildren().get(1);
         VBox infoBox = (VBox) separator.getChildren().get(1);
+        updateLogoBox(infoBox);
         updateGameBox(infoBox);
         updateScoreToWinBox(infoBox);
         updateGamesToWinBox(infoBox);
         updateIcons(infoBox);
         HBox gameViewBox = (HBox) super.getView();
         gameViewBox.getChildren().set(1, separator);
+    }
+
+    private void updateLogoBox(VBox infoBox) {
+        VBox logoBox = (VBox) infoBox.getChildren().get(0);
+        ImageView logo = (ImageView) logoBox.getChildren().get(0);
+        logo.setImage(new Image("/img/logo/astLogo_" + Match.getTheme() + ".png"));
     }
     
     private void updateGameBox(VBox infoBox) {
